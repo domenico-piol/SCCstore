@@ -19,8 +19,9 @@ tbd.
 
 ## Architecture
 This sample microservices-based system consists of the following modules:
-
-![High Level Diagram](./diagrams/high-level.drawio.svg)
+<p align="center">
+  <img src="./diagrams/high-level.drawio.svg">
+</p>
 
 - **SCC UI** - the user-interface component of the application
 - **SCC Identity Manager** - the account, authentication and authorization component (IAM)
