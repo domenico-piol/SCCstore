@@ -1,4 +1,4 @@
-# Sirius Cybernetics Corporation Online Store
+# The 'Sirius Cybernetics Corporation Online Store' demo application
 SCCstore is a Spring Boot based, cloud native demo application using microservice design patterns.
 
 In this project I'm demonstrating how to use Spring Boot for building microservice-based architecture for Kubernetes. This example is based on Spring Boot 2.5.
