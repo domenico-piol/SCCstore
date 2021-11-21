@@ -1,0 +1,9 @@
+server:
+  port: 443
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-store-password: Aldebaran-65
+    key-store: file:/Users/domenico/Documents/Projects/certs/www.piol.name-webcert.p12
+  error:
+    path: /error

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <div th:include="fragments/fragments :: head"></div>
+
+    <body id="page-top">
+        <!-- Navigation-->
+        <div th:include="fragments/fragments :: navigation"></div>
+
+        <section id="error">
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center">
+                    <div class="col-lg-12">
+                        <div class="mb-5 mb-lg-0 text-center text-lg-start">
+                            <div><p></p></div>
+                            <h1>Oops!</h1>
+                            <h2>404 Not Found</h2>
+                            <div class="error-details">
+                                Sorry, an error has occured, Requested page not found!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p></p>
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center">
+                    <div class="col-xl-8 justify-content-center">
+                            <div class="error-actions justify-content-center">
+                                <a href="/sccstore" class="btn btn-outline-primary rounded-pill">Take Me Home</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer-->
+        <div th:include="fragments/fragments :: footer"></div>
+        
+    </body>
+</html>
