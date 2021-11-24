@@ -23,10 +23,10 @@
 hs_err_pid*
 
 # various stuff
-.DS_Store
-.settings
-.vscode
-.project
+**/.DS_Store
+**/.settings
+**/.vscode
+**/.project
 
 # Maven
 */target/**
