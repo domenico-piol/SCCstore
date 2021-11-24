@@ -31,4 +31,9 @@ public class SCCstoreController {
     public String store() {
         return "store";
     }
+
+    @RequestMapping(value = "/sccstore/shopping-cart", method = RequestMethod.GET)
+    public String shoppingCart() {
+        return "shopping-cart";
+    }
 }
