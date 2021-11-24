@@ -27,6 +27,7 @@ hs_err_pid*
 **/.settings
 **/.vscode
 **/.project
+**/.classpath
 
 # Maven
 */target/**
