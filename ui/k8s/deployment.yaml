@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sccstore-ui
+  labels:
+    app: smartstudent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sccstore-ui
+  template:
+    metadata:
+      labels:
+        app: sccstore-ui
+    spec:
+      containers:
+      - name: sccstore-ui
+        image: registry-1.docker.io/domenicopiol/sccstore-ui:latest
+        imagePullPolicy: Always
+        env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: "staging"
+        ports:
+        - containerPort: 443
+#        livenessProbe:
+#          httpGet:
+#            path: /actuator/health/liveness
+#            port: 443
+#            scheme: HTTPS
+#          timeoutSeconds: 3
+#          initialDelaySeconds: 30
+#          periodSeconds: 10
+#        readinessProbe:
+#            httpGet:
+#              path: /actuator/health/readiness
+#              port: 443
+#              scheme: HTTPS
+#            timeoutSeconds: 3
+#            initialDelaySeconds: 30
+#            periodSeconds: 10
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "700m"
+          limits:
+            memory: "300Mi"
+            cpu: "2000m"
+      imagePullSecrets:
+      - name: regcred
