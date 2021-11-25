@@ -38,7 +38,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: ./ui/
-        file: ./Dockerfile
+        file: ./ui/Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore:latest
 
