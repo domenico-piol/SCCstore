@@ -1,3 +1,6 @@
+spring:
+  profiles:
+    active: LOCAL
 server:
   port: 443
   ssl:
@@ -7,3 +10,16 @@ server:
     key-store: file:/Users/domenico/Documents/Projects/certs/www.piol.name-webcert.p12
   error:
     path: /error
+---
+spring:
+    config:
+        activate:
+            on-profile: K8S
+server:
+  ssl:
+    key-store: file:/certs/www.piol.name-webcert.p12
+---
+spring:
+    config:
+        activate:
+            on-profile: LOCAL
