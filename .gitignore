@@ -31,3 +31,7 @@ hs_err_pid*
 
 # Maven
 */target/**
+
+# Mac
+**/Icon?
+**/.DS_Store
