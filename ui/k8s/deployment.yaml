@@ -20,7 +20,7 @@ spec:
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE
-          value: "staging"
+          value: "K8S"
         ports:
         - containerPort: 443
         volumeMounts:
