@@ -11,6 +11,16 @@ For building the demo application you will need Maven 3.5 or newer (I am using v
 
 As said, it is intended to be run on Kubernetes, but it does perfectly work also locally w/o a container environment. 
 
+#### Certificates
+Firstly, you will need a certificate. Ideally in p12 format (jks works as well). Let's create a self-signed certificate and create a p12 from it:
+
+    openssl req -newkey rsa:2048 -nodes -keyout key.pem -x509 -days 365 -out certificate.pem
+    openssl pkcs12 -inkey key.pem -in certificate.pem -export -out certificate.p12
+
+For the Kubernetes use-case, we need to base64 encode the p12 certificate and store it into a secret. On a Mac you do:
+
+    base64 -i certificate.p12 -o base64.txt
+
 #### Run locally w/o Kubernetes
 tbd.
 
