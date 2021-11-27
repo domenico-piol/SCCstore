@@ -26,22 +26,22 @@ spec:
         volumeMounts:
         - name: certs
           mountPath: "/certs/" 
-#        livenessProbe:
-#          httpGet:
-#            path: /actuator/health/liveness
-#            port: 443
-#            scheme: HTTPS
-#          timeoutSeconds: 3
-#          initialDelaySeconds: 30
-#          periodSeconds: 10
-#        readinessProbe:
-#            httpGet:
-#              path: /actuator/health/readiness
-#              port: 443
-#              scheme: HTTPS
-#            timeoutSeconds: 3
-#            initialDelaySeconds: 30
-#            periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8443
+            scheme: HTTPS
+          timeoutSeconds: 2
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8443
+              scheme: HTTPS
+            timeoutSeconds: 2
+            initialDelaySeconds: 15
+            periodSeconds: 10
         resources:
           requests:
             memory: "256Mi"
