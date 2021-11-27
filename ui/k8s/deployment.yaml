@@ -19,10 +19,13 @@ spec:
         image: registry-1.docker.io/domenicopiol/sccstore-ui:latest
         imagePullPolicy: Always
         env:
-          - name: SPRING_PROFILES_ACTIVE
-            value: "staging"
+        - name: SPRING_PROFILES_ACTIVE
+          value: "K8S"
         ports:
         - containerPort: 443
+        volumeMounts:
+        - name: certs
+          mountPath: "/certs/" 
 #        livenessProbe:
 #          httpGet:
 #            path: /actuator/health/liveness
@@ -46,5 +49,9 @@ spec:
           limits:
             memory: "300Mi"
             cpu: "2000m"
+      volumes:
+      - name: certs
+        secret:
+          secretName: sccstore-webcert
       imagePullSecrets:
       - name: regcred
