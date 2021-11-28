@@ -22,10 +22,6 @@ public class SCCstoreController {
         return "index";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
-        return "login";
-    }
 
     @RequestMapping(value = "/sccstore/store", method = RequestMethod.GET)
     public String store() {

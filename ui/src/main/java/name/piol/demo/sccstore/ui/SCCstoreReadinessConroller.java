@@ -1,4 +1,4 @@
-package name.piol;
+package name.piol.demo.sccstore.ui;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -12,5 +12,6 @@
 	
 	<modules>
     	<module>ui</module>
+		<module>iam</module>
 	</modules>
 </project>
