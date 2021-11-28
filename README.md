@@ -3,16 +3,16 @@ SCCstore is a Spring Boot based, cloud native demo application using microservic
 
 In this project I'm demonstrating how to use Spring Boot for building microservice-based architecture for Kubernetes. This example is based on Spring Boot 2.5.
 
-## Getting Started
+# Getting Started
 This project is a multi-module Maven project based on Spring Boot 2.5.x and intended to be run on Kubernetes.
 
-### Usage Guide
+## Usage Guide
 For building the demo application you will need Maven 3.5 or newer (I am using v3.8.2) and Java 11, whereby any newer version will do the job as well.
 
 As said, it is intended to be run on Kubernetes, but it does perfectly work also locally w/o a container environment. 
 
-#### Certificates
-Firstly, you will need a certificate. Ideally in p12 format (jks works as well). Let's create a self-signed certificate and create a p12 from it:
+### Certificates
+First of all, you will need a certificate. Ideally in p12 format (jks works as well). So let's create a self-signed certificate and create a p12 from it:
 
     openssl req -newkey rsa:2048 -nodes -keyout key.pem -x509 -days 365 -out certificate.pem
     openssl pkcs12 -inkey key.pem -in certificate.pem -export -out certificate.p12
@@ -21,13 +21,13 @@ For the Kubernetes use-case, we need to base64 encode the p12 certificate and st
 
     base64 -i certificate.p12 -o base64.txt
 
-#### Run locally w/o Kubernetes
+### Run locally w/o Kubernetes
 tbd.
 
-#### Run on a Kubernetes Cluster
+### Run on a Kubernetes Cluster
 tbd.
 
-## Architecture
+# Architecture
 This sample microservices-based system consists of the following modules:
 <p align="center">
   <img src="./diagrams/high-level.drawio.svg">
