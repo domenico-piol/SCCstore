@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sccstore-h2-webport-service
+spec:
+  ports:
+  - port: 8082
+    protocol: TCP
+    targetPort: 8082
+  selector:
+    app: sccstore-h2
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sccstore-h2-tcpport-service
+spec:
+  ports:
+  - port: 9092
+    protocol: TCP
+    targetPort: 9092
+  selector:
+    app: sccstore-h2
+  type: ClusterIP

@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: sccstore-ui
   labels:
-    app: smartstudent
+    app: sccstore-ui
 spec:
   replicas: 1
   selector:
