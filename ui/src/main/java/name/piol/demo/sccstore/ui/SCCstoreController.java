@@ -17,6 +17,11 @@ public class SCCstoreController {
         return "redirect:/sccstore";
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login() {
+        return "login";
+    }
+
     @RequestMapping(value = "/sccstore", method = RequestMethod.GET)
     public String index() {
         return "index";

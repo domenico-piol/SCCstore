@@ -21,9 +21,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
-                //.antMatchers("/sccstore/store").authenticated()
-                //.antMatchers("/sccstore/shopping-cart").authenticated()
-                .antMatchers("/**").authenticated()
+                //.antMatchers("/**").authenticated()
+                .antMatchers("/**").permitAll()
             .and()
                 .formLogin()
                 .loginPage("/login")
