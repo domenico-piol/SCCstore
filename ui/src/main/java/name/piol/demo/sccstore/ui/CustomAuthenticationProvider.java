@@ -3,17 +3,17 @@ package name.piol.demo.sccstore.ui;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import name.piol.demo.sccstore.common.RestSupport;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
+import name.piol.demo.sccstore.common.SCCUser;
 import java.util.ArrayList;
 
 @Component
@@ -26,13 +26,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 
     @Override
-    public Authentication authenticate(Authentication authentication)
-            throws AuthenticationException {
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String name = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        logger.info("starting auth for: " + name);
+        Authentication result = null;
 
+        logger.info("starting auth for: " + name);
 
         // User user = userAccountService.getUser(name);
 
@@ -40,21 +40,25 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         try {
             restTemplate = RestSupport.getRestTemplate(); // getRestTemplate();
             String fooResourceUrl = "https://localhost:444/authenticate?userId=" + name;
-            ResponseEntity<String> response = restTemplate.getForEntity(fooResourceUrl, String.class);
-            logger.info(response.toString());
-        } catch (KeyManagementException | KeyStoreException | NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
+            ResponseEntity<SCCUser> response = restTemplate.getForEntity(fooResourceUrl, SCCUser.class);
+            
+            logger.info("STATUS: " + response.getStatusCode());
 
-        if (name != null && name.equals("domenico@piol.name")) {
-            logger.info("User " + name + " logged in");
-            return new UsernamePasswordAuthenticationToken(name, password, new ArrayList<>());
-        } else {
-            logger.error("Authentication Error");
-            return null;
+            if (response.getStatusCode().series() == HttpStatus.Series.SERVER_ERROR || 
+                response.getStatusCode().series() == HttpStatus.Series.CLIENT_ERROR) {
+                logger.error("user not authenticated!");
+                throw new AuthenticationServiceException("Exception in Authentication Service");
+            } else {
+                // OK case
+                logger.info(response.toString());
+                result = new UsernamePasswordAuthenticationToken(name, password, new ArrayList<>());
+            }
+        } catch (Exception e) {
+            logger.error("an authentication error occurred", e);
+            throw new AuthenticationServiceException("Authentication Service not available");
         }
+
+        return result;
     }
 
     @Override

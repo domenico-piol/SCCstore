@@ -2,7 +2,11 @@ package name.piol.demo.sccstore.common;
 
 public class SCCUser {
     
-    private final String userId;
+    private String userId;
+
+    public SCCUser() {
+        super();
+    }
 
     public SCCUser(String userId) {
         this.userId = userId;
@@ -12,6 +16,9 @@ public class SCCUser {
         return userId;
     }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     @Override
     public String toString() {
