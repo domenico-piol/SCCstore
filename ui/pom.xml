@@ -12,7 +12,7 @@
 	<groupId>name.piol.demo.sccstore.ui</groupId>
 	<artifactId>sccstore-ui</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>sccstore</name>
+	<name>sccstore-ui</name>
 	<description>Sirius Cybernetics Corporation Online Store - a cloud native demo application</description>
 
 	<properties>
