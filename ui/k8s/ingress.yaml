@@ -7,7 +7,8 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 spec:
   rules:
-  - host: sccstore-ui.k8s.piol.local
+  #- host: sccstore-ui.k8s.piol.local
+  - host: sccstore-ui.apps-crc.testing
     http:
       paths:
         - path: /

@@ -16,8 +16,14 @@
 	<description>Sirius Cybernetics Corporation Online Store - a cloud native demo application</description>
 
 	<properties>
-		<java.version>17</java.version>
+		<java.version>11</java.version>
+
+		<quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+        <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
+        <quarkus.platform.version>2.8.3.Final</quarkus.platform.version>
+		<surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -74,7 +80,25 @@
 			<artifactId>sccstore-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.slf4j</groupId>
+			<artifactId>slf4j-jboss-logmanager</artifactId>
+		</dependency>
+
 	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency> 
+				<groupId>${quarkus.platform.group-id}</groupId>
+				<artifactId>quarkus-bom</artifactId>
+				<version>${quarkus.platform.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
@@ -82,7 +106,93 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin> 
+				<groupId>${quarkus.platform.group-id}</groupId>
+				<artifactId>quarkus-maven-plugin</artifactId>
+				<version>${quarkus.platform.version}</version>
+				<extensions>true</extensions> 
+				<executions>
+					<execution>
+						<goals>
+							<goal>build</goal>
+							<goal>generate-code</goal>
+							<goal>generate-code-tests</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!--plugin> 
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${surefire-plugin.version}</version>
+				<configuration>
+					<systemPropertyVariables>
+						<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+						<maven.home>${maven.home}</maven.home>
+					</systemPropertyVariables>
+				</configuration>
+			</plugin-->
+
+			<plugin>
+				<groupId>nl.lexemmens</groupId>
+				<artifactId>podman-maven-plugin</artifactId>
+				<version>1.8.0</version>
+				<configuration>
+					<registries>
+						<registry>default-route-openshift-image-registry.apps-crc.testing</registry>
+					</registries>
+					<pushRegistry>default-route-openshift-image-registry.apps-crc.testing</pushRegistry>
+					<skipAuth>true</skipAuth>
+					<podman>
+						<tlsVerify>FALSE</tlsVerify>   
+					</podman>
+					<images>
+						<image>
+							<name>sccstore/sccstore-ui</name>
+							<build>
+								<containerFile>Dockerfile</containerFile>
+								
+								<createLatestTag>true</createLatestTag>
+							</build>
+						</image>
+					</images>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile> 
+			<id>native</id>
+			<properties> 
+				<quarkus.package.type>native</quarkus.package.type>
+			</properties>
+			<build>
+				<plugins>
+					<plugin> 
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<version>${surefire-plugin.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
+								</goals>
+								<configuration>
+									<systemPropertyVariables>
+										<native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+										<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+										<maven.home>${maven.home}</maven.home>
+									</systemPropertyVariables>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>
