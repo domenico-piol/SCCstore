@@ -37,3 +37,4 @@ This sample microservices-based system consists of the following modules:
 - **SCC Identity Manager** - the account, authentication and authorization component (IAM)
 - **SCC Shopping Cart** - the shopping cart 
 - **SCC Database** - the relational database
+- **SCC Complaints** - the complaints controller
