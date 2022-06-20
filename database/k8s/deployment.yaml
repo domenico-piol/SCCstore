@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sccstore-h2
+  labels:
+    app: sccstore-h2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sccstore-h2
+  template:
+    metadata:
+      labels:
+        app: sccstore-h2
+    spec:
+      containers:
+      - name: sccstore-h2
+        image: registry-1.docker.io/domenicopiol/sccstore-h2:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8082
+          name: webport
+        - containerPort: 9092
+          name: tcpport
+        resources:
+          requests:
+            memory: "20Mi"
+            cpu: "700m"
+          limits:
+            memory: "30Mi"
+            cpu: "1000m"
+      imagePullSecrets:
+      - name: regcred

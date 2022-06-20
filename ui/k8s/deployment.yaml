@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: sccstore-ui
   labels:
-    app: smartstudent
+    app: sccstore-ui
 spec:
   replicas: 1
   selector:
@@ -16,20 +16,25 @@ spec:
     spec:
       containers:
       - name: sccstore-ui
-        image: registry-1.docker.io/domenicopiol/sccstore-ui:latest
+        #image: registry-1.docker.io/domenicopiol/sccstore-ui:latest
+        image: image-registry.openshift-image-registry.svc:5000/sccstore/sccstore-ui:latest
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "K8S"
         ports:
-        - containerPort: 443
+        #- containerPort: 443
+        - containerPort: 8443
         volumeMounts:
         - name: certs
           mountPath: "/certs/" 
+        #- name: kube-api-access-sccstore
+        #  readOnly: true
+        #  mountPath: /var/run/secrets/kubernetes.io/serviceaccount
         livenessProbe:
           httpGet:
             path: /actuator/health/liveness
-            port: 8443
+            port: 8778
             scheme: HTTPS
           timeoutSeconds: 2
           initialDelaySeconds: 20
@@ -37,7 +42,7 @@ spec:
         readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8443
+              port: 8778
               scheme: HTTPS
             timeoutSeconds: 2
             initialDelaySeconds: 15
@@ -53,5 +58,7 @@ spec:
       - name: certs
         secret:
           secretName: sccstore-webcert
+      serviceAccountName: default
       imagePullSecrets:
-      - name: regcred
+      #- name: regcred
+      - name: default-dockercfg-b2zgj

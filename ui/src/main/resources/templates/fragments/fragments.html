@@ -26,27 +26,26 @@
 
     <div th:fragment="navigation">
         <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
-            <div class="container px-5">
+            <div class="container px-1">
                 <img src="/img/SiriusCyberneticsCorporation-Logo-klein.jpg" style="width: auto; height: 20px;" class="img-fluid" alt="SCC Logo">
                 <a class="navbar-brand fw-bold" href="/sccstore">Sirius Cybernetics Corporation</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="bi-list"></i>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
-                        <li class="nav-item"><a class="nav-link me-lg-3" href="#store">Online Store</a></li>
-                        <li class="nav-item"><a class="nav-link me-lg-3" href="#complaints">Complaints Department</a></li>
-                        <li class="nav-item"><a class="nav-link me-lg-3" href="#marketing">Marketing Department</a></li>
-                        <div class="vr"></div>
-                        <li class="nav-item"><a class="nav-link me-lg-3" href="/sccstore/shopping-cart">
+                
+                <div class="collapse navbar-collapse d-flex" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto ">
+                        <li class="nav-item"><a class="nav-link me-lg-auto" href="#store">Online Store</a></li>
+                        <li class="nav-item"><a class="nav-link me-lg-auto" href="#complaints">Complaints Department</a></li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link me-lg-0" href="/sccstore/shopping-cart">
                             <i class="bi-basket" style="font-size: 1rem; color: rgb(0, 0, 0);"></i></a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link me-lg-3" href="/sccstore/special-functions">
-                            <i class="bi-gem" style="font-size: 1rem; color: rgb(0, 0, 0);"></i></a>
                         </li>
                     </ul>
                 </div>
+
             </div>
         </nav>
     </div>
@@ -56,7 +55,7 @@
         <footer class="bg-black text-center py-5">
             <div class="container px-5">
                 <div class="text-white-50">
-                    <div class="h3"><i class="bi bi-exclamation-triangle"></i>&nbsp;This is a demo application for EDUCATIONAL PURPOSE only!&nbsp;<i class="bi bi-exclamation-triangle"></i></div>
+                    <div class="h6"><i class="bi bi-exclamation-triangle"></i>&nbsp;This is a demo application for EDUCATIONAL PURPOSE only!&nbsp;<i class="bi bi-exclamation-triangle"></i></div>
                 </div>
                 <p></p>
                 <div class="text-white-50 small">

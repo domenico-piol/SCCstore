@@ -1,14 +1,13 @@
-certDir: ${user.dir}/../../certs/
 spring:
   profiles:
     active: LOCAL
 server:
-  port: 8443
+  port: 444
   ssl:
     enabled: true
     key-store-type: PKCS12
     key-store-password: sccstore
-    key-store: file:${certDir}/sccstore-ui-certificate.p12
+    key-store: file:/Users/domenico/Documents/Projects/certs/sccstore-ui-certificate.p12
   error:
     path: /error
 management:
@@ -16,12 +15,12 @@ management:
     probes:
       enabled: true
   server:
-    port: 8778
+    port: 8444
     ssl:
       enabled: true
       key-store-type: PKCS12
       key-store-password: sccstore
-      key-store: file:${certDir}/sccstore-ui-certificate.p12
+      key-store: file:/Users/domenico/Documents/Projects/certs/sccstore-ui-certificate.p12
 ---
 spring:
     config:
