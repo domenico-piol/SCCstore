@@ -25,7 +25,13 @@ For the Kubernetes use-case, we need to base64 encode the p12 certificate and st
 tbd.
 
 ### Run on a Kubernetes Cluster
-tbd.
+This project uses Helm for the deployment. This said, from the root directory use either:
+
+    helm install sccstore sccstore-charts
+
+or
+
+    helm upgrade sccstore sccstore-charts
 
 # Architecture
 This sample microservices-based system consists of the following modules:
