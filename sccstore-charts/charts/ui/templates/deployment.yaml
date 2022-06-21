@@ -4,8 +4,9 @@ metadata:
   name: sccstore-ui
   labels:
     app: sccstore-ui
+    app.kubernetes.io/managed-by: helm
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: sccstore-ui
@@ -16,21 +17,16 @@ spec:
     spec:
       containers:
       - name: sccstore-ui
-        #image: registry-1.docker.io/domenicopiol/sccstore-ui:latest
-        image: image-registry.openshift-image-registry.svc:5000/sccstore/sccstore-ui:latest
-        imagePullPolicy: Always
+        image: {{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "K8S"
         ports:
-        #- containerPort: 443
         - containerPort: 8443
         volumeMounts:
         - name: certs
           mountPath: "/certs/" 
-        #- name: kube-api-access-sccstore
-        #  readOnly: true
-        #  mountPath: /var/run/secrets/kubernetes.io/serviceaccount
         livenessProbe:
           httpGet:
             path: /actuator/health/liveness
@@ -59,6 +55,6 @@ spec:
         secret:
           secretName: sccstore-webcert
       serviceAccountName: default
-      imagePullSecrets:
+#      imagePullSecrets:
       #- name: regcred
-      - name: default-dockercfg-b2zgj
+#      - name: default-dockercfg-b2zgj
