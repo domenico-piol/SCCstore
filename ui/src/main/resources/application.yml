@@ -24,9 +24,17 @@ management:
       key-store: file:${certDir}/sccstore-ui-certificate.p12
 ---
 spring:
-    config:
-        activate:
-            on-profile: K8S
+  config:
+    activate:
+      on-profile: K8S
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://10.129.1.184:5432/sccstore
+    username: sccstore
+    password: sccstore
 server:
   ssl:
     key-store-password: sccstore
@@ -38,6 +46,14 @@ management:
       key-store: file:/certs/webcert.p12
 ---
 spring:
-    config:
-        activate:
-            on-profile: LOCAL
+  config:
+    activate:
+      on-profile: LOCAL
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/sccstore
+    username: sccstore
+    password: sccstore

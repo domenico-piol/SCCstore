@@ -33,6 +33,12 @@ public class SCCstoreController {
         return "store";
     }
 
+ /*    @RequestMapping(value = "/sccstore/compliants", method = RequestMethod.GET)
+    public String compliants() {
+        return "compliants";
+    }
+*/
+
     @RequestMapping(value = "/sccstore/shopping-cart", method = RequestMethod.GET)
     public String shoppingCart() {
         return "shopping-cart";

@@ -2,7 +2,6 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: sccstore-ui-route
-  #app.kubernetes.io/managed-by: helm
 spec:
   host: {{ .Values.route.host }}
   port:
