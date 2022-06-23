@@ -5,6 +5,9 @@ metadata:
   labels:
     app: sccstore-ui
     app.kubernetes.io/managed-by: helm
+  annotations:
+    helm-revision: "{{ .Release.Revision }}"
+    timestamp: {{ now | quote }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
