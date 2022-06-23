@@ -4,6 +4,12 @@
 
     <div th:include="fragments/fragments :: head"></div>
 
+    <script type="text/javascript" class="init">
+        $(document).ready(function () {
+            $('#compliantsTable').DataTable();
+        });
+    </script>
+
     <body id="page-top">
         <!-- Navigation-->
         <div th:include="fragments/fragments :: navigation"></div>
@@ -20,8 +26,9 @@
                                 <h3 class="card-title">Sirius Cybernetics Corporation - Compliants Department</h3>
                             </div>
                         </div>
+                        <div style="margin-top:20px"></div>&nbsp;
                         <div class="container-fluid px-5">
-                            <table class="table table-striped table-hover table-sm">
+                            <table class="table table-striped table-hover table-sm" id="compliantsTable">
                                 <thead>
                                     <th data-field="complId" scope="col">#</th>
                                     <th data-field="compliant" scope="col">Compliant</th>
@@ -29,7 +36,7 @@
                                 <tbody>
                                     <tr th:each="cl : ${compliants}">
                                         <td th:text="${cl.complId}"></td>
-                                        <td th:text="${cl.compliant}"></td>
+                                        <td data-sortable="true" th:text="${cl.compliant}"></td>
                                     </tr>
                                 </tbody>
                             </table>
