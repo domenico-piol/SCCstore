@@ -40,6 +40,13 @@ server:
     key-store-password: sccstore
     key-store: file:/certs/webcert.p12
 management:
+  endpoint:
+    restart:
+      enabled: true
+    health:
+      enabled: true
+    info:
+      enabled: true
   server:
     ssl:
       key-store-password: sccstore
