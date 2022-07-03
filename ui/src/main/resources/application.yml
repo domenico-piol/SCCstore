@@ -32,7 +32,7 @@ spring:
       ddl-auto: none
   datasource:
     platform: postgres
-    url: jdbc:postgresql://10.129.1.184:5432/sccstore
+    url: jdbc:postgresql://win10-postgresql:5432/sccstore
     username: sccstore
     password: sccstore
 server:
