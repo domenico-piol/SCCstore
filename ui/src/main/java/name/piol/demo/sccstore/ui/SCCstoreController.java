@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class SCCstoreController {
 
-    @Autowired
-    private SCCstoreController mySCCstoreController;
+    //@Autowired
+    //private SCCstoreController mySCCstoreController;
     
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
