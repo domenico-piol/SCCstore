@@ -12,10 +12,10 @@ import name.piol.demo.sccstore.ui.datamodel.Compliant;
 import name.piol.demo.sccstore.ui.datamodel.CompliantRepository;
 
 @Controller
-public class SCCstoreCompliancsController {
+public class SCCstoreCompliancesController {
 
-    @Autowired
-    private SCCstoreCompliancsController mySCCstoreCompliancsController;
+    //@Autowired
+    //private SCCstoreCompliancesController mySCCstoreCompliancesController;
 
     @Autowired
     protected CompliantRepository compliantRepository;
