@@ -1,0 +1,3 @@
+curl -L --fail "https://hub.docker.com/v2/repositories/domenicopiol/sccstore-ui/tags" | jq '.results[].images |= sort_by(.last_pushed) | del(.results[] | select(.name=="latest") ) | .results[0].name' | sed -e 's/^"//' -e 's/"$//'
+
+helm upgrade --set ui.image.tag=$(./getLatestTag sccstore-ui)

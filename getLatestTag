@@ -1,0 +1,4 @@
+#!/bin/bash
+
+TAG=$(curl -L --fail "https://hub.docker.com/v2/repositories/domenicopiol/$1/tags" | jq '.results[].images |= sort_by(.last_pushed) | del(.results[] | select(.name=="latest") ) | .results[0].name' | sed -e 's/^"//' -e 's/"$//')
+echo $TAG
