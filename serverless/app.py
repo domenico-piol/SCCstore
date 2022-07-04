@@ -26,7 +26,7 @@ def hello_world():
     htmlPageFooter = "</body></html>"
 
     for row in dataarray:
-        htmlPageContent = htmlPageContent + "<p>" + row[0] + "</p"
+        htmlPageContent += "<p>" + str(row[0]) +" - " + row[1] + "</p>"
 
     return htmlPageHeader + htmlPageContent + htmlPageFooter
 
