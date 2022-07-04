@@ -1,5 +1,12 @@
-certDir: ${user.dir}/../../certs/
+sccstore:
+  certDir: ${user.dir}/../../certs/
+  platform: postgres
+  url: jdbc:postgresql://win10-postgresql:5432/sccstore
+  username: sccstore
+  password: sccstore
 spring:
+  application:
+    name: sccstore-ui
   profiles:
     active: LOCAL
 server:
@@ -8,7 +15,7 @@ server:
     enabled: true
     key-store-type: PKCS12
     key-store-password: sccstore
-    key-store: file:${certDir}/sccstore-ui-certificate.p12
+    key-store: file:${sccstore.certDir}/sccstore-ui-certificate.p12
   error:
     path: /error
 management:
@@ -21,7 +28,7 @@ management:
       enabled: true
       key-store-type: PKCS12
       key-store-password: sccstore
-      key-store: file:${certDir}/sccstore-ui-certificate.p12
+      key-store: file:${sccstore.certDir}/sccstore-ui-certificate.p12
 ---
 spring:
   config:
@@ -31,10 +38,10 @@ spring:
     hibernate:
       ddl-auto: none
   datasource:
-    platform: postgres
-    url: jdbc:postgresql://win10-postgresql:5432/sccstore
-    username: sccstore
-    password: sccstore
+    platform: ${sccstore.platform}
+    url: ${sccstore.url}
+    username: ${sccstore.username}
+    password: ${sccstore.password}
 server:
   ssl:
     key-store-password: sccstore

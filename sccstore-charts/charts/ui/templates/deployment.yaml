@@ -27,6 +27,11 @@ spec:
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "K8S"
+        - name: SPRING_APPLICATION_JSON
+          valueFrom:
+            configMapKeyRef:
+              name: sccstore-ui-spring-config
+              key: k8s-config.json
         ports:
         - containerPort: 8443
         volumeMounts:
