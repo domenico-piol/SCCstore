@@ -6,9 +6,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CompliantRepository extends CrudRepository<Compliant, Long> {
+public interface ComplaintsRepository extends CrudRepository<Complaint, Long> {
     
-    List<Compliant> findByCompliant(String compliant);
+    List<Complaint> findByComplaint(String complaints);
 
-    Compliant findById(long id);
+    Complaint findById(long id);
 }
