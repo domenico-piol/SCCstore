@@ -7,15 +7,18 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
+    print("starting...")
+    
     conn = psycopg2.connect(
         host="win10-postgresql",
         database="sccstore",
-        user=os.environ['sccstore'],
-        password=os.environ['sccstore'])
-
-    cur = conn.cursor()
-
+        user="sccstore",
+        password="sccstore")
+    
     print("Connected to database")
+    
+    cur = conn.cursor()
+    print("got a cursor")
 
     cur.execute('SELECT * FROM compliants;')
     print('executed select')
