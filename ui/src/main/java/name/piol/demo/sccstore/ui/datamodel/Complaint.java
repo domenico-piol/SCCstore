@@ -7,21 +7,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "compliants")
-public class Compliant {
+@Table(name = "complaints")
+public class Complaint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long complId;
 
-    private String compliant;
+    private String complaints;
 
 
-    public Compliant() {
+    public Complaint() {
     }
 
-    public Compliant(String compliant) {
-        this.compliant = compliant;
+    public Complaint(String complaints) {
+        this.complaints = complaints;
     }
 
 
@@ -35,13 +35,13 @@ public class Compliant {
     }
 
 
-    public String getCompliant() {
-        return compliant;
+    public String getComplaint() {
+        return complaints;
     }
 
 
-    public void setCompliant(String compliant) {
-        this.compliant = compliant;
+    public void setComplaint(String complaints) {
+        this.complaints = complaints;
     }
 
     

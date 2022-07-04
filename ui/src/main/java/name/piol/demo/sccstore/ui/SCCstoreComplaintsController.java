@@ -8,25 +8,25 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import name.piol.demo.sccstore.ui.datamodel.Compliant;
-import name.piol.demo.sccstore.ui.datamodel.CompliantRepository;
+import name.piol.demo.sccstore.ui.datamodel.Complaint;
+import name.piol.demo.sccstore.ui.datamodel.ComplaintsRepository;
 
 @Controller
-public class SCCstoreCompliancesController {
+public class SCCstoreComplaintsController {
 
     //@Autowired
     //private SCCstoreCompliancesController mySCCstoreCompliancesController;
 
     @Autowired
-    protected CompliantRepository compliantRepository;
+    protected ComplaintsRepository complaintRepository;
     
 
-    @RequestMapping(value = "/sccstore/compliants", method = RequestMethod.GET)
+    @RequestMapping(value = "/sccstore/complaints", method = RequestMethod.GET)
     public String compliants(Model model) {
-        List<Compliant> compliants = (List<Compliant>) compliantRepository.findAll();
+        List<Complaint> complaints = (List<Complaint>) complaintRepository.findAll();
 
-        model.addAttribute("compliants", compliants);
+        model.addAttribute("complaints", complaints);
 
-        return "compliants";
+        return "complaints";
     }
 }
