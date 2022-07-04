@@ -21,7 +21,7 @@ def hello_world():
     cur.close()
     conn.close()
 
-    htmlPageHeader = "<!DOCTYPE html><html><body><h1>Our complains/h1>"
+    htmlPageHeader = "<!DOCTYPE html><html><body><h1>Our complains</h1>"
     htmlPageContent = ""
     htmlPageFooter = "</body></html>"
 
