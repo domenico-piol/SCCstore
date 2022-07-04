@@ -15,10 +15,13 @@ def hello_world():
 
     cur = conn.cursor()
 
+    print("Connected to database")
+
     cur.execute('SELECT * FROM compliants;')
+    print('executed select')
     dataarray = cur.fetchall()
 
-    print dataarray
+    print (dataarray)
 
     cur.close()
     conn.close()
