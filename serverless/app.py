@@ -21,7 +21,14 @@ def hello_world():
     cur.close()
     conn.close()
 
-    return dataarray
+    htmlPageHeader = "<!DOCTYPE html><html><body><h1>Our complains/h1>"
+    htmlPageContent = ""
+    htmlPageFooter = "</body></html>"
+
+    for row in dataarray:
+        htmlPageContent = htmlPageContent + "<p>" + row[0] + "</p"
+
+    return htmlPageHeader + htmlPageContent + htmlPageFooter
 
     #target = os.environ.get('TARGET', 'World')
     #return 'Hello {}!\n'.format(target)
