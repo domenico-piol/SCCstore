@@ -1,6 +1,6 @@
 # Use the official lightweight Python image.
 # https://hub.docker.com/_/python
-FROM python:3.7-slim
+FROM python:3.9.5-slim
 
 # Allow statements and log messages to immediately appear in the Knative logs
 ENV PYTHONUNBUFFERED True
@@ -11,6 +11,7 @@ WORKDIR $APP_HOME
 COPY . ./
 
 # Install production dependencies.
+RUN apt-get update && apt-get -y install libpq-dev gcc
 RUN pip install Flask gunicorn psycopg2
 
 # Run the web service on container startup. Here we use the gunicorn
