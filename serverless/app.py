@@ -16,15 +16,17 @@ def hello_world():
     cur = conn.cursor()
 
     cur.execute('SELECT * FROM compliants;')
-    complaints = cur.fetchall()
+    dataarray = cur.fetchall()
+
+    print dataarray
 
     cur.close()
     conn.close()
 
-    return complaints
+    #return complaints
 
-    #target = os.environ.get('TARGET', 'World')
-    #return 'Hello {}!\n'.format(target)
+    target = os.environ.get('TARGET', 'World')
+    return 'Hello {}!\n'.format(target)
 
 if __name__ == "__main__":
     app.run(debug=True,host='0.0.0.0',port=int(os.environ.get('PORT', 8080)))
