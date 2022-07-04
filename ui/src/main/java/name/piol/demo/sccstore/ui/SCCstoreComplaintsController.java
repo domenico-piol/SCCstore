@@ -22,7 +22,7 @@ public class SCCstoreComplaintsController {
     
 
     @RequestMapping(value = "/sccstore/complaints", method = RequestMethod.GET)
-    public String compliants(Model model) {
+    public String complaints(Model model) {
         List<Complaint> complaints = (List<Complaint>) complaintRepository.findAll();
 
         model.addAttribute("complaints", complaints);
