@@ -1,6 +1,19 @@
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: sccstore-{{.Chart.Name}}-appconfig
+#data:
+#{{ (.Files.Glob "application.yml").AsConfig | indent 4  }}
+#---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: sccstore-{{.Chart.Name}}-appconfig
+  name: sccstore-{{.Chart.Name}}-spring-config
 data:
-{{ (.Files.Glob "application.yml").AsConfig | indent 4  }}
+  k8s-config.json:
+    '{
+      "sccstore.platform": "postgres",
+      "sccstore.url": "jdbc:postgresql://win10-postgresql:5432/sccstore",
+      "sccstore.username": "sccstore",
+      "sccstore.password": "sccstore"
+     }'
