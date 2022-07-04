@@ -14,14 +14,14 @@ public class Complaint {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long complId;
 
-    private String complaints;
+    private String complaint;
 
 
     public Complaint() {
     }
 
-    public Complaint(String complaints) {
-        this.complaints = complaints;
+    public Complaint(String complaint) {
+        this.complaint = complaint;
     }
 
 
@@ -36,12 +36,12 @@ public class Complaint {
 
 
     public String getComplaint() {
-        return complaints;
+        return complaint;
     }
 
 
-    public void setComplaint(String complaints) {
-        this.complaints = complaints;
+    public void setComplaint(String complaint) {
+        this.complaint = complaint;
     }
 
     

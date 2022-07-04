@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ComplaintsRepository extends CrudRepository<Complaint, Long> {
     
-    List<Complaint> findByComplaint(String complaints);
+    List<Complaint> findByComplaint(String complaint);
 
     Complaint findById(long id);
 }
