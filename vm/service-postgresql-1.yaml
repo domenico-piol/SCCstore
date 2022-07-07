@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: win10-win10-postgresql-1
+spec:
+  type: ClusterIP
+  selector:
+    vm.kubevirt.io/name: win10-postgresql-1
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
