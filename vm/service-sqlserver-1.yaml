@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: win10-sqlserver-1
+  name: win10-sqlserver
 spec:
   type: ClusterIP
   selector:

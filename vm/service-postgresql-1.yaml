@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: win10-win10-postgresql-1
+  name: win10-postgresql
 spec:
   type: ClusterIP
   selector:
