@@ -1,3 +1,40 @@
-curl -L --fail "https://hub.docker.com/v2/repositories/domenicopiol/sccstore-ui/tags" | jq '.results[].images |= sort_by(.last_pushed) | del(.results[] | select(.name=="latest") ) | .results[0].name' | sed -e 's/^"//' -e 's/"$//'
+Helm
+====
 
-helm upgrade  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --dry-run --debug
+helm install  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) 
+--> then
+helm upgrade  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) 
+
+append "--dry-run --debug" for test-only
+
+
+OpenShift Management
+====================
+oc adm drain host05.rhlab.ch --ignore-daemonsets --force --grace-period=30 --delete-emptydir-data
+oc adm uncordon host05.rhlab.ch
+
+
+Postgresql
+==========
+
+in postgresql.conf change:
+
+    listen_addresses = '*'
+
+in pg_hba.conf add:
+
+    host    all             all              0.0.0.0/0                       md5
+
+
+List databases:     \l
+create database:    CREATE DATABASE sccstore;
+create user:        CREATE USER sccstore WITH PASSWORD 'sccstore';
+                    grant all privileges on database sccstore to sccstore;
+show tables:        \dt
+change to database: \c sccstore;
+create table:       create table complaints (compl_id SERIAL PRIMARY KEY, complaint VARCHAR (255) NOT NULL);
+
+
+kubectl run psqlclient --image=tmaier/postgresql-client --env="PGPASSWORD=sccstore"  --command -- /bin/sh -c 'tail -f /dev/null'
+
+psql  -h win10-postgresql -U sccstore -d sccstore -W

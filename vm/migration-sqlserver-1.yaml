@@ -1,0 +1,6 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachineInstanceMigration
+metadata:
+  name: win10-sqlserver-1-migration
+spec:
+  vmiName: win10-sqlserver-1

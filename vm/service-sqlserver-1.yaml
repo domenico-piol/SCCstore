@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: win10-sqlserver
+spec:
+  type: ClusterIP
+  selector:
+    vm.kubevirt.io/name: win10-sqlserver-1
+  ports:
+    - protocol: TCP
+      port: 1433
+      targetPort: 1433

@@ -1,0 +1,124 @@
+﻿apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: win10-sqlserver-1
+  labels:
+    app: win10-sqlserver-1
+spec:
+  dataVolumeTemplates:
+    - apiVersion: cdi.kubevirt.io/v1beta1
+      kind: DataVolume
+      metadata:
+        name: win10-sqlserver-1-rootdisk
+      spec:
+        pvc:
+          accessModes:
+            - ReadWriteMany
+          resources:
+            requests:
+              storage: 40Gi
+          storageClassName: managed-nfs-storage
+          volumeMode: Filesystem
+        source:
+          blank: {}
+    - metadata:
+        creationTimestamp: null
+        name: win10-sqlserver-1-cdrom
+        namespace: dpiol-test1
+      spec:
+        pvc:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 6Gi
+          storageClassName: svc-fs840-comp
+          volumeMode: Filesystem
+        source:
+          http:
+            url: https://windows101tricks.com/21H2-64/
+            #url: >-
+            #  https://software.download.prss.microsoft.com/dbazure/Win10_21H2_English_x64.iso?t=8dc5696f-18b3-4df0-a982-b0d981e002c0&e=1657101190&h=183aca71de6bb05f76275db5a47e49b08bdaa3ff49adee5467fee6f1d0a93791
+  running: false
+  template:
+    metadata:
+      annotations:
+        vm.kubevirt.io/flavor: large
+        vm.kubevirt.io/os: windows10
+        vm.kubevirt.io/workload: desktop
+      labels:
+        kubevirt.io/domain: win10-sqlserver-1
+        kubevirt.io/size: large
+        os.template.kubevirt.io/win10: 'true'
+        vm.kubevirt.io/name: win10-sqlserver-1
+        workload.template.kubevirt.io/desktop: 'true'
+    spec:
+      domain:
+        clock:
+          timer:
+            hpet:
+              present: false
+            hyperv: {}
+            pit:
+              tickPolicy: delay
+            rtc:
+              tickPolicy: catchup
+          utc: {}
+        cpu:
+          cores: 1
+          sockets: 2
+          threads: 1
+        memory:
+          guest: 4096M
+        devices:
+          disks:
+            - cdrom:
+                bus: sata
+              name: windows-guest-tools
+            - bootOrder: 1
+              disk:
+                bus: sata
+              name: rootdisk
+            - bootOrder: 2
+              cdrom:
+                bus: sata
+              name: cdrom
+          interfaces:
+            - masquerade: {}
+              model: e1000e
+              name: default
+        features:
+          acpi: {}
+          apic: {}
+          hyperv:
+            reenlightenment: {}
+            ipi: {}
+            synic: {}
+            synictimer:
+              direct: {}
+            spinlocks:
+              spinlocks: 8191
+            reset: {}
+            relaxed: {}
+            vpindex: {}
+            runtime: {}
+            tlbflush: {}
+            frequencies: {}
+            vapic: {}
+      evictionStrategy: LiveMigrate
+      hostname: win10-sqlserver-1
+      networks:
+        - name: default
+          pod: {}
+      terminationGracePeriodSeconds: 3600
+      volumes:
+        - containerDisk:
+            image: >-
+              registry.redhat.io/container-native-virtualization/virtio-win@sha256:b775504936e7396fe1334de7148d8c1aaee98443fedf10e4affcaf434fa8cacf
+          name: windows-guest-tools
+        - dataVolume:
+            name: win10-sqlserver-1-rootdisk
+          name: rootdisk
+        - dataVolume:
+            name: win10-sqlserver-1-cdrom
+          name: cdrom

@@ -19,9 +19,10 @@ server:
   error:
     path: /error
 management:
-  health:
-    probes:
-      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
   server:
     port: 8778
     ssl:
@@ -34,11 +35,20 @@ spring:
   config:
     activate:
       on-profile: K8S
+  sql:
+    init:
+      platform: ${sccstore.platform}
   jpa:
     hibernate:
       ddl-auto: none
+    properties:
+      hibernate:   
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl:
+          auto: none
+        temp:
+          use_jdbc_metadata_defaults: false 
   datasource:
-    platform: ${sccstore.platform}
     url: ${sccstore.url}
     username: ${sccstore.username}
     password: ${sccstore.password}
@@ -56,11 +66,20 @@ spring:
   config:
     activate:
       on-profile: LOCAL
+  sql:
+    init:
+      platform: postgres
   jpa:
     hibernate:
       ddl-auto: none
+    properties:
+      hibernate:   
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl:
+          auto: none
+        temp:
+          use_jdbc_metadata_defaults: false 
   datasource:
-    platform: postgres
     url: jdbc:postgresql://localhost:5432/sccstore
     username: sccstore
     password: sccstore
