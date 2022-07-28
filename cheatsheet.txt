@@ -32,7 +32,7 @@ create user:        CREATE USER sccstore WITH PASSWORD 'sccstore';
                     grant all privileges on database sccstore to sccstore;
 show tables:        \dt
 change to database: \c sccstore;
-create table:       create table complaints (complId SERIAL PRIMARY KEY, complaint VARCHAR (255) NOT NULL);
+create table:       create table complaints (compl_id SERIAL PRIMARY KEY, complaint VARCHAR (255) NOT NULL);
 
 
 kubectl run psqlclient --image=tmaier/postgresql-client --env="PGPASSWORD=sccstore"  --command -- /bin/sh -c 'tail -f /dev/null'
