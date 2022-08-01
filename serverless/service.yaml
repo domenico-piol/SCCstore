@@ -16,5 +16,3 @@ spec:
             configMapKeyRef:
               name: sccstore-serverless-config
               key: SCC_DB_HOST
-        - name: TARGET
-          value: "Python Sample v1"

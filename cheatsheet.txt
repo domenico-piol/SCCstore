@@ -38,3 +38,9 @@ create table:       create table complaints (compl_id SERIAL PRIMARY KEY, compla
 kubectl run psqlclient --image=tmaier/postgresql-client --env="PGPASSWORD=sccstore"  --command -- /bin/sh -c 'tail -f /dev/null'
 
 psql  -h win10-postgresql -U sccstore -d sccstore -W
+
+
+Serverless REST API
+===================
+
+curl -d "compl=example inserted via REST API" -X POST https://sccstore-serverless-dpiol-test1.apps.ocp001.rhlab.ch/complaint
