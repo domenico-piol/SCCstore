@@ -11,5 +11,8 @@ spec:
       containers:
       - image: registry-1.docker.io/domenicopiol/sccstore-serverless:latest
         env:
-        - name: TARGET
-          value: "Python Sample v1"
+        - name: SCC_DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: sccstore-serverless-config
+              key: SCC_DB_HOST
