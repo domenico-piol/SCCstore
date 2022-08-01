@@ -1,14 +1,18 @@
 import os
 import psycopg2
 
+from os import environ
 from flask import Flask
 
 app = Flask(__name__)
+app.config['SCC_DB_HOST'] = environ.get('SCC_DB_HOST')
+
 
 @app.route('/')
 def hello_world():    
     conn = psycopg2.connect(
         host="win10-postgresql",
+        # host=app.config['SCC_DB_HOST'],
         database="sccstore",
         user="sccstore",
         password="sccstore")
