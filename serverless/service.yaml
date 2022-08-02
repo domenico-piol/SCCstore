@@ -6,7 +6,7 @@ spec:
   template:
     metadata:
       annotations:
-        autoscaling.knative.dev/window: "10s"
+        autoscaling.knative.dev/window: "6s"
     spec:
       containers:
       - image: registry-1.docker.io/domenicopiol/sccstore-serverless:latest
