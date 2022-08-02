@@ -22,7 +22,6 @@ spec:
         source:
           blank: {}
     - metadata:
-        creationTimestamp: null
         name: win10-demo-1-cdrom
         namespace: dpiol-demo
       spec:
@@ -37,7 +36,7 @@ spec:
         source:
           http:
             url: >-
-              https://software.download.prss.microsoft.com/dbazure/Win10_21H2_EnglishInternational_x64.iso?t=9e9a258a-9db9-421b-81f0-6e6b657cd29c&e=1657703488&h=f85b4a0bf24b4f3236e3da8f17f06d9b620507324f1c044e1b3f8f2df5829b5a
+              https://www.itechtics.com/?dl_id=133
   running: false
   template:
     metadata:
@@ -71,9 +70,9 @@ spec:
           guest: 4096M
         devices:
           disks:
-            - cdrom:
-                bus: sata
-              name: windows-guest-tools
+            #- cdrom:
+            #    bus: sata
+            #  name: windows-guest-tools
             - bootOrder: 1
               disk:
                 bus: sata
@@ -111,10 +110,10 @@ spec:
           pod: {}
       terminationGracePeriodSeconds: 3600
       volumes:
-        - containerDisk:
-            image: >-
-              registry.redhat.io/container-native-virtualization/virtio-win@sha256:b775504936e7396fe1334de7148d8c1aaee98443fedf10e4affcaf434fa8cacf
-          name: windows-guest-tools
+        #- containerDisk:
+        #    image: >-
+        #      registry.redhat.io/container-native-virtualization/virtio-win@sha256:b775504936e7396fe1334de7148d8c1aaee98443fedf10e4affcaf434fa8cacf
+        #  name: windows-guest-tools
         - dataVolume:
             name: win10-demo-1-rootdisk
           name: rootdisk
