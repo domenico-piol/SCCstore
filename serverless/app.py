@@ -9,7 +9,7 @@ app.config['SCC_DB_HOST'] = environ.get('SCC_DB_HOST')
 
 
 @app.route('/')
-def hello_world():    
+def show_complaints():    
     conn = psycopg2.connect(
         #host="win10-postgresql",
         host=app.config['SCC_DB_HOST'],
@@ -32,7 +32,7 @@ def hello_world():
     for row in dataarray:
         htmlPageContent += "<p>" + str(row[0]) +" - " + row[1] + "</p>"
 
-    return htmlPageHeader + htmlPageContent + htmlPageFooter
+    return htmlPageHeader + htmlPageContent + htmlPageFooter, 200
 
 @app.route('/complaint', methods=['POST'])
 def write_complaint():
@@ -53,7 +53,28 @@ def write_complaint():
     cur.close()
     conn.close()
 
-    return complaint_value, 200
+    return complaint_value, 201
+
+@app.route('/complaint', methods=['DELETE'])
+def delete_complaint():
+    compl_id_value = str(request.form['id'])
+
+    conn = psycopg2.connect(
+        #host="win10-postgresql",
+        host=app.config['SCC_DB_HOST'],
+        database="sccstore",
+        user="sccstore",
+        password="sccstore")
+        
+    cur = conn.cursor()
+
+    cur.execute("DELETE FROM complaints where compl_id = %s;", (compl_id_value,))
+    conn.commit()
+
+    cur.close()
+    conn.close()
+
+    return compl_id_value, 200
 
 
 if __name__ == "__main__":
