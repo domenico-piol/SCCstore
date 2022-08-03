@@ -1,0 +1,122 @@
+﻿apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: win10-demo-1
+  labels:
+    app: win10-demo-1
+spec:
+  dataVolumeTemplates:
+    - apiVersion: cdi.kubevirt.io/v1beta1
+      kind: DataVolume
+      metadata:
+        name: win10-demo-1-rootdisk
+      spec:
+        pvc:
+          accessModes:
+            - ReadWriteMany
+          resources:
+            requests:
+              storage: 15Gi
+          storageClassName: managed-nfs-storage
+          volumeMode: Filesystem
+        source:
+          blank: {}
+    - metadata:
+        name: win10-demo-1-cdrom
+        namespace: dpiol-demo
+      spec:
+        pvc:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 6Gi
+          storageClassName: managed-nfs-storage
+          volumeMode: Filesystem
+        source:
+          http:
+            url: >-
+              https://www.itechtics.com/?dl_id=133
+  running: false
+  template:
+    metadata:
+      annotations:
+        vm.kubevirt.io/flavor: large
+        vm.kubevirt.io/os: windows10
+        vm.kubevirt.io/workload: desktop
+      labels:
+        kubevirt.io/domain: win10-demo-1
+        kubevirt.io/size: large
+        os.template.kubevirt.io/win10: 'true'
+        vm.kubevirt.io/name: win10-demo-1
+        workload.template.kubevirt.io/desktop: 'true'
+    spec:
+      domain:
+        clock:
+          timer:
+            hpet:
+              present: false
+            hyperv: {}
+            pit:
+              tickPolicy: delay
+            rtc:
+              tickPolicy: catchup
+          utc: {}
+        cpu:
+          cores: 1
+          sockets: 2
+          threads: 1
+        memory:
+          guest: 4096M
+        devices:
+          disks:
+            #- cdrom:
+            #    bus: sata
+            #  name: windows-guest-tools
+            - bootOrder: 1
+              disk:
+                bus: sata
+              name: rootdisk
+            - bootOrder: 2
+              cdrom:
+                bus: sata
+              name: cdrom
+          interfaces:
+            - masquerade: {}
+              model: e1000e
+              name: default
+        features:
+          acpi: {}
+          apic: {}
+          hyperv:
+            reenlightenment: {}
+            ipi: {}
+            synic: {}
+            synictimer:
+              direct: {}
+            spinlocks:
+              spinlocks: 8191
+            reset: {}
+            relaxed: {}
+            vpindex: {}
+            runtime: {}
+            tlbflush: {}
+            frequencies: {}
+            vapic: {}
+      evictionStrategy: LiveMigrate
+      hostname: win10-demo-1
+      networks:
+        - name: default
+          pod: {}
+      terminationGracePeriodSeconds: 3600
+      volumes:
+        #- containerDisk:
+        #    image: >-
+        #      registry.redhat.io/container-native-virtualization/virtio-win@sha256:b775504936e7396fe1334de7148d8c1aaee98443fedf10e4affcaf434fa8cacf
+        #  name: windows-guest-tools
+        - dataVolume:
+            name: win10-demo-1-rootdisk
+          name: rootdisk
+        - dataVolume:
+            name: win10-demo-1-cdrom
+          name: cdrom
