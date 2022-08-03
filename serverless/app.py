@@ -2,14 +2,14 @@ import os
 import psycopg2
 
 from os import environ
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 app.config['SCC_DB_HOST'] = environ.get('SCC_DB_HOST')
 
 
 @app.route('/')
-def show_complaints():    
+def show_complaints_page():    
     conn = psycopg2.connect(
         #host="win10-postgresql",
         host=app.config['SCC_DB_HOST'],
@@ -33,6 +33,32 @@ def show_complaints():
         htmlPageContent += "<p>" + str(row[0]) +" - " + row[1] + "</p>"
 
     return htmlPageHeader + htmlPageContent + htmlPageFooter, 200
+
+
+@app.route('/complaints', methods=['GET'])
+def show_complaints():    
+    conn = psycopg2.connect(
+        #host="win10-postgresql",
+        host=app.config['SCC_DB_HOST'],
+        database="sccstore",
+        user="sccstore",
+        password="sccstore")
+        
+    cur = conn.cursor()
+
+    cur.execute('SELECT * FROM complaints;')
+    dataarray = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    outputString = ""
+
+    for row in dataarray:
+        outputString += "{ 'id': '" + str(row[0]) +"', 'complaint': '" + row[1] + "' }" + '\r\n'
+
+    return outputString, 200
+
 
 @app.route('/complaint', methods=['POST'])
 def write_complaint():
