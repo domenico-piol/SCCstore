@@ -42,6 +42,7 @@ psql  -h win10-postgresql -U sccstore -d sccstore -W
 
 Serverless REST API
 ===================
+curl -X GET --insecure https://sccstore-serverless-dpiol-test1.apps.ocp001.rhlab.ch/complaints
 
 curl -d "compl=example inserted via REST API" -X POST --insecure https://sccstore-serverless-dpiol-test1.apps.ocp001.rhlab.ch/complaint
 
