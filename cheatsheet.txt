@@ -1,6 +1,8 @@
 Helm
 ====
 
+helm delete sccstore 
+
 helm install  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) 
 --> then
 helm upgrade  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) 
