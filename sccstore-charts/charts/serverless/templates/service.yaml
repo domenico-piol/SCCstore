@@ -9,7 +9,7 @@ spec:
         autoscaling.knative.dev/window: "6s"
     spec:
       containers:
-      - image: registry-1.docker.io/domenicopiol/sccstore-serverless:latest
+      - image: {{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
         env:
         - name: SCC_DB_HOST
           valueFrom:
