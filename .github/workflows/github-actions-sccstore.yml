@@ -56,3 +56,15 @@ jobs:
 
     - name: Image digest - SERVERLESS
       run: echo ${{ steps.docker_build_serverless.outputs.digest }}
+
+    - name: Build and push - QSERVERLESS
+      id: docker_build_qserverless
+      uses: docker/build-push-action@v2
+      with:
+        context: ./qserverless/
+        file: ./qserverless/Dockerfile
+        push: true
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-qserverless:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-qserverless:${{ github.sha }} 
+
+    - name: Image digest - QSERVERLESS
+      run: echo ${{ steps.docker_build_qserverless.outputs.digest }}
