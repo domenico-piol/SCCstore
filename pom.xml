@@ -13,6 +13,7 @@
 	<modules>
 		<module>common</module>
     	<module>ui</module>
+		<module>qserverless</module>
 		<module>iam</module>
 	</modules>
 </project>
