@@ -3,9 +3,9 @@ Helm
 
 helm delete sccstore 
 
-helm install  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set serverless.image.tag=$(./getLatestTag sccstore-serverless)
+helm install  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set serverless.image.tag=$(./getLatestTag sccstore-serverless) --set qserverless.image.tag=$(./getLatestTag sccstore-qserverless)
 --> then
-helm upgrade  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set serverless.image.tag=$(./getLatestTag sccstore-serverless)
+helm upgrade  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set serverless.image.tag=$(./getLatestTag sccstore-serverless) --set qserverless.image.tag=$(./getLatestTag sccstore-qserverless)
 
 append "--dry-run --debug" for test-only
 
