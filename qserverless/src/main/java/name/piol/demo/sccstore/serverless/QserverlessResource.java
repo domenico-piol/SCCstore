@@ -15,7 +15,6 @@ import java.sql.Statement;
 
 import javax.inject.Inject;
 import io.agroal.api.AgroalDataSource;
-import io.quarkus.agroal.DataSource;
 
 @Path("/")
 public class QserverlessResource {
@@ -38,7 +37,7 @@ public class QserverlessResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public List<String> all() {
-        List<String> ml = new ArrayList();   
+        List<String> ml = new ArrayList<String>();   
 
         try {
             con = ds.getConnection();
