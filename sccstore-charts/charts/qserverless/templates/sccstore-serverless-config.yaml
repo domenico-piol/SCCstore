@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sccstore-qserverless-config
+data:
+  # property-like keys; each key maps to a simple value
+  SCC_DB_HOST: win10-postgresql
+  #SCC_DB_URL: jdbc:postgresql://win10-postgresql:5432/sccstore
+  #quarkus.datasource.jdbc.url: jdbc:postgresql://win10-postgresql:5432/sccstore
