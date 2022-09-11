@@ -9,6 +9,6 @@ ui:
   route:
     host: sccstore-dpiol-test1.apps.ocp001.rhlab.ch
 serverless:
-  enabled: true
+  enabled: false
 qserverless:
   enabled: true
