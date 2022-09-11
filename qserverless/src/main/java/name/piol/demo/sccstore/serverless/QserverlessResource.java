@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.ArrayList;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
+import javax.ws.rs.core.Response;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,7 +39,7 @@ public class QserverlessResource {
     @Path("/complaints")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public List<String> all() {
+    public Response all() {
         List<String> ml = new ArrayList<String>();   
 
         try {
@@ -48,6 +51,7 @@ public class QserverlessResource {
 			}
         } catch (SQLException e) {
 			e.printStackTrace();
+            return Response.status(500).entity("SQL error while reading data").build();
 		} finally{
             try {
                 if (rs != null) rs.close();
@@ -55,9 +59,62 @@ public class QserverlessResource {
                 if (con != null) con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
+                return Response.status(500).entity("an error occurred").build();
             }
         }
 
-        return ml;
+        return Response.status(200).entity(ml).build();
     }
+
+    @Path("/complaint")
+    @POST
+    public Response add(@FormParam("compl") String compl) {
+        System.out.println("........... "+"INSERT INTO complaints (complaint) VALUES ('" + compl + "');");
+        try {
+            con = ds.getConnection();
+            con.setAutoCommit(true);
+            stmt = con.createStatement();
+			stmt.executeUpdate("INSERT INTO complaints (complaint) VALUES ('" + compl + "');");
+        } catch (SQLException e) {
+			e.printStackTrace();
+            return Response.status(500).entity("SQL error while adding record").build();
+		} finally{
+            try {
+                if (stmt != null) stmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return Response.status(500).entity("an error occurred").build();
+            }
+        }
+
+        return Response.status(201).entity("complaint added").build();
+    }
+
+    @Path("/complaint")
+    @DELETE
+    public Response delete(@FormParam("id") String id) {
+        System.out.println("........... "+"DELETE FROM complaints where compl_id=" + id + ";");
+
+        try {
+            con = ds.getConnection();
+            con.setAutoCommit(true);
+            stmt = con.createStatement();
+			stmt.executeUpdate("DELETE FROM complaints where compl_id=" + id + ";");
+        } catch (SQLException e) {
+			e.printStackTrace();
+            return Response.status(500).entity("SQL error while deleting record").build();
+		} finally{
+            try {
+                if (stmt != null) stmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return Response.status(500).entity("an error occurred").build();
+            }
+        }
+
+        return Response.status(200).entity("complaint " + id + " deleted").build();
+    }
+
 }
