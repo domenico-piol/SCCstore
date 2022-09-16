@@ -19,6 +19,6 @@ spec:
       command:
         - ls
       args:
-        - -ltr
+        - -lsa
         - '$(params.sub-dirs)'
       workingDir: '$(workspaces.directory.path)'
