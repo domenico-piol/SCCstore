@@ -1,0 +1,80 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: maven-test-pipeline
+spec:
+  workspaces:
+    - name: shared-workspace
+    - name: maven-settings
+  tasks:
+    - name: fetch-repository
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+      params:
+        - name: url
+          value: https://github.com/domenico-piol/SCCstore
+        - name: revision
+          value: domenico
+        - name: deleteExisting
+          value: "true"
+    - name: maven-run
+      taskRef:
+        name: maven
+      runAfter:
+        - fetch-repository
+      params:
+        - name: MAVEN_IMAGE
+          value: quay.io/quarkus/ubi-quarkus-native-s2i:22.1-java11
+        - name: CONTEXT_DIR
+          value: "."
+        - name: GOALS
+          value:
+            - -B
+            - package
+            - '-DskipTests'
+            - '-Dnative'
+      workspaces:
+        - name: maven-settings
+          workspace: maven-settings
+        - name: source
+          workspace: shared-workspace
+    - name: list-dir
+      taskRef:
+        name: list-directory
+      runAfter:
+        - maven-run
+      params:
+        - name: sub-dirs
+          value:
+            - qserverless/target
+      workspaces:
+        - name: directory
+          workspace: shared-workspace
+    - name: buildah-qserverless-container
+      taskRef:
+        name: buildah
+      runAfter:
+        - list-dir
+      params:
+        - name: IMAGE
+          value: registry-1.docker.io/domenicopiol/sccstore-qserverless
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+---
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: maven-test-pipeline-run
+spec:
+  pipelineRef:
+    name: maven-test-pipeline
+  workspaces:
+    - name: maven-settings
+      emptyDir: {}
+    - name: shared-workspace
+      persistentvolumeclaim:
+        claimName: maven-source-pvc
