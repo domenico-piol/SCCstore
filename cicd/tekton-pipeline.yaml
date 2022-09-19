@@ -43,6 +43,21 @@ spec:
           workspace: maven-settings
         - name: source
           workspace: shared-workspace
+    - name: buildah-ui-container
+      taskRef:
+        name: buildah
+      runAfter:
+        - maven-run
+      params:
+        - name: CONTEXT
+          value: ui
+        - name: IMAGE
+          value: registry-1.docker.io/domenicopiol/sccstore-ui:$(context.taskRun.uid)
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+        - name: dockerconfig
+          workspace: dockerconfig-ws
     - name: buildah-qserverless-container
       taskRef:
         name: buildah
@@ -53,6 +68,21 @@ spec:
           value: qserverless
         - name: IMAGE
           value: registry-1.docker.io/domenicopiol/sccstore-qserverless:$(context.taskRun.uid)
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+        - name: dockerconfig
+          workspace: dockerconfig-ws
+    - name: buildah-serverless-container
+      taskRef:
+        name: buildah
+      runAfter:
+        - maven-run
+      params:
+        - name: CONTEXT
+          value: serverless
+        - name: IMAGE
+          value: registry-1.docker.io/domenicopiol/sccstore-serverless:$(context.taskRun.uid)
       workspaces:
         - name: source
           workspace: shared-workspace
