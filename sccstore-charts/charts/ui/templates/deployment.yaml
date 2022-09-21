@@ -5,6 +5,7 @@ metadata:
   labels:
     app: sccstore-ui
     app.kubernetes.io/managed-by: helm
+    app.kubernetes.io/part-of: sccstore
   annotations:
     helm-revision: "{{ .Release.Revision }}"
     timestamp: {{ now | quote }}

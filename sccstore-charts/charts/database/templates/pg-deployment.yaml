@@ -4,6 +4,7 @@ metadata:
   name: postgres  # Sets Deployment name
   labels:
     app: postgres
+    app.kubernetes.io/part-of: sccstore
 spec:
   replicas: 1
   selector:
