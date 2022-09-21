@@ -4,4 +4,4 @@ metadata:
   name: sccstore-serverless-config
 data:
   # property-like keys; each key maps to a simple value
-  SCC_DB_HOST: "win10-postgresql"
+  SCC_DB_HOST: {{ .Values.global.database.service }}

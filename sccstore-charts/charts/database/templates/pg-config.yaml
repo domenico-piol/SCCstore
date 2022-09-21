@@ -5,9 +5,6 @@ metadata:
   labels:
     app: postgres
 data:
-  #POSTGRES_DB: sccstore
-  #POSTGRES_USER: sccstore
-  #POSTGRES_PASSWORD: sccstore
   POSTGRESQL_USER: sccstore
   POSTGRESQL_PASSWORD: sccstore
   POSTGRESQL_DATABASE: sccstore

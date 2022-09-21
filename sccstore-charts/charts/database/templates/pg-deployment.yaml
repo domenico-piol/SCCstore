@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres  # Sets Deployment name
+  labels:
+    app: postgres
 spec:
   replicas: 1
   selector:
@@ -24,7 +26,16 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgredb
+          volumeMounts:
+            - name: postgresql-conf
+              mountPath: 
       volumes:
         - name: postgredb
           persistentVolumeClaim:
             claimName: pg-pvc
+        - name: postgresql-conf
+          configMap:
+            name: pg-config
+            items:
+              - key: postgresql.conf
+                path: postgresql.conf

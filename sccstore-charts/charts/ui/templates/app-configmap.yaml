@@ -6,7 +6,7 @@ data:
   k8s-config.json:
     '{
       "sccstore.platform": "postgres",
-      "sccstore.url": "jdbc:postgresql://{{ .Values.database.service }}:5432/sccstore",
+      "sccstore.url": "jdbc:postgresql://{{ .Values.global.database.service }}:5432/sccstore",
       "sccstore.username": "sccstore",
       "sccstore.password": "sccstore"
      }'
