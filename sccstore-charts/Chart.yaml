@@ -30,3 +30,5 @@ dependencies:
   condition: serverless.enabled
 - name: qserverless
   condition: qserverless.enabled
+- name: database
+  condition: database.enabled

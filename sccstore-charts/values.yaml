@@ -12,3 +12,5 @@ serverless:
   enabled: false
 qserverless:
   enabled: true
+database:
+  enabled: true
