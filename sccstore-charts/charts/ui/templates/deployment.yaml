@@ -36,7 +36,7 @@ spec:
         - containerPort: 8443
         volumeMounts:
         - name: certs
-          mountPath: "/certs/" 
+          mountPath: "/certs/"
         livenessProbe:
           httpGet:
             path: /actuator/health/liveness

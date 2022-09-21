@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 global:
   database: 
-    service: win10-postgresql
+    service: pg-service
 ui:
   enabled: true
   image:
