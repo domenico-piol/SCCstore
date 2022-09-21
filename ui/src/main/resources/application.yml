@@ -5,6 +5,9 @@ sccstore:
   username: sccstore
   password: sccstore
 spring:
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/liquibase-changelogs/liquibase-changelog.xml
   application:
     name: sccstore-ui
   profiles:

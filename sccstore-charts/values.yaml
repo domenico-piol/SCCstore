@@ -1,14 +1,19 @@
 # Default values for sccstore-charts.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
+global:
+  database: 
+    service: pg-service
 ui:
   enabled: true
   image:
     repository: registry-1.docker.io/domenicopiol
   route:
-    host: sccstore-dpiol-test1.apps.ocp001.rhlab.ch
+    host: apps.ocp001.rhlab.ch
+
 serverless:
   enabled: false
 qserverless:
+  enabled: true
+database:
   enabled: true

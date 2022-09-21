@@ -11,4 +11,4 @@ image:
   pullPolicy: Always
 
 route:
-  host: sccstore-dpiol-test1.apps.ocp001.rhlab.ch
+  host: sccstore-{{.Release.Namespace}}.apps.ocp001.rhlab.ch
