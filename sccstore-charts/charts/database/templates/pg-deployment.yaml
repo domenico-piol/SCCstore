@@ -5,6 +5,7 @@ metadata:
   labels:
     app: postgres
     app.kubernetes.io/part-of: sccstore
+    app.openshift.io/runtime: postgresql
 spec:
   replicas: 1
   selector:

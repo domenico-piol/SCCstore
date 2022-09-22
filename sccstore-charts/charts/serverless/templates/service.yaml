@@ -4,6 +4,7 @@ metadata:
   name: sccstore-serverless
   labels:
     app.kubernetes.io/part-of: sccstore
+    app.openshift.io/runtime: python
 spec:
   template:
     metadata:
