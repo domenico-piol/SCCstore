@@ -5,6 +5,8 @@ metadata:
   labels:
     app: sccstore-ui
     app.kubernetes.io/managed-by: helm
+    app.kubernetes.io/part-of: sccstore
+    app.openshift.io/runtime: spring-boot
   annotations:
     helm-revision: "{{ .Release.Revision }}"
     timestamp: {{ now | quote }}

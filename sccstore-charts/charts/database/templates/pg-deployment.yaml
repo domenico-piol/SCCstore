@@ -4,6 +4,8 @@ metadata:
   name: postgres  # Sets Deployment name
   labels:
     app: postgres
+    app.kubernetes.io/part-of: sccstore
+    app.openshift.io/runtime: postgresql
 spec:
   replicas: 1
   selector:

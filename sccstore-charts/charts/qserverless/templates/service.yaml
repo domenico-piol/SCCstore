@@ -2,6 +2,9 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: sccstore-qserverless
+  labels:
+    app.kubernetes.io/part-of: sccstore
+    app.openshift.io/runtime: quarkus
 spec:
   template:
     metadata:
