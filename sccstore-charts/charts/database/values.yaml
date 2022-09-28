@@ -6,3 +6,5 @@ image:
   repository: registry.redhat.io/rhscl
   name: postgresql-95-rhel7
   tag: latest
+storage:
+  storageClass: managed-nfs-storage
