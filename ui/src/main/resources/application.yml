@@ -4,6 +4,7 @@ sccstore:
   url: jdbc:postgresql://win10-postgresql:5432/sccstore
   username: sccstore
   password: sccstore
+  complaintsBackend: http://127.0.0.1:8080
 spring:
   liquibase:
     enabled: true

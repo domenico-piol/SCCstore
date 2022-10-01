@@ -1,6 +1,7 @@
 package name.piol.demo.sccstore.serverless;
 
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.ArrayList;
 
 import javax.ws.rs.GET;
@@ -21,6 +22,7 @@ import io.agroal.api.AgroalDataSource;
 
 @Path("/")
 public class QserverlessResource {
+    private static final Logger LOG = Logger.getLogger(QserverlessResource.class.getName());
 
     @Inject
     AgroalDataSource ds;
@@ -36,6 +38,7 @@ public class QserverlessResource {
         return "Hello from RESTEasy Reactive";
     }
 
+    /*
     @Path("/complaints")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -49,6 +52,39 @@ public class QserverlessResource {
             while(rs.next()) {
                 ml.add("COMPL ID="+rs.getInt("compl_id")+", COMPLAINT="+rs.getString("complaint"));
 			}
+        } catch (SQLException e) {
+			e.printStackTrace();
+            return Response.status(500).entity("SQL error while reading data").build();
+		} finally{
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return Response.status(500).entity("an error occurred").build();
+            }
+        }
+
+        return Response.status(200).entity(ml).build();
+    }
+    */
+
+    @Path("/complaints")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response all() {
+        List<Complaint> ml = new ArrayList<Complaint>();
+
+        try {
+            con = ds.getConnection();
+            stmt = con.createStatement();
+			rs = stmt.executeQuery("select compl_id, complaint from complaints");
+            while(rs.next()) {
+                ml.add(new Complaint(rs.getInt("compl_id"), rs.getString("complaint")));
+			}
+
+            LOG.info(ml.size() + " Complaints retrieved");
         } catch (SQLException e) {
 			e.printStackTrace();
             return Response.status(500).entity("SQL error while reading data").build();
