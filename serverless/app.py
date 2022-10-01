@@ -1,5 +1,6 @@
 import os
 import psycopg2
+import json
 
 from os import environ
 from flask import Flask, request, jsonify
@@ -52,12 +53,14 @@ def show_complaints():
     cur.close()
     conn.close()
 
-    outputString = ""
-
+    complaints = list()
     for row in dataarray:
-        outputString += "{ 'id': '" + str(row[0]) +"', 'complaint': '" + row[1] + "' }" + '\r\n'
+        c = {'complId': row[0], 'complaint': row[1]}
+        complaints.append(c)
 
-    return outputString, 200
+    print(len(complaints), " Complaints retrieved")
+
+    return jsonify(complaints), 200
 
 
 @app.route('/complaint', methods=['POST'])
