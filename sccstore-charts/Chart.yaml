@@ -28,7 +28,7 @@ dependencies:
   condition: database.enabled
 - name: pcomplaints
   condition: pcomplaints.enabled
-- name: qserverless
-  condition: qserverless.enabled
+- name: qcomplaints
+  condition: qcomplaints.enabled
 - name: ui
   condition: ui.enabled

@@ -1,4 +1,4 @@
-package name.piol.demo.sccstore.serverless;
+package name.piol.demo.sccstore.qcomplaints;
 
 import java.util.List;
 import java.util.logging.Logger;

@@ -57,14 +57,14 @@ jobs:
     - name: Image digest - PCOMPLAINTS
       run: echo ${{ steps.docker_build_pcomplaints.outputs.digest }}
 
-    - name: Build and push - QSERVERLESS
-      id: docker_build_qserverless
+    - name: Build and push - QCOMPLAINTS
+      id: docker_build_qcomplaints
       uses: docker/build-push-action@v2
       with:
-        context: ./qserverless/
-        file: ./qserverless/Dockerfile
+        context: ./qcomplaints/
+        file: ./qcomplaints/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-qserverless:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-qserverless:${{ github.sha }} 
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-qcomplaints:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-qcomplaints:${{ github.sha }} 
 
-    - name: Image digest - QSERVERLESS
-      run: echo ${{ steps.docker_build_qserverless.outputs.digest }}
+    - name: Image digest - QCOMPLAINTS
+      run: echo ${{ steps.docker_build_qcomplaints.outputs.digest }}

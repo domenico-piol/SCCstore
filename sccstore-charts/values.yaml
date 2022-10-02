@@ -13,7 +13,7 @@ ui:
 
 pcomplaints:
   enabled: true
-qserverless:
+qcomplaints:
   enabled: true
 database:
   enabled: true
