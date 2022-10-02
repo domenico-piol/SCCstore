@@ -44,16 +44,16 @@ spec:
             path: /actuator/health/liveness
             port: 8778
             scheme: HTTPS
-          timeoutSeconds: 2
-          initialDelaySeconds: 20
+          timeoutSeconds: 4
+          initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: 8778
               scheme: HTTPS
-            timeoutSeconds: 2
-            initialDelaySeconds: 15
+            timeoutSeconds: 4
+            initialDelaySeconds: 30
             periodSeconds: 10
         resources:
           requests:
