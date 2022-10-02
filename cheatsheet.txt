@@ -48,11 +48,11 @@ Serverless REST API
 
 Quarkus
 =======
-curl -X GET --insecure https://sccstore-qcomplaints-dpiol-test1.apps.ocp001.rhlab.ch/complaints
+curl -X GET --insecure https://sccstore-qcomplaints-dpiol-sccstore-dev.apps.ocp001.rhlab.ch/complaints
 
-curl -d "compl=example inserted via REST API" -X POST --insecure https://sccstore-qcomplaints-dpiol-test1.apps.ocp001.rhlab.ch/complaint
+curl -d "compl=example inserted via REST API" -X POST --insecure https://sccstore-qcomplaints-dpiol-sccstore-dev.apps.ocp001.rhlab.ch/complaint
 
-curl -d "id=6" -X DELETE --insecure https://sccstore-qcomplaints-dpiol-test1.apps.ocp001.rhlab.ch/complaint
+curl -d "id=6" -X DELETE --insecure https://sccstore-qcomplaints-dpiol-sccstore-dev.apps.ocp001.rhlab.ch/complaint
 
 Python
 ======
