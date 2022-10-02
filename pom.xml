@@ -11,9 +11,9 @@
 	<description>Sirius Cybernetics Corporation Online Store - a cloud native demo application</description>
 	
 	<modules>
-		<module>common</module>
+		<!--module>common</module-->
     	<module>ui</module>
 		<module>qcomplaints</module>
-		<module>iam</module>
+		<!--module>iam</module-->
 	</modules>
 </project>
