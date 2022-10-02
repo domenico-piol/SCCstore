@@ -1,5 +1,6 @@
 package name.piol.demo.sccstore.ui;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,7 @@ public class SCCstoreComplaintsController {
 
         WebClient webClient = WebClient.builder().baseUrl(complaintsBackend).build();
 
-        Flux<Complaint> complaintsFlux = webClient.get().uri("/complaints").retrieve().bodyToFlux(Complaint.class);   
+        Flux<Complaint> complaintsFlux = webClient.get().uri("/complaints").retrieve().bodyToFlux(Complaint.class).timeout(Duration.ofMillis(10000));   
         List<Complaint> complaints = complaintsFlux.collect(Collectors.toList()).share().block(); 
 
         model.addAttribute("complaints", complaints);
