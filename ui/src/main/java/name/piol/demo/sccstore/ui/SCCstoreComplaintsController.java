@@ -33,12 +33,17 @@ public class SCCstoreComplaintsController {
     public String complaints(Model model) {
         //List<Complaint> complaints = (List<Complaint>) complaintRepository.findAll();
 
-        WebClient webClient = WebClient.builder().baseUrl(complaintsBackend).build();
+        try {
+            WebClient webClient = WebClient.builder().baseUrl(complaintsBackend).build();
 
-        Flux<Complaint> complaintsFlux = webClient.get().uri("/complaints").retrieve().bodyToFlux(Complaint.class).timeout(Duration.ofMillis(10000));   
-        List<Complaint> complaints = complaintsFlux.collect(Collectors.toList()).share().block(); 
+            Flux<Complaint> complaintsFlux = webClient.get().uri("/complaints").retrieve().bodyToFlux(Complaint.class);   
+            List<Complaint> complaints = complaintsFlux.collect(Collectors.toList()).share().block(); 
 
-        model.addAttribute("complaints", complaints);
+            model.addAttribute("complaints", complaints);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return "complaints";
     }
 }
