@@ -26,8 +26,8 @@ appVersion: "1.16.0"
 dependencies:
 - name: database
   condition: database.enabled
-- name: serverless
-  condition: serverless.enabled
+- name: pcomplaints
+  condition: pcomplaints.enabled
 - name: qserverless
   condition: qserverless.enabled
 - name: ui

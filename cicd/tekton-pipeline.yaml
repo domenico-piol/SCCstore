@@ -73,16 +73,16 @@ spec:
           workspace: shared-workspace
         - name: dockerconfig
           workspace: dockerconfig-ws
-    - name: buildah-serverless-container
+    - name: buildah-pcomplaints-container
       taskRef:
         name: buildah
       runAfter:
         - maven-run
       params:
         - name: CONTEXT
-          value: serverless
+          value: pcomplaints
         - name: IMAGE
-          value: registry-1.docker.io/domenicopiol/sccstore-serverless:$(context.taskRun.uid)
+          value: registry-1.docker.io/domenicopiol/sccstore-pcomplaints:$(context.taskRun.uid)
       workspaces:
         - name: source
           workspace: shared-workspace

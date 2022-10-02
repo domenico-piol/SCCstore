@@ -11,8 +11,8 @@ ui:
   route:
     host: apps.ocp001.rhlab.ch
 
-serverless:
-  enabled: false
+pcomplaints:
+  enabled: true
 qserverless:
   enabled: true
 database:
