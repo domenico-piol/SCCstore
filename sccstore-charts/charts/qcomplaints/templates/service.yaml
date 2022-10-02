@@ -1,7 +1,7 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: sccstore-qserverless
+  name: sccstore-qcomplaints
   labels:
     app.kubernetes.io/part-of: sccstore
     app.openshift.io/runtime: quarkus
@@ -17,5 +17,5 @@ spec:
         - name: SCC_DB_HOST
           valueFrom:
             configMapKeyRef:
-              name: sccstore-qserverless-config
+              name: sccstore-qcomplaints-config
               key: SCC_DB_HOST

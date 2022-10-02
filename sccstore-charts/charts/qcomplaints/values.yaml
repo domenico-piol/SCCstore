@@ -1,8 +1,8 @@
-# Default values for sccstore-serverless.
+# Default values for sccstore-qcomplaints.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 image:
   repository: registry-1.docker.io/domenicopiol
-  name: sccstore-qserverless
+  name: sccstore-qcomplaints
   tag: latest

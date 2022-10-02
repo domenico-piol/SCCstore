@@ -3,9 +3,9 @@ Helm
 
 helm delete sccstore 
 
-helm install  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set pconstraints.image.tag=$(./getLatestTag sccstore-pconstraints) --set qserverless.image.tag=$(./getLatestTag sccstore-qserverless) 
+helm install  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set pconstraints.image.tag=$(./getLatestTag sccstore-pconstraints) --set qcomplaints.image.tag=$(./getLatestTag sccstore-qcomplaints) 
 --> then
-helm upgrade  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set pconstraints.image.tag=$(./getLatestTag sccstore-pconstraints) --set qserverless.image.tag=$(./getLatestTag sccstore-qserverless) 
+helm upgrade  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set pconstraints.image.tag=$(./getLatestTag sccstore-pconstraints) --set qcomplaints.image.tag=$(./getLatestTag sccstore-qcomplaints) 
 
 append "--dry-run --debug" for test-only
 for using the postgres database on the win10 VM, add:  "--set global.database.service=win10-postgresql"
@@ -45,8 +45,15 @@ psql  -h win10-postgresql -U sccstore -d sccstore -W
 
 Serverless REST API
 ===================
-curl -X GET --insecure https://sccstore-qserverless-dpiol-test1.apps.ocp001.rhlab.ch/complaints
 
-curl -d "compl=example inserted via REST API" -X POST --insecure https://sccstore-qserverless-dpiol-test1.apps.ocp001.rhlab.ch/complaint
+Quarkus
+=======
+curl -X GET --insecure https://sccstore-qcomplaints-dpiol-test1.apps.ocp001.rhlab.ch/complaints
 
-curl -d "id=6" -X DELETE --insecure https://sccstore-qserverless-dpiol-test1.apps.ocp001.rhlab.ch/complaint
+curl -d "compl=example inserted via REST API" -X POST --insecure https://sccstore-qcomplaints-dpiol-test1.apps.ocp001.rhlab.ch/complaint
+
+curl -d "id=6" -X DELETE --insecure https://sccstore-qcomplaints-dpiol-test1.apps.ocp001.rhlab.ch/complaint
+
+Python
+======
+curl -X GET --insecure https://sccstore-pcomplaints-dpiol-sccstore-dev.apps.ocp001.rhlab.ch/complaints
