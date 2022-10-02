@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: sccstore-serverless-config
+  name: sccstore-pcomplaints-config
 data:
   # property-like keys; each key maps to a simple value
   SCC_DB_HOST: {{ .Values.global.database.service }}

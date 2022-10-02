@@ -1,7 +1,7 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: sccstore-serverless
+  name: sccstore-pcomplaints
   labels:
     app.kubernetes.io/part-of: sccstore
     app.openshift.io/runtime: python
@@ -17,5 +17,5 @@ spec:
         - name: SCC_DB_HOST
           valueFrom:
             configMapKeyRef:
-              name: sccstore-serverless-config
+              name: sccstore-pcomplaints-config
               key: SCC_DB_HOST

@@ -34,13 +34,14 @@ or
     helm upgrade sccstore sccstore-charts
 
 # Architecture
-This sample microservices-based system consists of the following modules:
+This sample microservices-based system consists of the following modules (target state, not there yet!):
 <p align="center">
   <img src="./diagrams/high-level.drawio.svg">
 </p>
 
 - **SCC UI** - the user-interface component of the application
-- **SCC Identity Manager** - the account, authentication and authorization component (IAM)
-- **SCC Shopping Cart** - the shopping cart 
-- **SCC Database** - the relational database
-- **SCC Complaints** - the complaints controller
+- **SCC Complaints (quarkus)** - the complaints controller
+- **SCC Complaints (python)** - the complaints controller
+- **SCC Complaints Database** - the relational database for complaints
+- **SCC Warehouse** - the complaints controller
+- **SCC Warehouse Database** - the relational database for the warehouse

@@ -1,4 +1,4 @@
-# Default values for sccstore-serverless.
+# Default values for sccstore-database.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -6,3 +6,5 @@ image:
   repository: registry.redhat.io/rhscl
   name: postgresql-95-rhel7
   tag: latest
+storage:
+  storageClass: managed-nfs-storage

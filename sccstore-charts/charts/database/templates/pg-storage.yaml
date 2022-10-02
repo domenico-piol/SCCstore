@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: pg-pvc
 spec:
-  storageClassName: managed-nfs-storage 
+  storageClassName: {{ .Values.storage.storageClass }}
   accessModes:
     - ReadWriteMany
   resources:

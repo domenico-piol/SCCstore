@@ -3,9 +3,9 @@ Helm
 
 helm delete sccstore 
 
-helm install  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set serverless.image.tag=$(./getLatestTag sccstore-serverless) --set qserverless.image.tag=$(./getLatestTag sccstore-qserverless) 
+helm install  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set pconstraints.image.tag=$(./getLatestTag sccstore-pconstraints) --set qserverless.image.tag=$(./getLatestTag sccstore-qserverless) 
 --> then
-helm upgrade  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set serverless.image.tag=$(./getLatestTag sccstore-serverless) --set qserverless.image.tag=$(./getLatestTag sccstore-qserverless) 
+helm upgrade  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set pconstraints.image.tag=$(./getLatestTag sccstore-pconstraints) --set qserverless.image.tag=$(./getLatestTag sccstore-qserverless) 
 
 append "--dry-run --debug" for test-only
 for using the postgres database on the win10 VM, add:  "--set global.database.service=win10-postgresql"

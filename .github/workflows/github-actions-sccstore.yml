@@ -45,17 +45,17 @@ jobs:
     - name: Image digest - UI
       run: echo ${{ steps.docker_build_ui.outputs.digest }}
 
-    - name: Build and push - SERVERLESS
-      id: docker_build_serverless
+    - name: Build and push - PCOMPLAINTS
+      id: docker_build_pcomplaints
       uses: docker/build-push-action@v2
       with:
-        context: ./serverless/
-        file: ./serverless/Dockerfile
+        context: ./pcomplaints/
+        file: ./pcomplaints/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-serverless:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-serverless:${{ github.sha }} 
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-pcomplaints:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-pcomplaints:${{ github.sha }} 
 
-    - name: Image digest - SERVERLESS
-      run: echo ${{ steps.docker_build_serverless.outputs.digest }}
+    - name: Image digest - PCOMPLAINTS
+      run: echo ${{ steps.docker_build_pcomplaints.outputs.digest }}
 
     - name: Build and push - QSERVERLESS
       id: docker_build_qserverless
