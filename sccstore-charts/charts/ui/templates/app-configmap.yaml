@@ -9,5 +9,5 @@ data:
       "sccstore.url": "jdbc:postgresql://{{ .Values.global.database.service }}:5432/sccstore",
       "sccstore.username": "sccstore",
       "sccstore.password": "sccstore",
-      "sccstore.complaintsBackend": "http://sccstore-pcomplaints.dpiol-sccstore-dev.svc"
+      "sccstore.complaintsBackend": "http://sccstore-qcomplaints.dpiol-sccstore-dev.svc"
      }'
