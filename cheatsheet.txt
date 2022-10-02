@@ -3,7 +3,7 @@ Helm
 
 helm delete sccstore 
 
-helm install  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set pconstraints.image.tag=$(./getLatestTag sccstore-pconstraints) --set qserverless.image.tag=$(./getLatestTag sccstore-qserverless)c 
+helm install  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set pconstraints.image.tag=$(./getLatestTag sccstore-pconstraints) --set qserverless.image.tag=$(./getLatestTag sccstore-qserverless) 
 --> then
 helm upgrade  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set pconstraints.image.tag=$(./getLatestTag sccstore-pconstraints) --set qserverless.image.tag=$(./getLatestTag sccstore-qserverless) 
 
