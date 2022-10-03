@@ -40,6 +40,8 @@ create table:       create table complaints (compl_id SERIAL PRIMARY KEY, compla
 
 kubectl run psqlclient --image=tmaier/postgresql-client --env="PGPASSWORD=sccstore"  --command -- /bin/sh -c 'tail -f /dev/null'
 
+kubectl run liquibase --image=domenicopiol/sccstore-liquibase:5aa1e0cb-8182-4dd9-ade6-25eb8d48e3a2 --command -- /bin/sh -c 'tail -f /dev/null'
+
 psql  -h win10-postgresql -U sccstore -d sccstore -W
 
 

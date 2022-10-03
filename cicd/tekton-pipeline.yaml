@@ -43,7 +43,7 @@ spec:
           workspace: maven-settings
         - name: source
           workspace: shared-workspace
-    - name: buildah-ui-container
+    - name: ui-buildah
       taskRef:
         name: buildah
       runAfter:
@@ -58,7 +58,7 @@ spec:
           workspace: shared-workspace
         - name: dockerconfig
           workspace: dockerconfig-ws
-    - name: buildah-qcomplaints-container
+    - name: qcomplaints-buildah
       taskRef:
         name: buildah
       runAfter:
@@ -73,7 +73,7 @@ spec:
           workspace: shared-workspace
         - name: dockerconfig
           workspace: dockerconfig-ws
-    - name: buildah-pcomplaints-container
+    - name: pcomplaints-buildah
       taskRef:
         name: buildah
       runAfter:
@@ -83,6 +83,21 @@ spec:
           value: pcomplaints
         - name: IMAGE
           value: registry-1.docker.io/domenicopiol/sccstore-pcomplaints:$(context.taskRun.uid)
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+        - name: dockerconfig
+          workspace: dockerconfig-ws
+    - name: liquibase-buildah
+      taskRef:
+        name: buildah
+      runAfter:
+        - maven-run
+      params:
+        - name: CONTEXT
+          value: liquibase
+        - name: IMAGE
+          value: registry-1.docker.io/domenicopiol/sccstore-liquibase:$(context.taskRun.uid)
       workspaces:
         - name: source
           workspace: shared-workspace
