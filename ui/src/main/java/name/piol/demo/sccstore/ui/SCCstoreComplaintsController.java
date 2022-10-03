@@ -39,22 +39,22 @@ public class SCCstoreComplaintsController {
         //List<Complaint> complaints = (List<Complaint>) complaintRepository.findAll();
 
         try {
-            /*ConnectionProvider provider = ConnectionProvider.builder("fixed")
+            ConnectionProvider provider = ConnectionProvider.builder("fixed")
                 .maxConnections(500)
                 .maxIdleTime(Duration.ofSeconds(20))
                 .maxLifeTime(Duration.ofSeconds(60))
                 .pendingAcquireTimeout(Duration.ofSeconds(60))
                 .evictInBackground(Duration.ofSeconds(120)).build();
-            */
             
-            //WebClient webClient = WebClient.builder().baseUrl(complaintsBackend).clientConnector(new ReactorClientHttpConnector(HttpClient.create(provider))).build();
-            WebClient webClient = WebClient.builder().baseUrl(complaintsBackend).build();
+            
+            WebClient webClient = WebClient.builder().baseUrl(complaintsBackend).clientConnector(new ReactorClientHttpConnector(HttpClient.create(provider))).build();
+            //WebClient webClient = WebClient.builder().baseUrl(complaintsBackend).build();
 
-            //Flux<Complaint> complaintsFlux = webClient.get().uri("/complaints").retrieve().bodyToFlux(Complaint.class);  
-            //List<Complaint> complaints = complaintsFlux.collect(Collectors.toList()).share().block(); 
+            Flux<Complaint> complaintsFlux = webClient.get().uri("/complaints").retrieve().bodyToFlux(Complaint.class).log();  
+            List<Complaint> complaints = complaintsFlux.collect(Collectors.toList()).share().block(); 
 
-            Mono<Complaint[]> cList = webClient.get().uri("/complaints").accept(MediaType.APPLICATION_JSON).retrieve().bodyToMono(Complaint[].class).log();
-            Complaint[] complaints = cList.block();
+            //Mono<Complaint[]> cList = webClient.get().uri("/complaints").accept(MediaType.APPLICATION_JSON).retrieve().bodyToMono(Complaint[].class).log();
+            //Complaint[] complaints = cList.block();
 
             model.addAttribute("complaints", complaints);
         } catch (Exception e) {
