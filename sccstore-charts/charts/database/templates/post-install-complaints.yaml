@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: liquibase-complaints
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook": post-upgrade
+spec:
+  template:
+    spec:
+      containers:
+      - name: liquibase-complaints
+        image: domenicopiol/sccstore-liquibase:5aa1e0cb-8182-4dd9-ade6-25eb8d48e3a2
+        #command: ["sh", "-c", "liquibase --url=${URL} --username=${USERNAME} --password=${PASSWORD} execute-sql --sql='select * from complaints'"]
+        command: ["sh", "-c", "docker-entrypoint.sh --username=${USERNAME} --password=${PASSWORD} --url=${URL} --classpath=changelog --changeLogFile=changelog/complaints.sql update"]
+        #command: ["sh", "-c", "tail -f /dev/null"]
+        env:
+        - name: URL
+          value: 'jdbc:postgresql://pg-service:5432/sccstore'
+        - name: USERNAME
+          value: sccstore
+        - name: PASSWORD
+          value: sccstore
+        volumeMounts:
+        - name: changeset
+          mountPath: /liquibase/changelog/complaints.sql
+          subPath: complaints.sql
+      restartPolicy: Never
+      volumes:
+        - name: changeset
+          configMap:
+            name: complaints-changeset
+  backoffLimit: 1

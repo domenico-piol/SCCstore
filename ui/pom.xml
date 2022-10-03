@@ -135,11 +135,11 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<dependency>
+		<!--dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
 			<version>4.16.1</version>
-		</dependency>
+		</dependency-->
 
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
