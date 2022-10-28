@@ -8,12 +8,20 @@ ui:
   enabled: true
   image:
     repository: registry-1.docker.io/domenicopiol
+    tag: latest
   route:
     host: apps.ocp001.rhlab.ch
-
 pcomplaints:
   enabled: true
+  image:
+    tag: latest
 qcomplaints:
   enabled: true
+  image:
+    tag: latest
 database:
+  storage:
+    storageClass: managed-nfs-storage
   enabled: true
+  image:
+    tag: latest

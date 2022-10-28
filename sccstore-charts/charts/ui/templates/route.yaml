@@ -3,7 +3,8 @@ kind: Route
 metadata:
   name: sccstore-ui-route
 spec:
-  host: sccstore-{{ .Release.Namespace }}.{{ .Values.route.host }}
+  #host: sccstore-{{ .Release.Namespace }}.{{ .Values.route.host }}
+  #host: sccstore
   port:
     targetPort: 8443
   tls:

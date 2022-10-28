@@ -10,5 +10,5 @@ image:
   tag: latest
   pullPolicy: Always
 
-route:
-  host: sccstore-{{.Release.Namespace}}.apps.ocp001.rhlab.ch
+#route:
+#  host: sccstore-{{.Release.Namespace}}.apps.ocp001.rhlab.ch

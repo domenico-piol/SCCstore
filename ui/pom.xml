@@ -117,6 +117,13 @@
 			<artifactId>slf4j-jboss-logmanager</artifactId>
 		</dependency>
 
+		<!-- AZURE -->
+		<dependency>
+			<groupId>com.microsoft.azure</groupId>
+			<artifactId>applicationinsights-spring-boot-starter</artifactId>
+			<version>2.5.1</version>
+		</dependency>
+
 
 		<!-- DATABASE -->
 		<dependency>
