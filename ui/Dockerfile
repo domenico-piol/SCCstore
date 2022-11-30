@@ -1,5 +1,5 @@
 #FROM openjdk:17-jdk-alpine
-FROM registry.access.redhat.com/ubi8/openjdk-11
+FROM registry.access.redhat.com/ubi8/openjdk-17
 LABEL maintainer="domenico@piol.name"
 
 # WORKDIR is /home/jboss by default!!!
