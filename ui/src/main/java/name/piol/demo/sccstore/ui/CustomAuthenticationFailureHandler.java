@@ -1,9 +1,9 @@
 package name.piol.demo.sccstore.ui;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 //import org.jboss.logging.Logger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

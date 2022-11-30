@@ -9,5 +9,6 @@ data:
       "sccstore.url": "jdbc:postgresql://{{ .Values.global.database.service }}:5432/sccstore",
       "sccstore.username": "sccstore",
       "sccstore.password": "sccstore",
-      "sccstore.complaintsBackend": "http://sccstore-qcomplaints.{{ .Release.Namespace }}.svc"
+      "sccstore.complaintsBackend": "http://sccstore-qcomplaints.{{ .Release.Namespace }}.svc",
+      "azure.application-insights.instrumentation-key": "09524bec-b3ef-4127-9600-3158fda55718"
      }'

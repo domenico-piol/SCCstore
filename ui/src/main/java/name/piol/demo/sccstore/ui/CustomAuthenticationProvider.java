@@ -3,7 +3,6 @@ package name.piol.demo.sccstore.ui;
 //import org.jboss.logging.Logger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -44,7 +43,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             
             logger.info("STATUS: " + response.getStatusCode());
 
-            if (response.getStatusCode().series() == HttpStatus.Series.SERVER_ERROR || 
+            if (response.getStatusCode().is2xxSuccessful()) {
+                logger.info(response.toString());
+                result = new UsernamePasswordAuthenticationToken(name, password, new ArrayList<>());
+            } else {
+                logger.error("user not authenticated!");
+                throw new AuthenticationServiceException("Exception in Authentication Service");
+            }
+
+            /*if (response.getStatusCode().series() == HttpStatus.Series.SERVER_ERROR || 
                 response.getStatusCode().series() == HttpStatus.Series.CLIENT_ERROR) {
                 logger.error("user not authenticated!");
                 throw new AuthenticationServiceException("Exception in Authentication Service");
@@ -52,7 +59,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                 // OK case
                 logger.info(response.toString());
                 result = new UsernamePasswordAuthenticationToken(name, password, new ArrayList<>());
-            }
+            }*/
         } catch (Exception e) {
             logger.error("an authentication error occurred", e);
             throw new AuthenticationServiceException("Authentication Service not available");
