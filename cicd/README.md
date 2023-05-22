@@ -33,5 +33,5 @@ As mentioned, buildah requires some additional privileges. If the pipeline Servi
 Then add the required privileges to that ServiceAccount:
 
     oc adm policy add-scc-to-user privileged -z pipeline
-    oc adm policy add-scc-to-user privileged -z pipeline
+    oc adm policy add-role-to-user edit -z pipeline
 
