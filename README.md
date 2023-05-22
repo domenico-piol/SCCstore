@@ -40,6 +40,8 @@ This sample microservices-based system consists of the following modules (target
 </p>
 
 - **SCC UI** - the user-interface component of the application
-- **SCC Complaints (quarkus)** - Java/Quarkus implementation of the complaints controller
-- **SCC Complaints (python)** - Python implementation of the complaints controller
+- **SCC Complaints (quarkus)** - the complaints controller
+- **SCC Complaints (python)** - the complaints controller
 - **SCC Complaints Database** - the relational database for complaints
+- **SCC Warehouse** - the complaints controller
+- **SCC Warehouse Database** - the relational database for the warehouse
