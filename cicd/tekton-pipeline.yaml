@@ -3,6 +3,12 @@ kind: Pipeline
 metadata:
   name: sccstore-pipeline
 spec:
+  description: | 
+    This pipeline builds the SCCStore application
+  params:
+    - name: repo-url
+      type: string
+      description: The git repo URL to clone from.
   workspaces:
     - name: shared-workspace
     - name: maven-settings
@@ -17,7 +23,8 @@ spec:
           workspace: shared-workspace
       params:
         - name: url
-          value: https://github.com/domenico-piol/SCCstore
+          value: $(params.repo-url)
+          #value: https://github.com/domenico-piol/SCCstore
         - name: revision
           value: domenico
         - name: deleteExisting
@@ -29,7 +36,6 @@ spec:
         - fetch-repository
       params:
         - name: MAVEN_IMAGE
-          #value: quay.io/quarkus/ubi-quarkus-native-s2i:22.1-java11
           value: quay.io/quarkus/ubi-quarkus-native-s2i:22.2-java17
         - name: CONTEXT_DIR
           value: "."
