@@ -9,6 +9,9 @@ spec:
     - name: repo-url
       type: string
       description: The git repo URL to clone from.
+    - name: repo-branch
+      type: string
+      description: The branch to be used.
   workspaces:
     - name: shared-workspace
     - name: maven-settings
@@ -24,9 +27,8 @@ spec:
       params:
         - name: url
           value: $(params.repo-url)
-          #value: https://github.com/domenico-piol/SCCstore
         - name: revision
-          value: domenico
+          value: $(params.repo-branch)
         - name: deleteExisting
           value: "true"
     - name: maven-run

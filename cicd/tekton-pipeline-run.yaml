@@ -17,3 +17,5 @@ spec:
   params:
     - name: repo-url
       value: https://github.com/domenico-piol/SCCstore
+    - name: repo-branch
+      value: domenico
