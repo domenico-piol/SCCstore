@@ -61,12 +61,29 @@ spec:
         - name: CONTEXT
           value: ui
         - name: IMAGE
-          value: registry-1.docker.io/domenicopiol/sccstore-ui:$(context.taskRun.uid)
+          value: registry-1.docker.io/domenicopiol/sccstore-ui:$(context.pipelineRun.uid)
       workspaces:
         - name: source
           workspace: shared-workspace
         - name: dockerconfig
           workspace: dockerconfig-ws
+    - name: ui-skopeo-copy
+      taskRef:
+        name: skopeo-copy
+      runAfter:
+        - ui-buildah
+      params:
+        - name: srcImageURL
+          value: docker://registry-1.docker.io/domenicopiol/sccstore-ui:$(context.pipelineRun.uid)
+        - name: destImageURL
+          value: docker://registry-1.docker.io/domenicopiol/sccstore-ui:latest
+        - name: srcTLSverify
+          value: 'false'
+        - name: destTLSverify
+          value: 'false'
+      workspaces:
+        - name: images-url
+          workspace: shared-workspace
     - name: qcomplaints-buildah
       taskRef:
         name: buildah
@@ -76,12 +93,29 @@ spec:
         - name: CONTEXT
           value: qcomplaints
         - name: IMAGE
-          value: registry-1.docker.io/domenicopiol/sccstore-qcomplaints:$(context.taskRun.uid)
+          value: registry-1.docker.io/domenicopiol/sccstore-qcomplaints:$(context.pipelineRun.uid)
       workspaces:
         - name: source
           workspace: shared-workspace
         - name: dockerconfig
           workspace: dockerconfig-ws
+    - name: qcomplaints-skopeo-copy
+      taskRef:
+        name: skopeo-copy
+      runAfter:
+        - qcomplaints-buildah
+      params:
+        - name: srcImageURL
+          value: docker://registry-1.docker.io/domenicopiol/sccstore-qcomplaints:$(context.pipelineRun.uid)
+        - name: destImageURL
+          value: docker://registry-1.docker.io/domenicopiol/sccstore-qcomplaints:latest
+        - name: srcTLSverify
+          value: 'false'
+        - name: destTLSverify
+          value: 'false'
+      workspaces:
+        - name: images-url
+          workspace: shared-workspace
     - name: pcomplaints-buildah
       taskRef:
         name: buildah
@@ -91,12 +125,29 @@ spec:
         - name: CONTEXT
           value: pcomplaints
         - name: IMAGE
-          value: registry-1.docker.io/domenicopiol/sccstore-pcomplaints:$(context.taskRun.uid)
+          value: registry-1.docker.io/domenicopiol/sccstore-pcomplaints:$(context.pipelineRun.uid)
       workspaces:
         - name: source
           workspace: shared-workspace
         - name: dockerconfig
           workspace: dockerconfig-ws
+    - name: pcomplaints-skopeo-copy
+      taskRef:
+        name: skopeo-copy
+      runAfter:
+        - pcomplaints-buildah
+      params:
+        - name: srcImageURL
+          value: docker://registry-1.docker.io/domenicopiol/sccstore-pcomplaints:$(context.pipelineRun.uid)
+        - name: destImageURL
+          value: docker://registry-1.docker.io/domenicopiol/sccstore-pcomplaints:latest
+        - name: srcTLSverify
+          value: 'false'
+        - name: destTLSverify
+          value: 'false'
+      workspaces:
+        - name: images-url
+          workspace: shared-workspace
     - name: liquibase-buildah
       taskRef:
         name: buildah
@@ -106,12 +157,31 @@ spec:
         - name: CONTEXT
           value: liquibase
         - name: IMAGE
-          value: registry-1.docker.io/domenicopiol/sccstore-liquibase:$(context.taskRun.uid)
+          value: registry-1.docker.io/domenicopiol/sccstore-liquibase:$(context.pipelineRun.uid)
       workspaces:
         - name: source
           workspace: shared-workspace
         - name: dockerconfig
           workspace: dockerconfig-ws
+    - name: liquibase-skopeo-copy
+      taskRef:
+        name: skopeo-copy
+      runAfter:
+        - liquibase-buildah
+      params:
+        - name: srcImageURL
+          value: docker://registry-1.docker.io/domenicopiol/sccstore-liquibase:$(context.pipelineRun.uid)
+        - name: destImageURL
+          value: docker://registry-1.docker.io/domenicopiol/sccstore-liquibase:latest
+        - name: srcTLSverify
+          value: 'false'
+        - name: destTLSverify
+          value: 'false'
+      workspaces:
+        - name: images-url
+          workspace: shared-workspace
+#
+# CAN BE USED FOR DEBUGGING
 #    - name: list-dir
 #      taskRef:
 #        name: list-directory

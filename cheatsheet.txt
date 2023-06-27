@@ -3,9 +3,13 @@ Helm
 
 helm delete sccstore 
 
-helm install  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set pcomplaints.image.tag=$(./getLatestTag sccstore-pcomplaints) --set qcomplaints.image.tag=$(./getLatestTag sccstore-qcomplaints)
+helm install sccstore sccstore-charts
+//helm install  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set pcomplaints.image.tag=$(./getLatestTag sccstore-pcomplaints) --set qcomplaints.image.tag=$(./getLatestTag sccstore-qcomplaints)
+
 --> then
-helm upgrade  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set pcomplaints.image.tag=$(./getLatestTag sccstore-pcomplaints) --set qcomplaints.image.tag=$(./getLatestTag sccstore-qcomplaints)
+
+//helm upgrade  sccstore sccstore-charts --set ui.image.tag=$(./getLatestTag sccstore-ui) --set pcomplaints.image.tag=$(./getLatestTag sccstore-pcomplaints) --set qcomplaints.image.tag=$(./getLatestTag sccstore-qcomplaints)
+helm upgrade sccstore sccstore-charts
 
 append "--dry-run --debug" for test-only
 for using the postgres database on the win10 VM, add:  "--set global.database.service=win10-postgresql"
@@ -60,3 +64,31 @@ curl -d "id=6" -X DELETE --insecure https://sccstore-qcomplaints-dpiol-sccstore-
 Python
 ======
 curl -X GET --insecure https://sccstore-pcomplaints-dpiol-sccstore-dev.apps.ocp001.rhlab.ch/complaints
+
+
+
+
+BUILDAH
+=======
+
+with openjdk17 ubi
+==================
+buildah from registry.access.redhat.com/ubi8/openjdk-17
+buildah add --chmod 775 --chown jboss:root openjdk-17-working-container target/sccstore-ui-0.0.1-SNAPSHOT.jar sccstore-ui.jar
+buildah config --entrypoint "exec java -jar /home/jboss/sccstore-ui.jar" openjdk-17-working-container 
+buildah commit openjdk-17-working-container sccstore-t1
+
+with  minimal-ubi8
+==================
+buildah from registry.access.redhat.com/ubi8/ubi-minimal
+buildah run ubi-minimal-working-container microdnf install -y java-17-openjdk-devel
+buildah add ubi-minimal-working-container target/sccstore-ui-0.0.1-SNAPSHOT.jar sccstore-ui.jar
+buildah config --entrypoint "exec java -jar sccstore-ui.jar" ubi-minimal-working-container
+buildah commit ubi-minimal-working-container sccstore-t1
+
+
+
+podman images
+podman run -d sccstore-t1
+podman ps -a
+podman logs --tail 100 3737d4ca8aff

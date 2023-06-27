@@ -14,8 +14,6 @@ ui:
   image:
     repository: registry-1.docker.io/domenicopiol
     tag: latest
-  route:
-    host: apps.ocp001.rhlab.ch
 pcomplaints:
   enabled: true
   image:

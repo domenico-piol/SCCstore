@@ -25,13 +25,23 @@ Use tkn to install this Task:
 The buildah task will also need credentials for pushing the container image to the container registry. Docker.io in this case.
 This can be done by placing the .docker/config.json file holding the credentials (encoded) to the buildah workspace. There is an example on how to do so in the buildah description on tekton hub.
 
+## skopeo-copy
+Use tkn to install this Task:
+
+    tkn hub install task skopeo-copy
+
+
 # Privileges
 As mentioned, buildah requires some additional privileges. If the pipeline ServiceAccount does not exist yet (unlikely,or you have a problem on your OpenShift cluster), use:
 
-    oc create serviceaccount pipeline
+    oc create serviceaccount pipeline           # should be already there...
 
 Then add the required privileges to that ServiceAccount:
 
     oc adm policy add-scc-to-user privileged -z pipeline
     oc adm policy add-role-to-user edit -z pipeline
 
+
+Add the 2 secrets for docker.io to the pipeline namespace and then link one with the pipeline service-account:
+
+    oc secrets link pipeline dockerio-creds-username 
