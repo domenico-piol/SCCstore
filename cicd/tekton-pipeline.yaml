@@ -15,6 +15,7 @@ spec:
   workspaces:
     - name: shared-workspace
     - name: maven-settings
+    - name: maven-local-m2
     - name: dockerconfig-ws
       optional: true
   tasks:
@@ -52,6 +53,8 @@ spec:
           workspace: maven-settings
         - name: source
           workspace: shared-workspace
+        - name: maven-local-repo
+          workspace: maven-local-m2
     - name: ui-buildah
       taskRef:
         name: buildah

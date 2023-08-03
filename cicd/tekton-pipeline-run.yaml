@@ -11,6 +11,9 @@ spec:
     - name: shared-workspace
       persistentvolumeclaim:
         claimName: maven-source-pvc
+    - name: maven-local-m2
+      persistentvolumeclaim:
+        claimName: maven-repo-pvc
     - name: dockerconfig-ws
       secret:
         secretName: dockerconfig-secret
