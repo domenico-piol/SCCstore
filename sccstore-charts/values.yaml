@@ -25,7 +25,7 @@ qcomplaints:
     tag: latest
 database:
   storage:
-    storageClass: managed-nfs-storage
+    storageClass: gp3
   enabled: true
   image:
     tag: latest

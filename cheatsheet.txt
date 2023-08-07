@@ -92,3 +92,15 @@ podman images
 podman run -d sccstore-t1
 podman ps -a
 podman logs --tail 100 3737d4ca8aff
+
+
+
+Helm repository
+===============
+
+In SCCStore-Helm/
+
+    helm package ../SCCstore/sccstore-charts -d .
+    helm repo index --url https://domenico-piol.github.io/SCCStore-Helm . --merge ./index.yaml
+
+Commit everything to the SCCStore-Helm repo and rerun publishing from git-ui.
