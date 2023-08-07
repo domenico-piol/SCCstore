@@ -27,6 +27,5 @@ database:
   enabled: false
   storage:
     storageClass: gp3
-  enabled: true
   image:
     tag: latest
