@@ -12,10 +12,11 @@ global:
 ui:
   enabled: true
   image:
-    repository: registry-1.docker.io/domenicopiol
+    #repository: registry-1.docker.io/domenicopiol
+    repository: registry-1.docker.io/rhworkshops
     tag: latest
 pcomplaints:
-  enabled: true
+  enabled: false
   image:
     tag: latest
 qcomplaints:

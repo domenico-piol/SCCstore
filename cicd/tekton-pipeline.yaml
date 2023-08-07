@@ -9,6 +9,9 @@ spec:
     - name: repo-url
       type: string
       description: The git repo URL to clone from.
+    - name: container-repo
+      type: string
+      description: The container repo URL to be used.
     - name: repo-branch
       type: string
       description: The branch to be used.
@@ -64,7 +67,7 @@ spec:
         - name: CONTEXT
           value: ui
         - name: IMAGE
-          value: registry-1.docker.io/domenicopiol/sccstore-ui:$(context.pipelineRun.uid)
+          value: $(params.container-repo)/sccstore-ui:$(context.pipelineRun.uid)
       workspaces:
         - name: source
           workspace: shared-workspace
@@ -77,9 +80,9 @@ spec:
         - ui-buildah
       params:
         - name: srcImageURL
-          value: docker://registry-1.docker.io/domenicopiol/sccstore-ui:$(context.pipelineRun.uid)
+          value: docker://$(params.container-repo)/sccstore-ui:$(context.pipelineRun.uid)
         - name: destImageURL
-          value: docker://registry-1.docker.io/domenicopiol/sccstore-ui:latest
+          value: docker://$(params.container-repo)/sccstore-ui:latest
         - name: srcTLSverify
           value: 'false'
         - name: destTLSverify
@@ -96,7 +99,7 @@ spec:
         - name: CONTEXT
           value: qcomplaints
         - name: IMAGE
-          value: registry-1.docker.io/domenicopiol/sccstore-qcomplaints:$(context.pipelineRun.uid)
+          value: $(params.container-repo)/sccstore-qcomplaints:$(context.pipelineRun.uid)
       workspaces:
         - name: source
           workspace: shared-workspace
@@ -109,9 +112,9 @@ spec:
         - qcomplaints-buildah
       params:
         - name: srcImageURL
-          value: docker://registry-1.docker.io/domenicopiol/sccstore-qcomplaints:$(context.pipelineRun.uid)
+          value: docker://$(params.container-repo)/sccstore-qcomplaints:$(context.pipelineRun.uid)
         - name: destImageURL
-          value: docker://registry-1.docker.io/domenicopiol/sccstore-qcomplaints:latest
+          value: docker://$(params.container-repo)/sccstore-qcomplaints:latest
         - name: srcTLSverify
           value: 'false'
         - name: destTLSverify
@@ -128,7 +131,7 @@ spec:
         - name: CONTEXT
           value: pcomplaints
         - name: IMAGE
-          value: registry-1.docker.io/domenicopiol/sccstore-pcomplaints:$(context.pipelineRun.uid)
+          value: $(params.container-repo)/sccstore-pcomplaints:$(context.pipelineRun.uid)
       workspaces:
         - name: source
           workspace: shared-workspace
@@ -141,9 +144,9 @@ spec:
         - pcomplaints-buildah
       params:
         - name: srcImageURL
-          value: docker://registry-1.docker.io/domenicopiol/sccstore-pcomplaints:$(context.pipelineRun.uid)
+          value: docker://$(params.container-repo)/sccstore-pcomplaints:$(context.pipelineRun.uid)
         - name: destImageURL
-          value: docker://registry-1.docker.io/domenicopiol/sccstore-pcomplaints:latest
+          value: docker://$(params.container-repo)/sccstore-pcomplaints:latest
         - name: srcTLSverify
           value: 'false'
         - name: destTLSverify
@@ -160,7 +163,7 @@ spec:
         - name: CONTEXT
           value: liquibase
         - name: IMAGE
-          value: registry-1.docker.io/domenicopiol/sccstore-liquibase:$(context.pipelineRun.uid)
+          value: $(params.container-repo)/sccstore-liquibase:$(context.pipelineRun.uid)
       workspaces:
         - name: source
           workspace: shared-workspace
@@ -173,9 +176,9 @@ spec:
         - liquibase-buildah
       params:
         - name: srcImageURL
-          value: docker://registry-1.docker.io/domenicopiol/sccstore-liquibase:$(context.pipelineRun.uid)
+          value: docker://$(params.container-repo)/sccstore-liquibase:$(context.pipelineRun.uid)
         - name: destImageURL
-          value: docker://registry-1.docker.io/domenicopiol/sccstore-liquibase:latest
+          value: docker://$(params.container-repo)/sccstore-liquibase:latest
         - name: srcTLSverify
           value: 'false'
         - name: destTLSverify

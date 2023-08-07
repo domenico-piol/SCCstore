@@ -16,9 +16,15 @@ spec:
         claimName: maven-repo-pvc
     - name: dockerconfig-ws
       secret:
-        secretName: dockerconfig-secret
+        #secretName: dockerconfig-secret
+        secretName: rhworkshops-dockerconfig-secret
+        #secretName: quay-dockerconfig-secret
   params:
     - name: repo-url
       value: https://github.com/domenico-piol/SCCstore
     - name: repo-branch
       value: domenico
+    - name: container-repo
+      #value: quay.io/domenico_piol
+      value: registry-1.docker.io/rhworkshops
+      #value: registry-1.docker.io/domenicopiol

@@ -45,3 +45,8 @@ Then add the required privileges to that ServiceAccount:
 Add the 2 secrets for docker.io to the pipeline namespace and then link one with the pipeline service-account:
 
     oc secrets link pipeline dockerio-creds-username 
+or
+    oc secrets link pipeline rhworkshops-dockerio-creds-username 
+
+Use 'unlink' to reverse.. there only can be one.
+    
