@@ -24,7 +24,7 @@ qcomplaints:
   image:
     tag: latest
 database:
-  enabled: true
+  enabled: false
   storage:
     storageClass: gp3
   enabled: true

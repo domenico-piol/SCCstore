@@ -103,4 +103,4 @@ In SCCStore-Helm/
     helm package ../SCCstore/sccstore-charts -d .
     helm repo index --url https://domenico-piol.github.io/SCCStore-Helm . --merge ./index.yaml
 
-Commit everything to the SCCStore-Helm repo and rerun publishing from git-ui.
+Page is published automatically after commit/push...
