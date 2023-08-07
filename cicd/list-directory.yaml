@@ -3,6 +3,7 @@ kind: Task
 metadata:
   name: list-directory
 spec:
+  description: Lists the content of given directories
   params:
     - name: sub-dirs
       type: array

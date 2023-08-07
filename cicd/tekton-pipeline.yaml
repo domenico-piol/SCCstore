@@ -3,9 +3,22 @@ kind: Pipeline
 metadata:
   name: sccstore-pipeline
 spec:
+  description: | 
+    This pipeline builds the SCCStore application
+  params:
+    - name: repo-url
+      type: string
+      description: The git repo URL to clone from.
+    - name: container-repo
+      type: string
+      description: The container repo URL to be used.
+    - name: repo-branch
+      type: string
+      description: The branch to be used.
   workspaces:
     - name: shared-workspace
     - name: maven-settings
+    - name: maven-local-m2
     - name: dockerconfig-ws
       optional: true
   tasks:
@@ -17,9 +30,9 @@ spec:
           workspace: shared-workspace
       params:
         - name: url
-          value: https://github.com/domenico-piol/SCCstore
+          value: $(params.repo-url)
         - name: revision
-          value: domenico
+          value: $(params.repo-branch)
         - name: deleteExisting
           value: "true"
     - name: maven-run
@@ -29,7 +42,7 @@ spec:
         - fetch-repository
       params:
         - name: MAVEN_IMAGE
-          value: quay.io/quarkus/ubi-quarkus-native-s2i:22.1-java11
+          value: quay.io/quarkus/ubi-quarkus-native-s2i:22.2-java17
         - name: CONTEXT_DIR
           value: "."
         - name: GOALS
@@ -43,6 +56,8 @@ spec:
           workspace: maven-settings
         - name: source
           workspace: shared-workspace
+        - name: maven-local-repo
+          workspace: maven-local-m2
     - name: ui-buildah
       taskRef:
         name: buildah
@@ -52,12 +67,29 @@ spec:
         - name: CONTEXT
           value: ui
         - name: IMAGE
-          value: registry-1.docker.io/domenicopiol/sccstore-ui:$(context.taskRun.uid)
+          value: $(params.container-repo)/sccstore-ui:$(context.pipelineRun.uid)
       workspaces:
         - name: source
           workspace: shared-workspace
         - name: dockerconfig
           workspace: dockerconfig-ws
+    - name: ui-skopeo-copy
+      taskRef:
+        name: skopeo-copy
+      runAfter:
+        - ui-buildah
+      params:
+        - name: srcImageURL
+          value: docker://$(params.container-repo)/sccstore-ui:$(context.pipelineRun.uid)
+        - name: destImageURL
+          value: docker://$(params.container-repo)/sccstore-ui:latest
+        - name: srcTLSverify
+          value: 'false'
+        - name: destTLSverify
+          value: 'false'
+      workspaces:
+        - name: images-url
+          workspace: shared-workspace
     - name: qcomplaints-buildah
       taskRef:
         name: buildah
@@ -67,12 +99,29 @@ spec:
         - name: CONTEXT
           value: qcomplaints
         - name: IMAGE
-          value: registry-1.docker.io/domenicopiol/sccstore-qcomplaints:$(context.taskRun.uid)
+          value: $(params.container-repo)/sccstore-qcomplaints:$(context.pipelineRun.uid)
       workspaces:
         - name: source
           workspace: shared-workspace
         - name: dockerconfig
           workspace: dockerconfig-ws
+    - name: qcomplaints-skopeo-copy
+      taskRef:
+        name: skopeo-copy
+      runAfter:
+        - qcomplaints-buildah
+      params:
+        - name: srcImageURL
+          value: docker://$(params.container-repo)/sccstore-qcomplaints:$(context.pipelineRun.uid)
+        - name: destImageURL
+          value: docker://$(params.container-repo)/sccstore-qcomplaints:latest
+        - name: srcTLSverify
+          value: 'false'
+        - name: destTLSverify
+          value: 'false'
+      workspaces:
+        - name: images-url
+          workspace: shared-workspace
     - name: pcomplaints-buildah
       taskRef:
         name: buildah
@@ -82,12 +131,29 @@ spec:
         - name: CONTEXT
           value: pcomplaints
         - name: IMAGE
-          value: registry-1.docker.io/domenicopiol/sccstore-pcomplaints:$(context.taskRun.uid)
+          value: $(params.container-repo)/sccstore-pcomplaints:$(context.pipelineRun.uid)
       workspaces:
         - name: source
           workspace: shared-workspace
         - name: dockerconfig
           workspace: dockerconfig-ws
+    - name: pcomplaints-skopeo-copy
+      taskRef:
+        name: skopeo-copy
+      runAfter:
+        - pcomplaints-buildah
+      params:
+        - name: srcImageURL
+          value: docker://$(params.container-repo)/sccstore-pcomplaints:$(context.pipelineRun.uid)
+        - name: destImageURL
+          value: docker://$(params.container-repo)/sccstore-pcomplaints:latest
+        - name: srcTLSverify
+          value: 'false'
+        - name: destTLSverify
+          value: 'false'
+      workspaces:
+        - name: images-url
+          workspace: shared-workspace
     - name: liquibase-buildah
       taskRef:
         name: buildah
@@ -97,12 +163,31 @@ spec:
         - name: CONTEXT
           value: liquibase
         - name: IMAGE
-          value: registry-1.docker.io/domenicopiol/sccstore-liquibase:$(context.taskRun.uid)
+          value: $(params.container-repo)/sccstore-liquibase:$(context.pipelineRun.uid)
       workspaces:
         - name: source
           workspace: shared-workspace
         - name: dockerconfig
           workspace: dockerconfig-ws
+    - name: liquibase-skopeo-copy
+      taskRef:
+        name: skopeo-copy
+      runAfter:
+        - liquibase-buildah
+      params:
+        - name: srcImageURL
+          value: docker://$(params.container-repo)/sccstore-liquibase:$(context.pipelineRun.uid)
+        - name: destImageURL
+          value: docker://$(params.container-repo)/sccstore-liquibase:latest
+        - name: srcTLSverify
+          value: 'false'
+        - name: destTLSverify
+          value: 'false'
+      workspaces:
+        - name: images-url
+          workspace: shared-workspace
+#
+# CAN BE USED FOR DEBUGGING
 #    - name: list-dir
 #      taskRef:
 #        name: list-directory

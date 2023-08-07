@@ -2,17 +2,21 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 global:
+  stage: dev
   database: 
     service: pg-service
+  namespaces:
+    nsfront: sccstore-front
+    nsservice: sccstore-service
+    nsdb: sccstore-db
 ui:
   enabled: true
   image:
-    repository: registry-1.docker.io/domenicopiol
+    #repository: registry-1.docker.io/domenicopiol
+    repository: registry-1.docker.io/rhworkshops
     tag: latest
-  route:
-    host: apps.ocp001.rhlab.ch
 pcomplaints:
-  enabled: true
+  enabled: false
   image:
     tag: latest
 qcomplaints:
