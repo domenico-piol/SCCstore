@@ -29,3 +29,5 @@ database:
     storageClass: gp3
   image:
     tag: latest
+ansible:
+  enabled: false

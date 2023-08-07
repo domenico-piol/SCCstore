@@ -1,0 +1,114 @@
+---
+- name: SCCSTORE database
+  hosts: pg-databases
+
+  tasks:
+    - name: Install postgres
+      become: yes
+      dnf: "name={{ item }} state=present"
+      with_items:
+        - gcc*
+        - python3
+        - postgresql
+        - postgresql-server
+        - python3-devel
+        - postgresql-devel
+        - rpm-build
+
+    - name: Install Python packages
+      become: yes
+      pip:
+        name: psycopg2-binary
+        executable: pip3
+
+    - name: Find out if PostgreSQL is initialized
+      become: yes
+      ansible.builtin.stat:
+        path: /var/lib/pgsql/data/pg_hba.conf
+      register: postgres_data
+
+    - name: Initialize PostgreSQL
+      become: yes
+      shell: postgresql-setup initdb
+      when: not postgres_data.stat.exists
+
+    - name: Start and enable services
+      become: yes
+      service:
+        name: postgresql
+        state: started
+        enabled: yes
+
+    - name: Create sccstore db user
+      become: yes
+      become_user: postgres
+      postgresql_user:
+        state: present
+        name: sccstore
+        password: sccstore
+
+    - name: create sccstore database
+      become: yes
+      become_user: postgres
+      postgresql_db:
+        state: present
+        name: sccstore
+        owner: sccstore
+        conn_limit: "20"
+
+    - name: Allow remote connections - part I
+      become: yes
+      become_user: postgres
+      lineinfile:
+        path: "~/data/postgresql.conf"
+        regexp: "listen_addresses ="
+        line: "listen_addresses = '*'"
+        state: present
+      notify: restart postgres
+
+    - name: Allow remote connections - part II
+      become: yes
+      become_user: postgres
+      lineinfile:
+        path: "~/data/pg_hba.conf"
+        line: "host    all    all    0.0.0.0/0    md5"
+        state: present
+      notify: restart postgres
+
+    # - name: do not permit traffic in default zone on port 8081/tcp
+    #   ansible.posix.firewalld:
+    #     port: 5432/tcp
+    #     permanent: true
+    #     state: enabled
+
+    - name: Create compliance table
+      become: yes
+      become_user: postgres
+      postgresql_table:
+        name: complaints
+        db: sccstore
+        owner: sccstore
+        columns:
+          - compl_id serial primary key
+          - complaint VARCHAR(255) NOT NULL
+
+    - name: Insert initial data-set - 1
+      become: yes
+      become_user: postgres
+      postgresql_query:
+        db: sccstore
+        autocommit: true
+        query: INSERT INTO complaints (complaint) SELECT 'Just a first initial complaint' WHERE NOT EXISTS (SELECT * FROM complaints)
+
+    - name: Insert initial data-set - 2
+      become: yes
+      become_user: postgres
+      postgresql_query:
+        db: sccstore
+        autocommit: true
+        query: INSERT INTO complaints (complaint) SELECT 'And another one initially loaded' WHERE (SELECT COUNT(*) FROM complaints) < 2
+
+  handlers:
+    - name: restart postgres
+      become: yes
+      service: name=postgresql state=restarted

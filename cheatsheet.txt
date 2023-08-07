@@ -104,3 +104,12 @@ In SCCStore-Helm/
     helm repo index --url https://domenico-piol.github.io/SCCStore-Helm . --merge ./index.yaml
 
 Page is published automatically after commit/push...
+
+
+
+EC2 instance
+============
+
+save the pem file!!
+
+    ssh -i ~/.ssh/pg-prod.pem ec2-user@18.189.24.210
