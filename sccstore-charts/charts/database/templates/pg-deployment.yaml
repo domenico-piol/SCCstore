@@ -30,13 +30,13 @@ spec:
               name: postgredb
       volumes:
         - name: postgredb
-          {{- if eq .Values.storage.persistent "true" }}
+{{- if .Values.storage.enabled }}
           persistentVolumeClaim:
             claimName: pg-pvc
-          {{- else }}
-            emptyDir: {}
-          {{- end }}
-{{- if eq .Values.storage.persistent "true" }}
+{{- else }}
+          emptyDir: {}
+{{- end }}
+{{- if .Values.storage.enabled }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
