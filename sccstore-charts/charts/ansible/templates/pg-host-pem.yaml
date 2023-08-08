@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pg-host-secret
+type: Opaque
+data:
+  pg-prod.pem: |-
+    {{  .Files.Get "playbooks/pg-host.pem" | b64enc }}

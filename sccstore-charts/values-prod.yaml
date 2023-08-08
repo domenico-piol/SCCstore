@@ -4,7 +4,7 @@
 global:
   stage: dev
   database: 
-    service: pg-service
+    service: ec2-18-189-24-210.us-east-2.compute.amazonaws.com
   namespaces:
     nsfront: sccstore-front
     nsservice: sccstore-service
@@ -30,4 +30,4 @@ database:
   image:
     tag: latest
 ansible:
-  enabled: false
+  enabled: true
