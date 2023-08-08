@@ -27,6 +27,7 @@ database:
   enabled: true
   storage:
     storageClass: gp3
+    persistent: false
   image:
     tag: latest
 ansible:
