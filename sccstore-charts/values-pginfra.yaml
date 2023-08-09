@@ -4,14 +4,14 @@
 global:
   stage: dev
   database: 
-    service: ec2-3-12-99-248.us-east-2.compute.amazonaws.com
+    service: ec2-18-189-24-210.us-east-2.compute.amazonaws.com
     dbName: psccstore
   namespaces:
     nsfront: sccstore-front
     nsservice: sccstore-service
     nsdb: sccstore-db
 ui:
-  enabled: true
+  enabled: false
   image:
     #repository: registry-1.docker.io/domenicopiol
     repository: registry-1.docker.io/rhworkshops
@@ -22,10 +22,10 @@ pcomplaints:
     repository: registry-1.docker.io/rhworkshops
     tag: latest
 qcomplaints:
-  enabled: true
+  enabled: false
   image:
     repository: registry-1.docker.io/rhworkshops
-    tag: 61292662-7c5c-466e-a444-01de4c07591d
+    tag: latest
 database:
   enabled: false
   storage:
@@ -35,7 +35,7 @@ database:
     tag: latest
 ansible:
   enabled: true
-  setupInfrastructure: false
+  setupInfrastructure: true
   image:
     repository: registry-1.docker.io/rhworkshops
     tag: latest

@@ -8,5 +8,5 @@ all:
   children:
     pg-databases:
       hosts:
-        ec2-18-189-24-210.us-east-2.compute.amazonaws.com:
-          ansible_host: 18.189.24.210
+        ec2-3-12-99-248.us-east-2.compute.amazonaws.com:
+          ansible_host: 3.12.99.248

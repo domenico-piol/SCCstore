@@ -3,7 +3,11 @@ kind: ConfigMap
 metadata:
   name: pg-ansible-playbook
 data:
-  playbook.yaml: |
-{{  .Files.Get "playbooks/playbook.yaml" | indent 4 }}
+  main-playbook.yaml: |
+{{  .Files.Get "playbooks/main-playbook.yaml" | indent 4 }}
+  pginfra-playbook.yaml: |
+{{  .Files.Get "playbooks/pginfra-playbook.yaml" | indent 4 }}
+  userdb-playbook.yaml: |
+{{  .Files.Get "playbooks/userdb-playbook.yaml" | indent 4 }}
   hosts.yaml: |
 {{  .Files.Get "playbooks/hosts.yaml" | indent 4 }}

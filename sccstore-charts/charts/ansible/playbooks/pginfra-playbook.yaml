@@ -1,5 +1,5 @@
 ---
-- name: SCCSTORE database
+- name: SCCSTORE database infra setup
   hosts: pg-databases
 
   tasks:
@@ -39,23 +39,6 @@
         state: started
         enabled: yes
 
-    - name: Create sccstore db user
-      become: yes
-      become_user: postgres
-      postgresql_user:
-        state: present
-        name: sccstore
-        password: sccstore
-
-    - name: create sccstore database
-      become: yes
-      become_user: postgres
-      postgresql_db:
-        state: present
-        name: sccstore
-        owner: sccstore
-        conn_limit: "20"
-
     - name: Allow remote connections - part I
       become: yes
       become_user: postgres
@@ -80,33 +63,6 @@
     #     port: 5432/tcp
     #     permanent: true
     #     state: enabled
-
-    - name: Create compliance table
-      become: yes
-      become_user: postgres
-      postgresql_table:
-        name: complaints
-        db: sccstore
-        owner: sccstore
-        columns:
-          - compl_id serial primary key
-          - complaint VARCHAR(255) NOT NULL
-
-    - name: Insert initial data-set - 1
-      become: yes
-      become_user: postgres
-      postgresql_query:
-        db: sccstore
-        autocommit: true
-        query: INSERT INTO complaints (complaint) SELECT 'Just a first initial complaint' WHERE NOT EXISTS (SELECT * FROM complaints)
-
-    - name: Insert initial data-set - 2
-      become: yes
-      become_user: postgres
-      postgresql_query:
-        db: sccstore
-        autocommit: true
-        query: INSERT INTO complaints (complaint) SELECT 'And another one initially loaded' WHERE (SELECT COUNT(*) FROM complaints) < 2
 
   handlers:
     - name: restart postgres

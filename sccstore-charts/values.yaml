@@ -18,10 +18,12 @@ ui:
 pcomplaints:
   enabled: false
   image:
+    repository: registry-1.docker.io/rhworkshops
     tag: latest
 qcomplaints:
   enabled: true
   image:
+    repository: registry-1.docker.io/rhworkshops
     tag: latest
 database:
   enabled: true
@@ -29,6 +31,10 @@ database:
     storageClass: gp3
     enabled: false
   image:
+    repository: registry-1.docker.io/rhworkshops
     tag: latest
 ansible:
   enabled: false
+  image:
+    repository: registry-1.docker.io/rhworkshops
+    tag: latest

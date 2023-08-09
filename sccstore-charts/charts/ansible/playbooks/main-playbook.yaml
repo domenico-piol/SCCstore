@@ -1,0 +1,5 @@
+---
+- name: db-infra
+  import_playbook: /ansible-playbooks/pginfra-playbook.yaml
+- name: user-db
+  import_playbook: /ansible-playbooks/userdb-playbook.yaml

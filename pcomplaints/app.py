@@ -38,10 +38,14 @@ def show_complaints_page():
 
 @app.route('/complaints', methods=['GET'])
 def show_complaints():    
+    dbName = app.config['SCC_DB_NAME']
+    if len(dbName) == 0:
+        dbName = "sccstore"
+
     conn = psycopg2.connect(
         #host="win10-postgresql",
         host=app.config['SCC_DB_HOST'],
-        database="sccstore",
+        database=dbName,
         user="sccstore",
         password="sccstore")
         
