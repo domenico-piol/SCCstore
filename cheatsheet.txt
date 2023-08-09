@@ -106,6 +106,13 @@ In SCCStore-Helm/
 Page is published automatically after commit/push...
 
 
+ARGOCD
+======
+
+IMPORTANT Give permission to the Argo CD service account to control the cluster:
+
+    oc adm policy add-cluster-role-to-user cluster-admin -z openshift-gitops-argocd-application-controller -n openshift-gitops
+
 
 EC2 instance
 ============

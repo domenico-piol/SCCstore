@@ -5,10 +5,6 @@ global:
   stage: dev
   database: 
     service: pg-service
-  namespaces:
-    nsfront: sccstore-front
-    nsservice: sccstore-service
-    nsdb: sccstore-db
 ui:
   enabled: true
   image:
@@ -30,8 +26,9 @@ database:
   storage:
     storageClass: gp3
     enabled: false
-  image:
+  liquibaseimage:
     repository: registry-1.docker.io/rhworkshops
+    name: sccstore-liquibase
     tag: latest
 ansible:
   enabled: false

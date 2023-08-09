@@ -49,4 +49,11 @@ or
     oc secrets link pipeline rhworkshops-dockerio-creds-username 
 
 Use 'unlink' to reverse.. there only can be one.
+
+## ArgoCD
+IMPORTANT Give permission to the Argo CD service account to control the cluster:
+
+    oc adm policy add-cluster-role-to-user cluster-admin -z openshift-gitops-argocd-application-controller -n openshift-gitops
+
+
     

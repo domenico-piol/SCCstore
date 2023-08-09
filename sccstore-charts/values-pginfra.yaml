@@ -30,9 +30,6 @@ database:
   enabled: false
   storage:
     storageClass: gp3
-  image:
-    repository: registry-1.docker.io/rhworkshops
-    tag: latest
 ansible:
   enabled: true
   setupInfrastructure: true
