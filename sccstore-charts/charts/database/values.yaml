@@ -12,5 +12,6 @@ liquibaseimage:
   name: sccstore-liquibase
   tag: latest
 
-storage:
-  storageClass: managed-nfs-storage
+#storage:
+  #storageClass: gp3
+  #storageClass: managed-nfs-storage

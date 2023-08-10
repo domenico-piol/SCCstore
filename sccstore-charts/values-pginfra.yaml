@@ -4,9 +4,14 @@
 global:
   stage: dev
   database: 
-    service: pg-service
+    service: ec2-18-189-24-210.us-east-2.compute.amazonaws.com
+    dbName: psccstore
+  namespaces:
+    nsfront: sccstore-front
+    nsservice: sccstore-service
+    nsdb: sccstore-db
 ui:
-  enabled: true
+  enabled: false
   image:
     #repository: registry-1.docker.io/domenicopiol
     repository: registry-1.docker.io/rhworkshops
@@ -17,21 +22,17 @@ pcomplaints:
     repository: registry-1.docker.io/rhworkshops
     tag: latest
 qcomplaints:
-  enabled: true
+  enabled: false
   image:
     repository: registry-1.docker.io/rhworkshops
     tag: latest
 database:
-  enabled: true
+  enabled: false
   storage:
     storageClass: gp3
-    enabled: false
-  liquibaseimage:
-    repository: registry-1.docker.io/rhworkshops
-    name: sccstore-liquibase
-    tag: latest
 ansible:
-  enabled: false
+  enabled: true
+  setupInfrastructure: true
   image:
     repository: registry-1.docker.io/rhworkshops
     tag: latest

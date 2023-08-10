@@ -1,6 +1,6 @@
 apiVersion: v2
-name: sccstore-charts
-description: A Helm chart for Kubernetes
+name: ansible
+description: A Helm chart for Ansible on K8s
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -22,15 +22,3 @@ version: 1.2.2
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "1.2.2"
-
-dependencies:
-- name: database
-  condition: database.enabled
-- name: pcomplaints
-  condition: pcomplaints.enabled
-- name: qcomplaints
-  condition: qcomplaints.enabled
-- name: ui
-  condition: ui.enabled
-- name: ansible
-  condition: ansible.enabled

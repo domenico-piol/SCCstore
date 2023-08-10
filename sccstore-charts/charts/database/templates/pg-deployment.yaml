@@ -30,6 +30,23 @@ spec:
               name: postgredb
       volumes:
         - name: postgredb
+{{- if .Values.storage.enabled }}
+          persistentVolumeClaim:
+            claimName: pg-pvc
+{{- else }}
           emptyDir: {}
-          #persistentVolumeClaim:
-          #  claimName: pg-pvc
+{{- end }}
+{{- if .Values.storage.enabled }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pg-pvc
+spec:
+  storageClassName: {{ .Values.storage.storageClass }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Mi
+{{- end }}

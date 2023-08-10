@@ -92,3 +92,31 @@ podman images
 podman run -d sccstore-t1
 podman ps -a
 podman logs --tail 100 3737d4ca8aff
+
+
+
+Helm repository
+===============
+
+In SCCStore-Helm/
+
+    helm package ../SCCstore/sccstore-charts -d .
+    helm repo index --url https://domenico-piol.github.io/SCCStore-Helm . --merge ./index.yaml
+
+Page is published automatically after commit/push...
+
+
+ARGOCD
+======
+
+IMPORTANT Give permission to the Argo CD service account to control the cluster:
+
+    oc adm policy add-cluster-role-to-user cluster-admin -z openshift-gitops-argocd-application-controller -n openshift-gitops
+
+
+EC2 instance
+============
+
+save the pem file!!
+
+    ssh -i ~/.ssh/pg-prod.pem ec2-user@18.189.24.210

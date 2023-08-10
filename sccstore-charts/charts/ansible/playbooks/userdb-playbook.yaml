@@ -1,0 +1,48 @@
+---
+- name: SCCSTORE userdb setup
+  hosts: pg-databases
+
+  tasks:
+    - name: Create sccstore db user
+      become: yes
+      become_user: postgres
+      postgresql_user:
+        state: present
+        name: sccstore
+        password: sccstore
+
+    - name: create sccstore database
+      become: yes
+      become_user: postgres
+      postgresql_db:
+        state: present
+        name: "{{ DB_NAME }}"
+        owner: sccstore
+        conn_limit: "20"
+
+    - name: Create compliance table
+      become: yes
+      become_user: postgres
+      postgresql_table:
+        name: complaints
+        db: "{{ DB_NAME }}"
+        owner: sccstore
+        columns:
+          - compl_id serial primary key
+          - complaint VARCHAR(255) NOT NULL
+
+    - name: Insert initial data-set - 1
+      become: yes
+      become_user: postgres
+      postgresql_query:
+        db: "{{ DB_NAME }}"
+        autocommit: true
+        query: INSERT INTO complaints (complaint) SELECT 'Just a first initial complaint' WHERE NOT EXISTS (SELECT * FROM complaints)
+
+    - name: Insert initial data-set - 2
+      become: yes
+      become_user: postgres
+      postgresql_query:
+        db: "{{ DB_NAME }}"
+        autocommit: true
+        query: INSERT INTO complaints (complaint) SELECT 'And another one initially loaded' WHERE (SELECT COUNT(*) FROM complaints) < 2

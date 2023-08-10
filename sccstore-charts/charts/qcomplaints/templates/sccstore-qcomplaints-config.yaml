@@ -5,5 +5,6 @@ metadata:
 data:
   # property-like keys; each key maps to a simple value
   SCC_DB_HOST: {{ .Values.global.database.service }}
+  SCC_DB_NAME: {{ .Values.global.database.dbName }}
   #SCC_DB_URL: jdbc:postgresql://win10-postgresql:5432/sccstore
   #quarkus.datasource.jdbc.url: jdbc:postgresql://win10-postgresql:5432/sccstore

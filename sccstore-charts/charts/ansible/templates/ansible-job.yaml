@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ansible-postgres-playbook-runner
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    spec:
+      containers:
+      - name: ansible-runner
+        image: {{ .Values.ansiblerunner.repository }}/{{ .Values.ansiblerunner.name }}:{{ .Values.ansiblerunner.tag }}
+        imagePullPolicy: Always
+{{- if .Values.setupInfrastructure }}
+        command: ["sh", "-c", "ansible-playbook /ansible-playbooks/main-playbook.yaml -i /ansible-playbooks/hosts.yaml --extra-vars 'DB_NAME={{ .Values.global.database.dbName }}'"]
+{{- else }}
+        command: ["sh", "-c", "ansible-playbook /ansible-playbooks/userdb-playbook.yaml -i /ansible-playbooks/hosts.yaml --extra-vars 'DB_NAME={{ .Values.global.database.dbName }}'"]
+{{- end }}
+        #command: ["sh", "-c", "while true; do sleep 30; done;"]
+        volumeMounts:
+          - name: playbooks
+            mountPath: /ansible-playbooks/
+          - name: pghostpem
+            mountPath: /pg-host/pg-prod.pem
+            subPath: pg-prod.pem
+            readOnly: true
+      restartPolicy: Never
+      volumes:
+        - name: playbooks
+          configMap:
+            name: pg-ansible-playbook
+        - name: pghostpem
+          secret:
+            secretName: pg-host-secret
+            defaultMode: 432

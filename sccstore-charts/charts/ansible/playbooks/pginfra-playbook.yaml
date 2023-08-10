@@ -1,0 +1,70 @@
+---
+- name: SCCSTORE database infra setup
+  hosts: pg-databases
+
+  tasks:
+    - name: Install postgres
+      become: yes
+      dnf: "name={{ item }} state=present"
+      with_items:
+        - gcc*
+        - python3
+        - postgresql
+        - postgresql-server
+        - python3-devel
+        - postgresql-devel
+        - rpm-build
+
+    - name: Install Python packages
+      become: yes
+      pip:
+        name: psycopg2-binary
+        executable: pip3
+
+    - name: Find out if PostgreSQL is initialized
+      become: yes
+      ansible.builtin.stat:
+        path: /var/lib/pgsql/data/pg_hba.conf
+      register: postgres_data
+
+    - name: Initialize PostgreSQL
+      become: yes
+      shell: postgresql-setup initdb
+      when: not postgres_data.stat.exists
+
+    - name: Start and enable services
+      become: yes
+      service:
+        name: postgresql
+        state: started
+        enabled: yes
+
+    - name: Allow remote connections - part I
+      become: yes
+      become_user: postgres
+      lineinfile:
+        path: "~/data/postgresql.conf"
+        regexp: "listen_addresses ="
+        line: "listen_addresses = '*'"
+        state: present
+      notify: restart postgres
+
+    - name: Allow remote connections - part II
+      become: yes
+      become_user: postgres
+      lineinfile:
+        path: "~/data/pg_hba.conf"
+        line: "host    all    all    0.0.0.0/0    md5"
+        state: present
+      notify: restart postgres
+
+    # - name: do not permit traffic in default zone on port 8081/tcp
+    #   ansible.posix.firewalld:
+    #     port: 5432/tcp
+    #     permanent: true
+    #     state: enabled
+
+  handlers:
+    - name: restart postgres
+      become: yes
+      service: name=postgresql state=restarted
