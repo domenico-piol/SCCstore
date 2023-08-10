@@ -1,4 +1,4 @@
-apiVersion: tekton.dev/v1beta1
+apiVersion: tekton.dev/v1
 kind: Pipeline
 metadata:
   name: sccstore-pipeline
@@ -186,6 +186,13 @@ spec:
       workspaces:
         - name: images-url
           workspace: shared-workspace
+  finally:
+    - name: print-buildinfo
+      taskRef: 
+        name: build-info
+      params:
+        - name: buildID
+          value: $(context.pipelineRun.uid)
 #
 # CAN BE USED FOR DEBUGGING
 #    - name: list-dir
