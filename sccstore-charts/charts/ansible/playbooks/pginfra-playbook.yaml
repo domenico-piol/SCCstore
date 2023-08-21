@@ -65,6 +65,6 @@
     #     state: enabled
 
   handlers:
-    - name: restart postgres
+    - name: Restart postgres
       become: yes
       service: name=postgresql state=restarted
