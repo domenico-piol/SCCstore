@@ -1,4 +1,4 @@
-The pipeline requires Tekton and ArgoCD to be available on the cluster. Additionally, some Tasks from the Tekton Hub are required. And as we build container-images, the SericeAccount used by the pipeline (default: pipeline) requires some additional rights to run the tasks privileged.
+The pipeline requires Tekton and ArgoCD to be available on the cluster. Additionally, some Tasks from the Tekton Hub are required. And as we build container-images, the ServiceAccount used by the pipeline (default: pipeline) requires some additional rights to run the tasks privileged.
 
 # Tekton/ArgoCD
 Use the respective operators from the OpenShift OperatorHub to install Tekton and ArgoCD.
