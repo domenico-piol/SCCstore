@@ -12,6 +12,9 @@ spec:
     - name: container-repo
       type: string
       description: The container repo URL to be used.
+    - name: container-registry
+      type: string
+      description: The container registry (e.g. docker.io)
     - name: repo-branch
       type: string
       description: The branch to be used.
@@ -75,7 +78,7 @@ spec:
           workspace: dockerconfig-ws
     - name: ui-skopeo-copy
       taskRef:
-        name: skopeo-copy
+        name: dpiol-skopeo-copy
       runAfter:
         - ui-buildah
       params:
@@ -87,6 +90,10 @@ spec:
           value: 'false'
         - name: destTLSverify
           value: 'false'
+        - name: credentials
+          value: rhworkshops-dockerio-creds-username
+        - name: containerRegistry
+          value: $(params.container-registry)
       workspaces:
         - name: images-url
           workspace: shared-workspace
@@ -107,7 +114,7 @@ spec:
           workspace: dockerconfig-ws
     - name: qcomplaints-skopeo-copy
       taskRef:
-        name: skopeo-copy
+        name: dpiol-skopeo-copy
       runAfter:
         - qcomplaints-buildah
       params:
@@ -119,6 +126,10 @@ spec:
           value: 'false'
         - name: destTLSverify
           value: 'false'
+        - name: credentials
+          value: rhworkshops-dockerio-creds-username
+        - name: containerRegistry
+          value: $(params.container-registry)
       workspaces:
         - name: images-url
           workspace: shared-workspace
@@ -139,7 +150,7 @@ spec:
           workspace: dockerconfig-ws
     - name: pcomplaints-skopeo-copy
       taskRef:
-        name: skopeo-copy
+        name: dpiol-skopeo-copy
       runAfter:
         - pcomplaints-buildah
       params:
@@ -151,6 +162,10 @@ spec:
           value: 'false'
         - name: destTLSverify
           value: 'false'
+        - name: credentials
+          value: rhworkshops-dockerio-creds-username
+        - name: containerRegistry
+          value: $(params.container-registry)
       workspaces:
         - name: images-url
           workspace: shared-workspace
@@ -171,7 +186,7 @@ spec:
           workspace: dockerconfig-ws
     - name: liquibase-skopeo-copy
       taskRef:
-        name: skopeo-copy
+        name: dpiol-skopeo-copy
       runAfter:
         - liquibase-buildah
       params:
@@ -183,6 +198,10 @@ spec:
           value: 'false'
         - name: destTLSverify
           value: 'false'
+        - name: credentials
+          value: rhworkshops-dockerio-creds-username
+        - name: containerRegistry
+          value: $(params.container-registry)
       workspaces:
         - name: images-url
           workspace: shared-workspace

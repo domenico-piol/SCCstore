@@ -28,7 +28,11 @@ This can be done by placing the .docker/config.json file holding the credentials
 ## skopeo-copy
 Use tkn to install this Task:
 
-    tkn hub install task skopeo-copy
+~~tkn hub install task skopeo-copy~~   NOT WORKING ANYMORE
+
+use this instead:
+
+    oc apply -f cicd/dpiol-skopeo-copy.yaml
 
 
 # Privileges

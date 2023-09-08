@@ -26,5 +26,7 @@ spec:
       value: domenico
     - name: container-repo
       #value: quay.io/domenico_piol
-      value: registry-1.docker.io/rhworkshops
+      value: rhworkshops
       #value: registry-1.docker.io/domenicopiol
+    - name: container-registry
+      value: docker.io

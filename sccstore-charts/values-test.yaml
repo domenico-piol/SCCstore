@@ -1,0 +1,37 @@
+# Default values for sccstore-charts.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+global:
+  stage: test
+  database: 
+    service: pg-service
+ui:
+  enabled: true
+  image:
+    #repository: registry-1.docker.io/domenicopiol
+    repository: registry-1.docker.io/rhworkshops
+    tag: latest
+pcomplaints:
+  enabled: false
+  image:
+    repository: registry-1.docker.io/rhworkshops
+    tag: latest
+qcomplaints:
+  enabled: true
+  image:
+    repository: registry-1.docker.io/rhworkshops
+    tag: latest
+database:
+  enabled: true
+  storage:
+    storageClass: gp3
+    enabled: false
+  liquibaseimage:
+    repository: registry-1.docker.io/rhworkshops
+    name: sccstore-liquibase
+    tag: latest
+ansible:
+  enabled: false
+  image:
+    repository: registry-1.docker.io/rhworkshops
+    tag: latest
