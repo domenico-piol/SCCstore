@@ -11,7 +11,8 @@ spec:
         image: {{ .Values.ansiblerunner.repository }}/{{ .Values.ansiblerunner.name }}:{{ .Values.ansiblerunner.tag }}
         imagePullPolicy: Always
 {{- if .Values.setupInfrastructure }}
-        command: ["sh", "-c", "ansible-playbook /ansible-playbooks/main-playbook.yaml -i /ansible-playbooks/hosts.yaml --extra-vars 'DB_NAME={{ .Values.global.database.dbName }}'"]
+        #command: ["sh", "-c", "ansible-playbook /ansible-playbooks/main-playbook.yaml -i /ansible-playbooks/hosts.yaml --extra-vars 'DB_NAME={{ .Values.global.database.dbName }}'"]
+        command: ["sh", "-c", "ansible-playbook /ansible-playbooks/pginfra-playbook.yaml -i /ansible-playbooks/hosts.yaml --extra-vars 'DB_NAME={{ .Values.global.database.dbName }}'"]
 {{- else }}
         command: ["sh", "-c", "ansible-playbook /ansible-playbooks/userdb-playbook.yaml -i /ansible-playbooks/hosts.yaml --extra-vars 'DB_NAME={{ .Values.global.database.dbName }}'"]
 {{- end }}
