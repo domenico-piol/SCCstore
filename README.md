@@ -82,6 +82,8 @@ Buildah can use the credentials for docker.io in the config.json format. For thi
     cat config.json | base64
 Then add the generated hash to the yaml-file below.
 
+In the `rhworkshops-docker-io-secret.yaml` file:
+
     apiVersion: v1
     kind: Secret
     metadata:
@@ -89,7 +91,7 @@ Then add the generated hash to the yaml-file below.
     data:
       config.json: ewoJImF1...
 
-On the other hand, Skope expects the username and password 
+On the other hand, Skopeo expects the username and password, so in the `rhworkshops-docker-io-secret-usernamepassword.yaml` file:
 
     apiVersion: v1
     kind: Secret
