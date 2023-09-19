@@ -17,8 +17,12 @@ This sample microservices-based system consists of the following modules (target
 - **SCC Complaints (python)** - Python implementation of the complaints controller
 - **SCC Complaints Database** - the relational database for complaints
 
-> The Service Mesh is not yet implemented and therefore the **SCC Complaints (python)** component is not yet deployed during the deployment.
+---
+**NOTE**
 
+The Service Mesh is not yet implemented and therefore the **SCC Complaints (python)** component is not yet deployed during the deployment.
+
+---
 ## Usage Guide
 For building the demo application you will need Maven 3.5 or newer (I am using v3.8.2), Java 17 and Quarkus and Tekton for the CI/CD pipeline. 
 
@@ -102,6 +106,13 @@ Apply those 2 yaml files to the sccstore-pipelines namespace:
 
     oc apply -f rhworkshops-docker-io-secret.yaml 
     oc apply -f rhworkshops-docker-io-secret-usernamepassword.yaml 
+
+---
+**NOTE**
+
+Be aware, this 2 files are the only ones NOT provided within this repository for obvious reasons. You must create them on your own!
+
+---
 
 As a next step, you need to link the generated secret containeg the username/password key-value pair to the service-account:
 
