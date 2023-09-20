@@ -3,6 +3,7 @@ SCCstore is a Spring Boot based, cloud native demo application using microservic
 
 In this project I'm demonstrating how to use Spring Boot for building microservice-based architecture for Kubernetes. This example is based on Spring Boot 2.5.
 
+
 # Getting Started
 This project is a multi-module Maven project based on Spring Boot 2.5.x, Quarkus, a PostgreSQL database and intended to be run on OpenShift.
 
@@ -23,24 +24,53 @@ This sample microservices-based system consists of the following modules (target
 The Service Mesh is not yet implemented and therefore the **SCC Complaints (python)** component is not yet deployed during the deployment.
 
 ---
-## Usage Guide
+
+On a deployment level, there is a big difference between DEV/TEST and PROD deployment. On DEV and TEST, the database is deployed within a container on OpenShift, whereas on PROD the database is running on a VM!
+
+<p align="center">
+  <img src="./diagrams/architecture-stages.jpg" width="600">
+</p>
+
+## Build and deployment process
+For the build process we will use the capabilities of Tekton. A Tekton pipeline will build, package and push the images to our image-registry on docker.io.
+
+<p align="center">
+  <img src="./diagrams/workflow-dev.jpg" width="600">
+</p>
+
+Also, we will work with 3 different stages for this workshop. DEV, TEST and PROD. The difference being - beside the database running in a VM on PROD - that on DEV we use manual deployment whereas on TEST and PROD we will use ArgoCD for CI!
+
+<p align="center">
+  <img src="./diagrams/workflow-test_prod.jpg" width="600">
+</p>
+
+The VM containing the database will be set-up by Ansible during the deployment process. More details later...
+
+This said, overall it looks like this:
+
+<p align="center">
+  <img src="./diagrams/deploy-workflow-overall.jpg" width="600">
+</p>
+
+
+# Usage Guide
 For building the demo application you will need Maven 3.5 or newer (I am using v3.8.2), Java 17 and Quarkus and Tekton for the CI/CD pipeline. 
 
 For running it, as said, you will need OpenShift, but it should perfectly work also on any other container platform. 
 
 In the PROD setup, I use a PostgreSQL database which runs on a VM... In the DEV setup the database runs within a container.
 
-### Prepare the OpenShift cluster environment (part I - DEV)
+## Prepare the OpenShift cluster environment (part I - DEV)
 For this I use an OpenShift cluster on AWS. When choosing another cloud-provider or environment you will to change the storage-class in the helm values file for the database (for AWS I use 'gp3').
 
-#### Step 1 - create the required namespaces
+### Step 1 - create the required namespaces
 We need a namespace for running the pipelines, one for running the dev-stage and one for the prod-stage.
 
     oc new-project sccstore-pipelines
     oc new-project sccstore-dev
     oc new-project sccstore-prod
 
-#### Step 2 - install Tekton, required Tasks and privileges
+### Step 2 - install Tekton, required Tasks and privileges
 We use Tekton for building the application. First, install Tekton using the OperatorHub.
 
 <p align="center">
@@ -122,7 +152,7 @@ As a next step, you need to link the generated secret containeg the username/pas
 
 That's it... the Tekton pipeline environment is now ready!
 
-#### Step 3 - start our first build
+### Step 3 - start our first build
 Now that the build-pipeline environment is ready to be used, let's start our first build.
 First, install the pipeline:
 
@@ -139,7 +169,7 @@ For sake of this exercise, we will trigger the build manually by providing a Pip
 
 The pipeline will build the complete project, create container-images for all components, tag the images with the build-hash, push them to docker.io and add also the `latest` tag.
 
-#### Step 4 - install the serverless environment (KNative)
+### Step 4 - install the serverless environment (KNative)
 Now we install Red Hat OpenShift Serverless (KNative) from OperatorHub.
 <p align="center">
   <img src="./diagrams/step4-install_serverless.jpg" width="600">
@@ -154,7 +184,7 @@ Once installed we need to create a KnativeServing instance in the `knative-servi
 
 Once it's ready (see "status" labels), we are good to continue.
 
-### Deploy to DEV stage
+## Deploy to DEV stage
 For DEV stage, we use simply Helm on the command line. But first we must switch to the DEV namespace!
 
     oc project sccstore-dev
