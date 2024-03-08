@@ -1,0 +1,33 @@
+---
+# Source: sccstore-charts/charts/database/templates/post-install-complaints.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: liquibase-complaints
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+spec:
+  ttlSecondsAfterFinished: 120
+  template:
+    spec:
+      containers:
+      - name: liquibase-complaints
+        image: registry-1.docker.io/rhworkshops/sccstore-liquibase:latest
+        imagePullPolicy: Always
+        command: ["sh", "-c", "docker-entrypoint.sh --username=${USERNAME} --password=${PASSWORD} --url=${URL} --classpath=changelog --changeLogFile=changelog/complaints.sql update"]
+        env:
+        - name: URL
+          value: 'jdbc:postgresql://pg-service:5432/sccstore'
+        - name: USERNAME
+          value: sccstore
+        - name: PASSWORD
+          value: sccstore
+        volumeMounts:
+        - name: changeset
+          mountPath: /liquibase/changelog/complaints.sql
+          subPath: complaints.sql
+      restartPolicy: Never
+      volumes:
+        - name: changeset
+          configMap:
+            name: complaints-changeset
