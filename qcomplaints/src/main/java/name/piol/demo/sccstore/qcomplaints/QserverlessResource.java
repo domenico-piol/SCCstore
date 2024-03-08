@@ -17,8 +17,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.inject.Inject;
+//import javax.inject.Inject;
 import io.agroal.api.AgroalDataSource;
+import jakarta.inject.Inject;
 
 @Path("/")
 public class QserverlessResource {
