@@ -1,0 +1,1 @@
+Use this plain k8s yaml files only when Helm cannot be used for some reasons!!

@@ -1,0 +1,125 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sccstore-webcert
+type: Opaque
+data:
+  webcert.p12: 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
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sccstore-ui-spring-config
+data:
+  k8s-config.json:
+    '{
+      "sccstore.platform": "postgres",
+      "sccstore.url": "jdbc:postgresql://pg-service:5432/sccstore",
+      "sccstore.username": "sccstore",
+      "sccstore.password": "sccstore",
+      "sccstore.complaintsBackend": "http://sccstore-qcomplaints.sccstore-dev.svc"
+     }'
+
+---
+
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: sccstore-ui-route
+spec:
+  port:
+    targetPort: 8443
+  tls:
+    termination: passthrough 
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
+  to:
+    kind: Service
+    name: sccstore-ui-service
+    weight: 100
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: sccstore-ui-service
+spec:
+  ports:
+  - port: 443
+    protocol: TCP
+    targetPort: 8443
+  selector:
+    app: sccstore-ui
+  type: ClusterIP
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sccstore-ui
+  labels:
+    app: sccstore-ui
+    app.kubernetes.io/managed-by: helm
+    app.kubernetes.io/part-of: sccstore
+    app.openshift.io/runtime: spring-boot
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: sccstore-ui
+  template:
+    metadata:
+      labels:
+        app: sccstore-ui
+    spec:
+      containers:
+      - name: sccstore-ui
+        image: 'registry-1.docker.io/rhworkshops/sccstore-ui:latest'
+        imagePullPolicy: Always
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "K8S"
+        - name: SPRING_APPLICATION_JSON
+          valueFrom:
+            configMapKeyRef:
+              name: sccstore-ui-spring-config
+              key: k8s-config.json
+        ports:
+        - containerPort: 8443
+        volumeMounts:
+        - name: certs
+          mountPath: "/certs/"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8778
+            scheme: HTTPS
+          timeoutSeconds: 4
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8778
+              scheme: HTTPS
+            timeoutSeconds: 4
+            initialDelaySeconds: 30
+            periodSeconds: 10
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "300m"
+          limits:
+            memory: "300Mi"
+            cpu: "1500m"
+      volumes:
+      - name: certs
+        secret:
+          secretName: sccstore-webcert
+      serviceAccountName: default
