@@ -5,7 +5,7 @@ metadata:
 data:
   # property-like keys; each key maps to a simple value
   SCC_DB_HOST: pg-service
-  SCC_DB_NAME: 
+  SCC_DB_NAME:
 
 ---
 
