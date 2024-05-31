@@ -203,6 +203,12 @@ Once every component has completed tha startup, you can access the application i
 
 To access the data in the database, click on "Complaints Department" in the menu and click on Marvin, the depressed robot.
 
+### Run the liquibase-job standalone
+In dev stage there is no persistance. In case you need to re-run the liquibase only for initializing the database, you can run:
+
+    helm template ./sccstore-charts -s charts/database/templates/post-install-complaints.yaml | oc apply -f - 
+
+
 ## Prepare the OpenShift cluster environment (part II - TEST)
 Other than for DEV, in the TEST stage we will use ArgoCD for the deployment and not manually invoke Helm.
 ### Install ArgoCD
