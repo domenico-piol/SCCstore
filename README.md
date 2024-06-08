@@ -208,6 +208,7 @@ In dev stage there is no persistance. In case you need to re-run the liquibase o
 
     helm template ./sccstore-charts -s charts/database/templates/post-install-complaints.yaml | oc apply -f - 
 
+
 ## Prepare the OpenShift cluster environment (part II - TEST)
 Other than for DEV, in the TEST stage we will use ArgoCD for the deployment and not manually invoke Helm.
 ### Install ArgoCD
