@@ -13,17 +13,16 @@ Use the `sccstore-dev` namespace!!
 `helm install sccstore sccstore-charts`
 
 1. Create Fedora VM
-Do this in the `sccstore` namespace, add the `fedora` SSH Private Key (in "Scripts")in the creation step!!! Name the VM "pg-database"
+Do this in the `sccstore` namespace, add the `fedora` SSH Public Key (from ~/.ssh/) in "Scripts" section in the creation step!!! Name the VM "pg-database"
 
 1. Install Ansible
-`sudo dnf install ansible`
+Login - `virtctl ssh -i ~/.ssh/fedora fedora@pg-database`
+Then - `sudo dnf install ansible`
 
 1. Copy the Ansible script to the VM and run it to create the DB
 `virtctl ssh -i ~/.ssh/fedora fedora@pg-database`
-Then paste the `DB-VM-Ansible.yaml` to a the VM into `pg.yaml` and run it as root!
+Then paste the `DB-VM-Ansible.yaml` to a the VM into `pg.yaml` and run it as root! (pwd: get from console in OCP)
 `sudo ansible-playbook pg.yaml -K`
 1. Deploy DB-VM.yaml (service)
 1. Deploy QCOMPLAINTS.yaml (serverless)
 1. Deploy UI.yaml (UI)
-
-
