@@ -1,0 +1,112 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: complaints-changeset
+data:
+  complaints.sql: |
+    --liquibase formatted sql
+    --changeset sccstore-changeset:1
+    create table complaints (
+      compl_id SERIAL PRIMARY KEY, 
+      complaint VARCHAR (255) NOT NULL
+    );
+    insert into complaints (complaint) values ('Just a first initial complaint');
+    insert into complaints (complaint) values ('And another one initially loaded');
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pg-config
+  labels:
+    app: postgres
+data:
+  POSTGRESQL_USER: sccstore
+  POSTGRESQL_PASSWORD: sccstore
+  POSTGRESQL_DATABASE: sccstore
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: pg-service
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres  # Sets Deployment name
+  labels:
+    app: postgres
+    app.kubernetes.io/part-of: sccstore
+    app.openshift.io/runtime: postgresql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: registry.redhat.io/rhscl/postgresql-13-rhel7
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: pg-config
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgredb
+      volumes:
+        - name: postgredb
+          emptyDir: {}
+
+---
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: liquibase-complaints
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+spec:
+  ttlSecondsAfterFinished: 120
+  template:
+    spec:
+      containers:
+      - name: liquibase-complaints
+        image: registry-1.docker.io/rhworkshops/sccstore-liquibase:latest
+        imagePullPolicy: Always
+        command: ["sh", "-c", "docker-entrypoint.sh --username=${USERNAME} --password=${PASSWORD} --url=${URL} --classpath=changelog --changeLogFile=changelog/complaints.sql update"]
+        env:
+        - name: URL
+          value: 'jdbc:postgresql://pg-service:5432/sccstore'
+        - name: USERNAME
+          value: sccstore
+        - name: PASSWORD
+          value: sccstore
+        volumeMounts:
+        - name: changeset
+          mountPath: /liquibase/changelog/complaints.sql
+          subPath: complaints.sql
+      restartPolicy: Never
+      volumes:
+        - name: changeset
+          configMap:
+            name: complaints-changeset
