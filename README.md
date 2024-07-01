@@ -81,7 +81,7 @@ There we can install the required Tasks, from Tekton Hub:
 
     tkn hub install task git-clone
     tkn hub install task maven
-    tkn hub install task buildah --version 0.5   ## later version is generating errors
+    tkn hub install task buildah
 And our own custom Tasks:
 
     oc apply -f cicd/dpiol-skopeo-copy.yaml
