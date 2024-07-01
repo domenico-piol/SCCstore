@@ -16,8 +16,8 @@ spec:
         claimName: maven-repo-pvc
     - name: dockerconfig-ws
       secret:
-        #secretName: dockerconfig-secret
-        secretName: rhworkshops-dockerconfig-secret
+        secretName: dockerconfig-secret
+        #secretName: rhworkshops-dockerconfig-secret
         #secretName: quay-dockerconfig-secret
   params:
     - name: repo-url
