@@ -92,7 +92,7 @@ spec:
         - name: destTLSverify
           value: 'false'
         - name: credentials
-          value: rhworkshops-dockerio-creds-username
+          value: dockerio-creds-username
         - name: containerRegistry
           value: $(params.container-registry)
       workspaces:
@@ -128,7 +128,7 @@ spec:
         - name: destTLSverify
           value: 'false'
         - name: credentials
-          value: rhworkshops-dockerio-creds-username
+          value: dockerio-creds-username
         - name: containerRegistry
           value: $(params.container-registry)
       workspaces:
@@ -164,7 +164,7 @@ spec:
         - name: destTLSverify
           value: 'false'
         - name: credentials
-          value: rhworkshops-dockerio-creds-username
+          value: dockerio-creds-username
         - name: containerRegistry
           value: $(params.container-registry)
       workspaces:
@@ -200,7 +200,7 @@ spec:
         - name: destTLSverify
           value: 'false'
         - name: credentials
-          value: rhworkshops-dockerio-creds-username
+          value: dockerio-creds-username
         - name: containerRegistry
           value: $(params.container-registry)
       workspaces:
