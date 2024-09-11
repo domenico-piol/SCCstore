@@ -1,0 +1,8 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: pg-service
+spec:
+  type: NodePort
+  selector:
+    kubevirt.io/domain: pg-database
