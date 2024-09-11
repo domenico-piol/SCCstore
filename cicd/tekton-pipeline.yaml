@@ -45,7 +45,8 @@ spec:
         - fetch-repository
       params:
         - name: MAVEN_IMAGE
-          value: quay.io/quarkus/ubi-quarkus-native-s2i:22.2-java17
+          value: docker.io/domenicopiol/builder-graalvm21:latest
+          #value: quay.io/quarkus/ubi-quarkus-native-s2i:22.2-java17
         - name: CONTEXT_DIR
           value: "."
         - name: GOALS
@@ -91,7 +92,7 @@ spec:
         - name: destTLSverify
           value: 'false'
         - name: credentials
-          value: rhworkshops-dockerio-creds-username
+          value: dockerio-creds-username
         - name: containerRegistry
           value: $(params.container-registry)
       workspaces:
@@ -127,7 +128,7 @@ spec:
         - name: destTLSverify
           value: 'false'
         - name: credentials
-          value: rhworkshops-dockerio-creds-username
+          value: dockerio-creds-username
         - name: containerRegistry
           value: $(params.container-registry)
       workspaces:
@@ -163,7 +164,7 @@ spec:
         - name: destTLSverify
           value: 'false'
         - name: credentials
-          value: rhworkshops-dockerio-creds-username
+          value: dockerio-creds-username
         - name: containerRegistry
           value: $(params.container-registry)
       workspaces:
@@ -199,7 +200,7 @@ spec:
         - name: destTLSverify
           value: 'false'
         - name: credentials
-          value: rhworkshops-dockerio-creds-username
+          value: dockerio-creds-username
         - name: containerRegistry
           value: $(params.container-registry)
       workspaces:

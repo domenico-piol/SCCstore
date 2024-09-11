@@ -1,6 +1,6 @@
-> **NOTE** Use this plain k8s yaml files the use-case with PostgreSQL in a VM!
+> **NOTE** Use this plain k8s yaml files the use-case with PostgreSQL in a VM using kustomize!
 
-### Steps
+## Prepare
 1. Get ARO Open Environment
 1. Install OCP Virt
 1. Install Serverless
@@ -8,10 +8,16 @@
 `oc new-project sccstore`
 `oc new-project sccstore-dev`
 
-1. Deploy the DEV environment with PG in a container
-Use the `sccstore-dev` namespace!! 
-`helm install sccstore sccstore-charts`
+## DEV stage
+Use the `sccstore-dev` namespace!
 
+1. Deploy the DEV environment with PG in a container
+`oc apply -k kustomize/overlays/dev`
+
+## PROD stage
+Use the `sccstore` namespace!
+
+### Prepare
 1. Create Fedora VM
 Do this in the `sccstore` namespace, add the `fedora` SSH Public Key (from ~/.ssh/) in "Scripts" section in the creation step!!! Name the VM "pg-database"
 
@@ -23,6 +29,7 @@ Then - `sudo dnf install ansible`
 `virtctl ssh -i ~/.ssh/fedora fedora@pg-database`
 Then paste the `DB-VM-Ansible.yaml` to a the VM into `pg.yaml` and run it as root! (pwd: get from console in OCP)
 `sudo ansible-playbook pg.yaml -K`
-1. Deploy DB-VM.yaml (service)
-1. Deploy QCOMPLAINTS.yaml (serverless)
-1. Deploy UI.yaml (UI)
+
+### Deployment
+1. Deploy application
+`oc apply -k kustomize/overlays/prod` 

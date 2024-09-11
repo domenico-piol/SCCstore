@@ -15,7 +15,7 @@ This sample microservices-based system consists of the following modules (target
 
 - **SCC UI** - the user-interface component of the application
 - **SCC Complaints (quarkus)** - Java/Quarkus implementation of the complaints controller
-- **SCC Complaints (python)** - Python implementation of the complaints controller
+- **SCC Complaints (python)** - Python implementation of the complaints controller (not used yet)
 - **SCC Complaints Database** - the relational database for complaints
 
 
@@ -57,14 +57,14 @@ For running it, as said, you will need OpenShift, but it should perfectly work a
 In the PROD setup, I use a PostgreSQL database which runs on a VM... In the DEV setup the database runs within a container.
 
 ## Prepare the OpenShift cluster environment (part I - DEV)
-For this I use an OpenShift cluster on AWS. When choosing another cloud-provider or environment you will to change the storage-class in the helm values file for the database (for AWS I use 'gp3').
+For this I use an OpenShift cluster on AWS. When choosing another cloud-provider or environment you will to change the storage-class in the kustomize template file for the database (for AWS I use 'gp3').
 
 ### Step 1 - create the required namespaces
 We need a namespace for running the pipelines, one for running the dev/test-stage and prod-stage.
 
     oc new-project sccstore-pipelines
     oc new-project sccstore-dev
-    oc new-project sccstore-test
+    oc new-project sccstore-test      # can be ignored for now
     oc new-project sccstore-prod
 
 ### Step 2 - install Tekton, required Tasks and privileges
@@ -81,7 +81,7 @@ There we can install the required Tasks, from Tekton Hub:
 
     tkn hub install task git-clone
     tkn hub install task maven
-    tkn hub install task buildah --version 0.5   ## later version is generating errors
+    tkn hub install task buildah
 And our own custom Tasks:
 
     oc apply -f cicd/dpiol-skopeo-copy.yaml
@@ -176,24 +176,27 @@ Once installed we need to create a KnativeServing instance in the `knative-servi
 
 Once it's ready (see "status" labels), we are good to continue.
 
+### Step 5 - install OpenShift Virtualization
+Again, go to the Operator Hub and install OpenShift Virtualization.
+
+For this step to succeed, be sure you have a default storage class configured!
+
+
 ## Deploy to DEV stage
-For DEV stage, we use simply Helm on the command line. But first we must switch to the DEV namespace!
+With kustomize it's very easy to deploy the complete application - including the database in a container - to kubernetes. I am using OpenShift and therefore the `oc` command. However, `kubctl` works the same! 
+And don't forget to switch to the `sccstore-dev` namespace before!
 
-    oc project sccstore-dev
+    oc apply -k kustomize/overlays/dev
 
-    helm install sccstore sccstore-charts
+If you want to delete everything again, use:
 
-This will pick the `latest` tag of all the images and deploy the complete application to OpenShift.
-
-To delete the complete deployment, use:
-
-    helm delete sccstore
+    oc delete -k kustomize/overlays/dev
 
 <p align="center">
   <img src="./diagrams/deploy_dev.jpg" width="600">
 </p>
 
-You be seeing the `liquibase constraints` job failing initially until the PostgreSQL database is ready. That is absolutely to be expected. It will complete successfully after PostreSQL is ready.
+You'll be seeing the `liquibase constraints` job failing initially until the PostgreSQL database is ready. That is absolutely to be expected. It will complete successfully after PostreSQL is ready.
 
 Once every component has completed tha startup, you can access the application in the `sccstore-ui` component.
 
@@ -206,61 +209,36 @@ To access the data in the database, click on "Complaints Department" in the menu
 ### Run the liquibase-job standalone
 In dev stage there is no persistance. In case you need to re-run the liquibase only for initializing the database, you can run:
 
-    helm template ./sccstore-charts -s charts/database/templates/post-install-complaints.yaml | oc apply -f - 
+> **NOTE** to be defined...
 
+## Deploy to PROD stage
+PROD stage is different... you know somebody who is running production databases in containers? I don't... So, this said, our database in PROD will be running in a VM using kubevirt (OpenShift Virtualization in my case).
 
-## Prepare the OpenShift cluster environment (part II - TEST)
-Other than for DEV, in the TEST stage we will use ArgoCD for the deployment and not manually invoke Helm.
-### Install ArgoCD
-ArgoCD can be easily installed using the Operator Hub:
+In a first step, we need to create the VM manually, I will try to automate this later using Ansible.
 
-<p align="center">
-  <img src="./diagrams/argocd-install-1.jpg" width="600">
-</p>
+### Prepare the database VM
+1. **Create a Fedora VM**
+Do this in the sccstore namespace, add the fedora SSH Public Key (mine is stored in from ~/.ssh/) in the "Scripts" section during creation in Openshift Virtualization UI!!! 
+Name the VM "pg-database".
 
-Once ArgoCD is operational, we have to give permission to the Argo CD service account to control the cluster:
+1. **Install Ansible**
+Login to the VM using `virtctl ssh -i ~/.ssh/fedora fedora@pg-database`
+And then install Ansible `sudo dnf install ansible`
 
-    oc adm policy add-cluster-role-to-user cluster-admin -z openshift-gitops-argocd-application-controller -n openshift-gitops
+1. **Create and configure the DB**
+Login and copy the Ansible script to the VM and run it:
+`virtctl ssh -i ~/.ssh/fedora fedora@pg-database`
+Then paste the db-vm-ansible.yaml to a the VM into pg.yaml and run it as root! (password required for sudo - get the user-password from console in OCP)
+`sudo ansible-playbook pg.yaml -K`
 
-Now we can log-in to ArgoCD using the OpenShift credentials, but before creating our SCCStore TEST application in ArgoCD, we need to push the Helm charts we use to a Helm repository.
-Why that? Because ArgoCD relies on a Helm repository for obtaining the charts when using Helm for deployments. 
+### Deploy the application without database
+Once the database is created, you can again deploy the application like in the DEV stage... be sure to be i the correct namespace!
 
-### Publish Helm charts to the Github Helm-Chart repository (optional)
-> Why is this an optional task? Because as long as you do not plan to change the Helm charts, there is no need to re-package and publish the charts. They are already available in my SCCStore-Helm repository!
+    `oc apply -k kustomize/overlays/prod`
 
-However, in case you choose to do so...
+Looking to the output, you will notice that the db-creation objects are not being deployed, that happens only DEV.
+And looking at the db-service, you will notice a difference compared to DEV. The service points to the VM. That's it... no further change to the application required.
 
-I am not going into the details of Halm usage, however, there is a `SCCStore-Helm` project in Github for this... you can create a fork as well. In `Sccstore-Helm` you can use:
+Again, you can delete everything (except the database VM) by using:
 
-    helm package ../SCCstore/sccstore-charts -d .
-    helm repo index --url https://domenico-piol.github.io/SCCStore-Helm . --merge ./index.yaml
-
-To package a new version of the helm-charts. Don't forget to update the Helm version-info's appropriately in `SCCStore`.
-
-The new Helm-Chart version is published automatically by Github after the commit/push.
-
-### Create ArgcoCD application for TEST
-After login to ArgoCD using the OpenShift credentials, we can create an application named sccstore-test:
-
-<p align="center">
-  <img src="./diagrams/argocd-create-app.jpg" width="600">
-</p>
-
-Use:
-| Attribute | Value |
-| ----------- | ----------- |
-| Application Name: | sccstore-test |
-| Project Name | default |
-| Repository URL | https://domenico-piol.github.io/SCCStore-Helm/ <br> *This is my helm-chart repository, if you choose to create your own, this need to change!*|
-| Chart | sccstore-charts *(choose from list)* |
-| Version | *just pick the last recent version from the list* |
-| Cluster URL | https://kubernetes.default.svc *(pick from list)* |
-| Namespace | sccstore-test |
-| Values Files | values.yaml *(pick from list)* |
-
-Leave the rest as it is!
-
-> In a real world, we would link the execution of the sync to a trigger-event, such as merge to a certain branch.
-However, for simplicity sake, we will trigger the sync manually!
-
-During the sync operation you will notice all components starting and once every application component being ready (Postgres database, Spring Frontend and Quarkus backend), a Job is started which will initialize the database. After that, the application is fully operational.
+    `oc delete -k kustomize/overlays/prod`

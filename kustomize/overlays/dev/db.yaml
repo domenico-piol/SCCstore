@@ -28,21 +28,6 @@ data:
 
 ---
 
-kind: Service
-apiVersion: v1
-metadata:
-  name: pg-service
-spec:
-  type: ClusterIP
-  selector:
-    app: postgres
-  ports:
-    - protocol: TCP
-      port: 5432
-      targetPort: 5432
-
----
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:

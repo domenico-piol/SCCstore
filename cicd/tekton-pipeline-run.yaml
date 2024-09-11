@@ -16,8 +16,8 @@ spec:
         claimName: maven-repo-pvc
     - name: dockerconfig-ws
       secret:
-        #secretName: dockerconfig-secret
-        secretName: rhworkshops-dockerconfig-secret
+        secretName: dockerconfig-secret
+        #secretName: rhworkshops-dockerconfig-secret
         #secretName: quay-dockerconfig-secret
   params:
     - name: repo-url
@@ -26,7 +26,7 @@ spec:
       value: domenico
     - name: container-repo
       #value: quay.io/domenico_piol
-      value: rhworkshops
-      #value: registry-1.docker.io/domenicopiol
+      #value: rhworkshops
+      value: registry-1.docker.io/domenicopiol
     - name: container-registry
       value: docker.io
