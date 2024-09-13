@@ -1,7 +1,9 @@
 ---
 - name: SCCSTORE database
-  hosts: localhost
-
+  hosts: sccstore-vm-test-1
+  gather_facts: false
+  vars:
+    list_of_ssh_ports: [22, 31022]
   tasks:
     - name: Install postgres
       become: true
@@ -14,6 +16,7 @@
         - python3-devel
         - postgresql-devel
         - rpm-build
+        - acl
 
     - name: Install Python packages
       become: true
