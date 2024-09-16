@@ -5,9 +5,5 @@ metadata:
 data:
   k8s-config.json:
     '{
-      "sccstore.platform": "postgres",
-      "sccstore.url": "jdbc:postgresql://pg-service:5432/sccstore",
-      "sccstore.username": "sccstore",
-      "sccstore.password": "sccstore",
       "sccstore.complaintsBackend": "http://sccstore-qcomplaints.sccstore.svc"
      }'
