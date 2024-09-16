@@ -4,17 +4,17 @@
   tasks:
     - name: Create VM
       kubernetes.core.k8s:
-        api_key: sha256~5gCUaP7o4G2R9zOCF7DCNMM1Kq-oEj3YNSXuAl3EhxM
+        api_key: sha256~GPGew3sb9CjEXG4Gg3uLjl9tLcw0RCYo3x9-YkysFXE
         host: https://api.homeocp.piol.local:6443
         validate_certs: false
         definition:
           apiVersion: kubevirt.io/v1
           kind: VirtualMachine
           metadata:
-            name: fedora-test
-            namespace: developer
+            name: pg-database
+            namespace: sccstore
             labels:
-              app: fedora-test
+              app: pg-database
               kubevirt.io/dynamic-credentials-support: "true"
               vm.kubevirt.io/template: fedora-server-small
               vm.kubevirt.io/template.namespace: openshift
@@ -39,7 +39,7 @@
             template:
               metadata:
                 labels:
-                  kubevirt.io/domain: fedora-test
+                  kubevirt.io/domain: pg-database
                   kubevirt.io/size: small
               spec:
                 architecture: amd64

@@ -17,6 +17,7 @@
         - postgresql-devel
         - rpm-build
         - acl
+        - htop
 
     - name: Install Python packages
       become: true

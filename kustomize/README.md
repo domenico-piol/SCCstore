@@ -19,7 +19,10 @@ Use the `sccstore` namespace!
 
 ### Prepare
 1. Create Fedora VM
-Do this in the `sccstore` namespace, add the `fedora` SSH Public Key (from ~/.ssh/) in "Scripts" section in the creation step!!! Name the VM "pg-database"
+Do this in the `sccstore` namespace, add the `fedora` SSH Public Key (from ~/.ssh/) in "Scripts" section in the creation step!!! 
+Or manually: `oc create secret generic fedora-key --from-file=fedora.pub=/Users/domenico/.ssh/fedora.pub`
+
+Name the VM "pg-database" or you need to change the service-file..
 
 1. Install Ansible
 Login - `virtctl ssh -i ~/.ssh/fedora fedora@pg-database`
