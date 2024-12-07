@@ -218,8 +218,10 @@ In a first step, we need to create the VM manually, I will try to automate this 
 
 ### Prepare the database VM
 1. **Create a Fedora VM**
-Do this in the sccstore namespace, add the fedora SSH Public Key (mine is stored in from ~/.ssh/) in the "Scripts" section during creation in Openshift Virtualization UI!!! 
-Name the VM "pg-database".
+Do this in the sccstore namespace and add the fedora SSH Public Key (mine is stored in from ~/.ssh/) in the "Scripts" section during creation in Openshift Virtualization UI!!! Or add the pubkey manually using:
+`oc create secret generic fedora-key --from-file=fedora.pub=/Users/domenico/.ssh/fedora.pub`
+
+Name the VM "pg-database" or you need to change the service-file..
 
 1. **Install Ansible**
 Login to the VM using `virtctl ssh -i ~/.ssh/fedora fedora@pg-database`
