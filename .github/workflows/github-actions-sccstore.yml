@@ -42,7 +42,7 @@ jobs:
         context: ./ui/
         file: ./ui/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-ui:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-ui:${{ github.ref }} 
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-ui:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-ui:${{ github.ref_name }} 
 
     - name: Image digest - UI
       run: echo ${{ steps.docker_build_ui.outputs.digest }}
@@ -54,7 +54,7 @@ jobs:
         context: ./pcomplaints/
         file: ./pcomplaints/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-pcomplaints:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-pcomplaints:${{ github.ref }} 
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-pcomplaints:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-pcomplaints:${{ github.ref_name }} 
 
     - name: Image digest - PCOMPLAINTS
       run: echo ${{ steps.docker_build_pcomplaints.outputs.digest }}
@@ -66,7 +66,7 @@ jobs:
         context: ./qcomplaints/
         file: ./qcomplaints/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-qcomplaints:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-qcomplaints:${{ github.ref }} 
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-qcomplaints:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-qcomplaints:${{ github.ref_name }} 
 
     - name: Image digest - QCOMPLAINTS
       run: echo ${{ steps.docker_build_qcomplaints.outputs.digest }}
