@@ -2,7 +2,9 @@ name: CI for SCCstore
 
 on:
   push:
-    branches: [ main ]
+    # branches: [ main ]
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
   build:
@@ -40,7 +42,7 @@ jobs:
         context: ./ui/
         file: ./ui/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-ui:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-ui:${{ github.sha }} 
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-ui:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-ui:${{ github.ref }} 
 
     - name: Image digest - UI
       run: echo ${{ steps.docker_build_ui.outputs.digest }}
@@ -52,7 +54,7 @@ jobs:
         context: ./pcomplaints/
         file: ./pcomplaints/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-pcomplaints:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-pcomplaints:${{ github.sha }} 
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-pcomplaints:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-pcomplaints:${{ github.ref }} 
 
     - name: Image digest - PCOMPLAINTS
       run: echo ${{ steps.docker_build_pcomplaints.outputs.digest }}
@@ -64,7 +66,7 @@ jobs:
         context: ./qcomplaints/
         file: ./qcomplaints/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-qcomplaints:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-qcomplaints:${{ github.sha }} 
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-qcomplaints:latest,${{ secrets.DOCKER_HUB_USERNAME }}/sccstore-qcomplaints:${{ github.ref }} 
 
     - name: Image digest - QCOMPLAINTS
       run: echo ${{ steps.docker_build_qcomplaints.outputs.digest }}
