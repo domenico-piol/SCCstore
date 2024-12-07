@@ -24,6 +24,7 @@ Or manually: `oc create secret generic fedora-key --from-file=fedora.pub=/Users/
 
 Name the VM "pg-database" or you need to change the service-file..
 
+
 1. Install Ansible
 Login - `virtctl ssh -i ~/.ssh/fedora fedora@pg-database`
 Then - `sudo dnf install ansible`
