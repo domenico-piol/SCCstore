@@ -29,4 +29,3 @@ spec:
         - name: changeset
           configMap:
             name: complaints-changeset
-

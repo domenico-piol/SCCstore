@@ -209,7 +209,7 @@ To access the data in the database, click on "Complaints Department" in the menu
 ### Run the liquibase-job standalone
 In dev stage there is no persistance. In case you need to re-run the liquibase only for initializing the database, you can run:
 
-> **NOTE** to be defined...
+    oc apply -f kustomize/overlays/dev/db-liquibase-job.yaml 
 
 ## Deploy to PROD stage
 PROD stage is different... you know somebody who is running production databases in containers? I don't... So, this said, our database in PROD will be running in a VM using kubevirt (OpenShift Virtualization in my case).
