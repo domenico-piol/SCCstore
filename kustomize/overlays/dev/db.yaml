@@ -14,7 +14,6 @@ data:
     insert into complaints (complaint) values ('And another one initially loaded');
 
 ---
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -27,11 +26,10 @@ data:
   POSTGRESQL_DATABASE: sccstore
 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres  # Sets Deployment name
+  name: postgres # Sets Deployment name
   labels:
     app: postgres
     app.kubernetes.io/part-of: sccstore
@@ -61,37 +59,3 @@ spec:
       volumes:
         - name: postgredb
           emptyDir: {}
-
----
-
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: liquibase-complaints
-  annotations:
-    "helm.sh/hook": post-install,post-upgrade
-spec:
-  ttlSecondsAfterFinished: 120
-  template:
-    spec:
-      containers:
-      - name: liquibase-complaints
-        image: registry-1.docker.io/rhworkshops/sccstore-liquibase:latest
-        imagePullPolicy: Always
-        command: ["sh", "-c", "docker-entrypoint.sh --username=${USERNAME} --password=${PASSWORD} --url=${URL} --classpath=changelog --changeLogFile=changelog/complaints.sql update"]
-        env:
-        - name: URL
-          value: 'jdbc:postgresql://pg-service:5432/sccstore'
-        - name: USERNAME
-          value: sccstore
-        - name: PASSWORD
-          value: sccstore
-        volumeMounts:
-        - name: changeset
-          mountPath: /liquibase/changelog/complaints.sql
-          subPath: complaints.sql
-      restartPolicy: Never
-      volumes:
-        - name: changeset
-          configMap:
-            name: complaints-changeset
