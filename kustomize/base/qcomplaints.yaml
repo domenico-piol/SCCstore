@@ -24,6 +24,7 @@ spec:
     spec:
       containers:
       - image: registry-1.docker.io/domenicopiol/sccstore-qcomplaints:latest
+        imagePullPolicy: Always
         env:
           - name: SCC_DB_HOST
             valueFrom:
