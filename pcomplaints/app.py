@@ -7,6 +7,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 app.config['SCC_DB_HOST'] = environ.get('SCC_DB_HOST')
+app.config['SCC_DB_NAME'] = environ.get('SCC_DB_NAME')
 
 
 @app.route('/')
@@ -38,7 +39,7 @@ def show_complaints_page():
 
 @app.route('/complaints', methods=['GET'])
 def show_complaints():    
-    dbName = app.config['SCC_DB_NAME']
+    dbName=app.config['SCC_DB_NAME']
     if len(dbName) == 0:
         dbName = "sccstore"
 

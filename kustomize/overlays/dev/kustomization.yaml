@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - ../../base
   - db.yaml
+  - db-liquibase-job.yaml
 patches:
   - path: db-service.yaml
   - path: ui-config.yaml
