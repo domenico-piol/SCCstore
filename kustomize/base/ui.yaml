@@ -64,7 +64,7 @@ spec:
     spec:
       containers:
       - name: sccstore-ui
-        image: 'registry-1.docker.io/rhworkshops/sccstore-ui:latest'
+        image: 'registry-1.docker.io/domenicopiol/sccstore-ui:latest'
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE

@@ -23,7 +23,7 @@ spec:
         autoscaling.knative.dev/window: "6s"
     spec:
       containers:
-      - image: registry-1.docker.io/rhworkshops/sccstore-qcomplaints:latest
+      - image: registry-1.docker.io/domenicopiol/sccstore-qcomplaints:latest
         env:
           - name: SCC_DB_HOST
             valueFrom:

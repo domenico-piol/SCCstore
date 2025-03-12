@@ -10,7 +10,7 @@ spec:
     spec:
       containers:
       - name: liquibase-complaints
-        image: registry-1.docker.io/rhworkshops/sccstore-liquibase:latest
+        image: registry-1.docker.io/domenicopiol/sccstore-liquibase:latest
         imagePullPolicy: Always
         command: ["sh", "-c", "docker-entrypoint.sh --username=${USERNAME} --password=${PASSWORD} --url=${URL} --classpath=changelog --changeLogFile=changelog/complaints.sql update"]
         env:
