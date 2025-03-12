@@ -164,6 +164,16 @@ cd knative-docs/code-samples/serving/hello-world/helloworld-python
    - Automatically scales your pods up and down, including scaling down to zero
      active pods.
 
+### Podman deployment
+
+    podman network create sccstore
+
+    podman run -d --name postgresql -p 5432:5432 -e POSTGRES_PASSWORD=sccstore --network sccstore postgres:latest
+
+    podman run -p 8080:8080 -e PORT=8080 -e SCC_DB_HOST=postgresql -e SCC_DB_NAME=sccstore --network sccstore domenicopiol/pcomplaints
+
+
+
 ## Verification
 
 1. Run one of the followings commands to find the domain URL for your service.
