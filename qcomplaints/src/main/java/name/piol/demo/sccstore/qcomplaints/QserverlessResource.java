@@ -1,5 +1,33 @@
 package name.piol.demo.sccstore.qcomplaints;
 
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import java.util.List;
+
+@Path("/complaints")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public class QServerlessResource {
+
+    @Inject
+    ComplaintsRepository complaintsRepository;
+
+    // Retrieve all tasks
+    @GET
+    public List<Complaint> list() {
+        //System.out.println("ALL: " + complaintsRepository.listAll());
+        return complaintsRepository.listAll();
+    }
+}
+
+
+/*
+
+package name.piol.demo.sccstore.qcomplaints;
+
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.ArrayList;
@@ -22,8 +50,8 @@ import io.agroal.api.AgroalDataSource;
 import jakarta.inject.Inject;
 
 @Path("/")
-public class QserverlessResource {
-    private static final Logger LOG = Logger.getLogger(QserverlessResource.class.getName());
+public class QServerlessResource {
+    private static final Logger LOG = Logger.getLogger(QServerlessResource.class.getName());
 
     @Inject
     AgroalDataSource ds;
@@ -39,37 +67,7 @@ public class QserverlessResource {
         return "Hello from RESTEasy Reactive";
     }
 
-    /*
-    @Path("/complaints")
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public Response all() {
-        List<String> ml = new ArrayList<String>();   
-
-        try {
-            con = ds.getConnection();
-            stmt = con.createStatement();
-			rs = stmt.executeQuery("select compl_id, complaint from complaints");
-            while(rs.next()) {
-                ml.add("COMPL ID="+rs.getInt("compl_id")+", COMPLAINT="+rs.getString("complaint"));
-			}
-        } catch (SQLException e) {
-			e.printStackTrace();
-            return Response.status(500).entity("SQL error while reading data").build();
-		} finally{
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (con != null) con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return Response.status(500).entity("an error occurred").build();
-            }
-        }
-
-        return Response.status(200).entity(ml).build();
-    }
-    */
+    
 
     @Path("/complaints")
     @GET
@@ -155,3 +153,4 @@ public class QserverlessResource {
     }
 
 }
+*/
