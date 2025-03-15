@@ -56,6 +56,29 @@ For running it, as said, you will need OpenShift, but it should perfectly work a
 
 In the PROD setup, I use a PostgreSQL database which runs on a VM... In the DEV setup the database runs within a container.
 
+## Local development using Podman
+For local development and test we can use Podman and Podman-Compose. On Mac's you can use Homebrew to install `podman`, `podman-compose` and the `psql` commandline client.
+
+    brew install podman
+    brew install podman-compose
+    brew install libpq
+
+Start the Podman environment:
+    
+    podman machine start
+
+In this example we will start the PostgreSQL database and the middleware component (pcomplaints) as pods on Podman, the SpringBoot UI then can be started for testing out of the IDE.
+
+The `podman-compose` file is in the `compose` subdirectory!
+    
+    podman-compose --file sccstore-compose.yaml up -d
+
+Now you can initialize the database:
+
+    psql -h localhost -p 5432 -U postgres < sccstore-db-init.sql
+
+The `pcomplaints` middle-tier is listening on `http:localhost:8080/complaints`, the SCCstore UI will connect by default to that IP.
+
 ## Prepare the OpenShift cluster environment (part I - DEV)
 For this I use an OpenShift cluster on AWS. When choosing another cloud-provider or environment you will to change the storage-class in the kustomize template file for the database (for AWS I use 'gp3').
 

@@ -1,5 +1,5 @@
 sccstore:
-  certDir: ${user.dir}/../../certs/
+  certDir: ${user.dir}/../../Documents/Projects/certs/
   platform: postgres
   url: jdbc:postgresql://win10-postgresql:5432/sccstore
   username: sccstore

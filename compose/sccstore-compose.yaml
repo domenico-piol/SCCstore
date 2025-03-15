@@ -1,0 +1,27 @@
+services:
+  sccstore_postgresql:
+    container_name: sccstore_postgresql
+    image: postgres:latest
+    networks:
+      - sccstore
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=sccstore
+
+  sccstore_pcomplaints:
+    container_name: sccstore_pcomplaints
+    depends_on:
+      - sccstore_postgresql
+    image: localhost/domenicopiol/sccstore-pcomplaints
+    networks:
+      - sccstore
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - SCC_DB_HOST=sccstore_postgresql
+      - SCC_DB_NAME=sccstore
+
+networks:
+  sccstore:
