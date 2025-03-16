@@ -8,6 +8,8 @@ services:
       - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=sccstore
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d
 
   #sccstore_pcomplaints:
   #  container_name: sccstore_pcomplaints

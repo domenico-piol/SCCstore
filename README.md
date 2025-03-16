@@ -73,9 +73,7 @@ The `podman-compose` file is in the `compose` subdirectory!
     
     podman-compose --file sccstore-compose.yaml up -d
 
-Now you can initialize the database:
-
-    psql -h localhost -p 5432 -U postgres < sccstore-db-init.sql
+The database is initialized via initdb!
 
 The `pcomplaints` middle-tier is listening on `http:localhost:8080/complaints`, the SCCstore UI will connect by default to that IP.
 
