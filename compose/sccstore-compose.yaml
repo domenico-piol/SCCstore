@@ -9,17 +9,30 @@ services:
     environment:
       - POSTGRES_PASSWORD=sccstore
 
-  sccstore_pcomplaints:
-    container_name: sccstore_pcomplaints
+  #sccstore_pcomplaints:
+  #  container_name: sccstore_pcomplaints
+  #  depends_on:
+  #    - sccstore_postgresql
+  #  image: localhost/domenicopiol/sccstore-pcomplaints
+  #  networks:
+  #    - sccstore
+  #  ports:
+  #    - "8080:8080"
+  #  environment:
+  #    - PORT=8080
+  #    - SCC_DB_HOST=sccstore_postgresql
+  #    - SCC_DB_NAME=sccstore
+  
+  sccstore_qcomplaints:
+    container_name: sccstore_qcomplaints
     depends_on:
       - sccstore_postgresql
-    image: localhost/domenicopiol/sccstore-pcomplaints
+    image: localhost/domenicopiol/sccstore-qcomplaints
     networks:
       - sccstore
     ports:
       - "8080:8080"
     environment:
-      - PORT=8080
       - SCC_DB_HOST=sccstore_postgresql
       - SCC_DB_NAME=sccstore
 
