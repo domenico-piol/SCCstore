@@ -73,11 +73,20 @@ The `podman-compose` file is in the `compose` subdirectory!
     
     podman-compose --file sccstore-compose.yaml up -d
 
-Now you can initialize the database:
-
-    psql -h localhost -p 5432 -U postgres < sccstore-db-init.sql
+The database is initialized via initdb!
 
 The `pcomplaints` middle-tier is listening on `http:localhost:8080/complaints`, the SCCstore UI will connect by default to that IP.
+
+### Using the Quarkus middle-tier component in local development
+The `sccstore-compose.yaml` contains also the setup for using the `sccstore-qcomplaints` component (Quarkus instead of Python). However, at least on Mac you cannot use the natively compiled executable (architecture mismatch...), but you can create a jar-file and run it in Java mode in the container. To do so, build the packages accordingly:
+
+    mvn clean package -Dquarkus.package.type=uber-jar
+
+And then create the container image with:
+
+    podman build -t domenicopiol/sccstore-qcomplaints -f Dockerfile-Mac .
+
+The rest is as described above, use `podman-compose` to start.
 
 ## Prepare the OpenShift cluster environment (part I - DEV)
 For this I use an OpenShift cluster on AWS. When choosing another cloud-provider or environment you will to change the storage-class in the kustomize template file for the database (for AWS I use 'gp3').

@@ -1,0 +1,8 @@
+FROM ghcr.io/graalvm/jdk-community:21
+LABEL maintainer="domenico@piol.name"
+
+WORKDIR /work/
+COPY target/*-runner.jar /work/sccstore-qcomplaints.jar
+
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","/work/sccstore-qcomplaints.jar"]
