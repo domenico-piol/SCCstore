@@ -1,0 +1,50 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: sccstore-qcomplaints-service
+  labels:
+    app.kubernetes.io/part-of: sccstore
+    app.openshift.io/runtime: quarkus
+spec:
+  type: ClusterIP
+  selector:
+    app: sccstore-qcomplaints
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sccstore-qcomplaints
+  labels:
+    app.kubernetes.io/part-of: sccstore
+    app.openshift.io/runtime: quarkus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sccstore-qcomplaints
+  template:
+    metadata:
+      labels:
+        app: sccstore-qcomplaints
+    spec:
+      containers:
+      - name: sccstore-qcomplaints
+        image: registry-1.docker.io/domenicopiol/sccstore-qcomplaints:latest
+        imagePullPolicy: Always
+        env:
+          - name: SCC_DB_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: sccstore-qcomplaints-config
+                key: SCC_DB_HOST
+          - name: SCC_DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: sccstore-qcomplaints-config
+                key: SCC_DB_NAME

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sccstore-ui-spring-config
+data:
+  k8s-config.json:
+    '{
+      "sccstore.complaintsBackend": "http://sccstore-qcomplaints-service.sccstore-istio.svc"
+     }'

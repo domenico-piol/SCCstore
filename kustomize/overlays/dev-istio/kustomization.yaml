@@ -5,6 +5,8 @@ resources:
   - db.yaml
   - db-liquibase-job.yaml
   - qcomplaints.yaml
+  - pcomplaints-config.yaml
+  - pcomplaints.yaml
 patches:
   - path: db-service.yaml
   - path: ui-config.yaml

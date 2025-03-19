@@ -1,0 +1,28 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: sccstore-qcomplaints
+  labels:
+    app.kubernetes.io/part-of: sccstore
+    app.openshift.io/runtime: quarkus
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/window: "6s"
+    spec:
+      containers:
+      #- image: registry-1.docker.io/rhworkshops/sccstore-qcomplaints:latest
+      - image: registry-1.docker.io/domenicopiol/sccstore-qcomplaints:latest
+        imagePullPolicy: Always
+        env:
+          - name: SCC_DB_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: sccstore-qcomplaints-config
+                key: SCC_DB_HOST
+          - name: SCC_DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: sccstore-qcomplaints-config
+                key: SCC_DB_NAME
