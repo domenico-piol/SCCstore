@@ -1,13 +1,15 @@
 services:
   sccstore_postgresql:
     container_name: sccstore_postgresql
-    image: postgres:latest
+    #image: postgres:latest
+    image: docker.io/bitnami/postgresql:17
     networks:
       - sccstore
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_PASSWORD=sccstore
+      #- POSTGRES_PASSWORD=sccstore
+      POSTGRESQL_PASSWORD: pgsecret
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d
 
